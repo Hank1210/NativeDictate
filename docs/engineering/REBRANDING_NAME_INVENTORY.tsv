@@ -1,0 +1,76 @@
+path	baseline_match_count	category	treatment
+.env.example	1	aktuell	Aktuellen Xcode-Hinweis in R4 auf NativeDictate umstellen.
+CHANGELOG.md	10	aktuell	Neuen 4.2-Eintrag als NativeDictate schreiben; vorhandene Versionshistorie unverändert lassen.
+COMMUNITY_INSTALLATION.md	22	aktuell	Aktuelle Installation und den manuellen 4.1-zu-4.2-Upgradepfad in R4 umstellen.
+COMMUNITY_INSTALLATION_EN.md	20	aktuell	Aktuelle Installation und den manuellen 4.1-zu-4.2-Upgradepfad in R4 umstellen.
+FlowDictate.xcodeproj/project.pbxproj	69	sichtbar	App-Produktname und Usage-Texte umstellen; Bundle-IDs de.mcc.FlowDictate, de.mcc.FlowDictate.TestHost und Test-IDs als Legacy-Vertrag bewahren; Projekt-, Target- und Testnamen dürfen intern bestehen bleiben.
+FlowDictate.xcodeproj/xcshareddata/xcschemes/FlowDictate.xcscheme	15	optional intern	Scheme-, Target-, Test- und Projektverweise für 4.2 intern beibehalten; nur anpassen, falls der neue App-Produktname dies technisch erfordert.
+FlowDictate/App/DictationCoordinator.swift	19	sichtbar	Status-, Dialog-, Update- und Exporttexte sowie neue Exportdateinamen in R2 umstellen; interne Typreferenzen bleiben.
+FlowDictate/Audio/AudioStore.swift	2	legacy	Persistente Application-Support-, Audio- und Meetingpfade FlowDictate unverändert bewahren.
+FlowDictate/Audio/AudioUploadPreparer.swift	2	optional intern	Temporäre Upload- und Multipart-Präfixe dürfen intern bestehen bleiben.
+FlowDictate/Audio/CaptureProbeArtifactStore.swift	1	optional intern	Temporären Diagnoseordnernamen intern beibehalten, sofern er nicht benutzersichtbar wird.
+FlowDictate/Audio/SystemAudioRecorder.swift	2	sichtbar	Berechtigungsfehler auf NativeDictate umstellen; internen Queue-Namen als Legacy-Identifier bewahren.
+FlowDictate/FlowDictateApp.swift	7	sichtbar	Fenster- und Test-Build-Titel umstellen; Swift-Typen und interne Quelldateinamen dürfen bestehen bleiben.
+FlowDictate/History/DictationHistoryStore.swift	8	sichtbar	Unterbrechungs- und Wiederherstellungstexte umstellen; History-Pfad, Queue-Label und Schema-Typen als Legacy-Vertrag bewahren.
+FlowDictate/History/DictationRecord.swift	2	optional intern	Interne Referenzen auf FlowDictateVersion dürfen bestehen bleiben.
+FlowDictate/History/HistoryView.swift	1	sichtbar	Fenstertitel in R2 umstellen.
+FlowDictate/Insertion/AccessibilityTextInserter.swift	1	sichtbar	Benutzersichtbare Schutzfeldmeldung in R2 umstellen.
+FlowDictate/Jobs/DictationJobStore.swift	3	sichtbar	Benutzersichtbaren Unterbrechungstext umstellen; Jobs-Pfad und Queue-Label als Legacy-Vertrag bewahren.
+FlowDictate/Meetings/CoreAudioTapCaptureProbe.swift	6	sichtbar	Sichtbaren Neustarthinweis und Audio-Gerätebezeichnungen umstellen; UIDs und Queue-Labels als Legacy-Identifier bewahren.
+FlowDictate/Meetings/LongFormTrackTranscriptionExecutor.swift	1	optional intern	Nur interner Kommentar; Umbenennung ist für 4.2 nicht erforderlich.
+FlowDictate/Meetings/MeetingRecordingConsentView.swift	1	sichtbar	Rechtlichen Benutzerhinweis in R2 umstellen, ohne seine Aussage zu verändern.
+FlowDictate/Meetings/MeetingSessionStore.swift	1	optional intern	Internes serielles Queue-Label als Legacy-Identifier beibehalten.
+FlowDictate/Meetings/MeetingTranscriptInsertionGate.swift	1	optional intern	Nur interner Kommentar; Umbenennung ist für 4.2 nicht erforderlich.
+FlowDictate/Meetings/MixedRecordingSession.swift	2	sichtbar	Persistierte benutzersichtbare Unterbrechungstexte umstellen; Datenformat nicht ändern.
+FlowDictate/Meetings/ScreenCaptureKitSystemTrackRecorder.swift	1	optional intern	Internes Queue-Label als Legacy-Identifier beibehalten.
+FlowDictate/Meetings/SystemAudioPermissionStatus.swift	1	sichtbar	Benutzersichtbaren Berechtigungsstatus in R2 umstellen.
+FlowDictate/Meetings/SystemAudioTrackRecorder.swift	5	sichtbar	Neustarthinweis und Audio-Gerätenamen umstellen; Aggregate-UID und Queue-Label als Legacy-Identifier bewahren.
+FlowDictate/MenuBar/FlowDictateMenu.swift	8	sichtbar	Menüs, Settings und Hilfetexte in R2 umstellen; interne Swift-Typen dürfen bestehen bleiben.
+FlowDictate/Onboarding/OnboardingView.swift	8	sichtbar	Onboarding-, Fenster-, Start- und Login-Texte vollständig in R2 umstellen.
+FlowDictate/Overlay/RecordingOverlayController.swift	1	legacy	Internes Bundle-basiertes Timer-Label de.mcc.FlowDictate.success-overlay-hide unverändert bewahren.
+FlowDictate/Permissions/PermissionManager.swift	2	sichtbar	Mikrofon- und Accessibility-Hinweise in R2 umstellen.
+FlowDictate/Productivity/ProductivityServices.swift	2	sichtbar	Fehlermeldung in R2 umstellen; GitHub-Release-API erst bei R6 auf das umbenannte Repository schalten.
+FlowDictate/Productivity/ProductivitySettingsView.swift	2	sichtbar	Versions- und Updatehinweise in R2 umstellen; FlowDictateVersion als internen Typ beibehalten.
+FlowDictate/Profiles/AppDictationProfile.swift	1	legacy	Persistenten Profile-Pfad Application Support/FlowDictate unverändert bewahren.
+FlowDictate/Profiles/AppProfilesSettingsView.swift	2	sichtbar	Benutzersichtbare Clipboard- und Accessibility-Erklärungen in R2 umstellen.
+FlowDictate/Settings/KeychainCredentialStore.swift	1	legacy	Keychain-Service auf Basis de.mcc.FlowDictate unverändert bewahren.
+FlowDictate/Settings/LaunchAtLoginManager.swift	1	sichtbar	Benutzersichtbaren Login-Items-Hinweis in R2 umstellen; Kontinuität separat testen.
+FlowDictate/Settings/SmartDictationSettingsView.swift	2	sichtbar	Benutzersichtbare Smart-Dictation-Texte in R2 umstellen.
+FlowDictate/SmartDictation/SmartDictationStores.swift	2	legacy	Persistente Dictionary- und Writing-Style-Pfade unter Application Support/FlowDictate unverändert bewahren.
+FlowDictate/Storage/RecordingLocationStore.swift	3	sichtbar	Ordnerauswahl- und Berechtigungstexte in R2 umstellen; gespeichertes Bookmark nicht migrieren.
+FlowDictate/Transcription/Local/LocalModelManager.swift	2	legacy	Persistenten Modellpfad Application Support/FlowDictate/Models und zugehörigen Kommentar unverändert bewahren.
+FlowDictate/Transcription/LongForm/LongFormTranscriptionModels.swift	3	sichtbar	Persistierte beziehungsweise benutzersichtbare Unterbrechungs- und Planungsfehler in R2 umstellen; Schema unverändert lassen.
+FlowDictate/Transcription/LongForm/TranscriptionSessionStore.swift	1	legacy	Persistenten Transkriptionssession-Pfad unter Application Support/FlowDictate unverändert bewahren.
+FlowDictate/Transcription/MultipartUploadFileBuilder.swift	1	optional intern	Temporären Multipart-Dateinamen intern beibehalten.
+FlowDictate/Transcription/OpenAITranscriptionProvider.swift	1	optional intern	Multipart-Boundary-Präfix intern beibehalten.
+FlowDictate/Transcription/TranscriptionProvider.swift	1	sichtbar	Benutzersichtbaren API-Key-Hinweis in R2 umstellen.
+FlowDictate/Transcription/TranscriptionRunner.swift	1	sichtbar	Benutzersichtbaren History-Fehler in R2 umstellen.
+FlowDictate/Utilities/FlowDictateVersion.swift	1	optional intern	Internen Swift-Typ für 4.2 beibehalten; Werte werden separat auf 4.2 aktualisiert.
+FlowDictate/Utilities/FlowLogger.swift	1	legacy	Bundle-ID-basiertes Logger-Subsystem beziehungsweise Fallback unverändert bewahren.
+FlowDictateTests/FlowDictateTests.swift	135	optional intern	Modul-, Typ- und temporäre Fixture-Namen selektiv beibehalten; R1 ergänzt explizite Legacy-Vertragstests und R2 passt nur Markenassertions an.
+FlowDictateUITests/FlowDictateUITests.swift	3	optional intern	Testtarget- und Testklassennamen dürfen für 4.2 intern bestehen bleiben.
+PRIVACY.md	14	aktuell	Aktuelle Datenschutzbeschreibung auf NativeDictate umstellen und Legacy-Pfade transparent erklären.
+README.md	18	aktuell	Aktuellen Projekteinstieg, Build-, Download- und Übergangshinweise in R4 umstellen; historische Links erhalten.
+RELEASE.md	14	aktuell	Releaseprozess und 4.2-Paketnamen in R4 umstellen; dokumentierte 4.1-Nachweise unverändert lassen.
+THIRD_PARTY_NOTICES.md	5	aktuell	Aktuelle Produktreferenzen umstellen; Drittanbietertexte und historische Lizenzangaben nicht verändern.
+config/FlowDictateInfo.plist	1	sichtbar	Systemaudio-Usage-Text auf NativeDictate umstellen; Dateiname darf intern bestehen bleiben.
+docs/README.md	4	aktuell	Aktuellen Dokumentationsindex in R4 umstellen und historische Dokumente weiterhin verlinken.
+docs/engineering/ARBEITSPLAN_PHASE_4_1.md	40	historisch	Abgeschlossenen 4.1-Arbeitsplan unverändert als historischen Nachweis erhalten.
+docs/engineering/ARBEITSPLAN_REBRANDING_NATIVEDICTATE.md	48	aktuell	Aktiven 4.2-Arbeitsplan und R0-Nachweise fortschreiben; Legacy- und Historienverträge ausdrücklich erhalten.
+docs/engineering/CAPTURE_SPIKE_PHASE_4_1.md	12	historisch	Abgeschlossenen 4.1-Capture-Spike unverändert erhalten.
+docs/releases/RELEASE_NOTES_3.2.0.md	9	historisch	Veröffentlichte Release Notes unverändert erhalten.
+docs/releases/RELEASE_NOTES_3.3.0.md	8	historisch	Veröffentlichte Release Notes unverändert erhalten.
+docs/releases/RELEASE_NOTES_3.4.0.md	9	historisch	Veröffentlichte Release Notes unverändert erhalten.
+docs/releases/RELEASE_NOTES_4.0.0.md	6	historisch	Veröffentlichte Release Notes unverändert erhalten.
+docs/releases/RELEASE_NOTES_4.0.1.md	3	historisch	Veröffentlichte Release Notes unverändert erhalten.
+docs/releases/RELEASE_NOTES_4.0.2.md	3	historisch	Veröffentlichte Release Notes unverändert erhalten.
+docs/releases/RELEASE_NOTES_4.1.0.md	5	historisch	Veröffentlichte Release Notes unverändert erhalten.
+docs/requirements/FlowDictate_PRD_Phase_2.md	27	historisch	Abgeschlossenes PRD unverändert als historischen Nachweis erhalten.
+docs/requirements/FlowDictate_PRD_Phase_3.md	23	historisch	Abgeschlossenes PRD unverändert als historischen Nachweis erhalten.
+docs/requirements/FlowDictate_PRD_Phase_3_4.md	11	historisch	Abgeschlossenes PRD unverändert als historischen Nachweis erhalten.
+docs/requirements/FlowDictate_PRD_Phase_4_0.md	12	historisch	Abgeschlossenes PRD unverändert als historischen Nachweis erhalten.
+docs/requirements/FlowDictate_PRD_Phase_4_1.md	21	historisch	Abgeschlossenes PRD unverändert als historischen Nachweis erhalten.
+docs/requirements/FlowDictate_PRD_v1.1.md	10	historisch	Abgeschlossenes PRD unverändert als historischen Nachweis erhalten.
+docs/requirements/README.md	6	aktuell	Aktuellen Requirements-Index auf NativeDictate umstellen; historische PRD-Titel und Pfade beibehalten.
+scripts/build-community-release.sh	8	aktuell	In R3 App-, Staging-, ZIP- und Checksum-Namen umstellen; Projekt- und Scheme-Namen dürfen intern bestehen bleiben.
+scripts/build-release.sh	4	aktuell	In R3 App- und ZIP-Ausgaben umstellen; Projekt- und Scheme-Namen dürfen intern bestehen bleiben.

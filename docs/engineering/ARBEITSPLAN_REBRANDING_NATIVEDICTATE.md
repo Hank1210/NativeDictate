@@ -1,0 +1,554 @@
+# FlowDictate → NativeDictate – Rebranding-Arbeitsplan
+
+**Vorhaben:** Umbenennung des Open-Source-Projekts und der sichtbaren macOS-App von FlowDictate zu NativeDictate
+**Status:** `IN ARBEIT` – R0 abgeschlossen, R1 als nächster Schritt
+**Stand:** 3. Oktober 2026
+**Ausgangsbasis:** FlowDictate 4.1.0, Build 33, Tag `v4.1.0`, Commit `afa02eb`
+**Zielversion:** NativeDictate 4.2.0
+**Geplanter Arbeitsbranch:** `codex/rebrand-native-dictate`
+**Bestehendes Repository:** `Hank1210/FlowDictate`
+**Ziel-Repository:** `Hank1210/NativeDictate`
+**Kanonische Schreibweise:** `NativeDictate`
+**Ablage:** öffentlich und versioniert unter `docs/engineering/`
+
+## 1. Zweck
+
+Dieser Plan beschreibt die kontrollierte Umbenennung von FlowDictate zu NativeDictate. Das Rebranding soll die Verwechslung mit einem unabhängigen kommerziellen Produkt beenden, ohne bestehende Installationen erneut unnötig von Einstellungen, History, lokalem Modell, Keychain-Zugang oder Ordnerfreigaben zu trennen.
+
+Der Plan behandelt das Rebranding als eigenständige, möglichst verhaltensneutrale 4.2-Arbeit. Neue Produktfunktionen, Datenbankschemata und Architekturumbauten werden nicht mit der Umbenennung vermischt. Sichtbare Produktidentität, technische App-Identität, persistente Datenpfade und historische Dokumentation werden ausdrücklich getrennt bewertet.
+
+## 2. Statuslegende und Arbeitsregel
+
+| Status | Bedeutung |
+|---|---|
+| `OFFEN` | noch nicht begonnen |
+| `IN ARBEIT` | lokale Änderungen vorhanden, Exit noch nicht erreicht |
+| `GATE` | Entscheidung oder Nachweis ist vor dem Folgeschritt erforderlich |
+| `ERLEDIGT` | Implementierung, Tests und Exit-Kriterium sind erfüllt |
+| `BLOCKIERT` | ein dokumentierter technischer oder externer Blocker verhindert den nächsten Schritt |
+
+Ein Schritt wird erst `ERLEDIGT`, wenn seine Code-, Dokumentations-, Test- und Migrationskriterien erfüllt sind. Ein grüner Build allein schließt keinen Schritt ab.
+
+Für jeden abgeschlossenen Schritt gilt:
+
+1. Rebranding und Funktionsentwicklung nicht vermischen.
+2. Historische Tags, Releases und wahrheitsgemäße alte Dokumente nicht rückwirkend umschreiben.
+3. Persistente Legacy-Identifier nur nach ausdrücklicher Migrationsentscheidung ändern.
+4. Keine Benutzerdateien, Container oder Keychain-Einträge im Zuge des Rebrandings löschen.
+5. Keine Veröffentlichung, bevor Upgrade und Neuinstallation getrennt geprüft wurden.
+6. `git diff --check`, vollständige Testsuite und Paketprüfung sind für jeden Releasekandidaten Pflicht.
+
+## 3. Verbindliche Entscheidungen
+
+### 3.1 Neue öffentliche Identität
+
+- Der sichtbare Produkt- und Projektname lautet ausschließlich `NativeDictate`.
+- `Native Dictate` und `Native Dictation` werden nicht als wechselnde Markenschreibweisen verwendet.
+- Der englische Kurztext lautet zunächst: `Open-source dictation and meeting transcription for macOS.`
+- Die technische Produktbeschreibung darf ergänzen: `Native macOS dictation with local or BYOK transcription.`
+- Es wird keine Domain vorausgesetzt oder registriert; GitHub bleibt die kanonische Projekt- und Downloadadresse.
+- Es wird keine Markenregistrierung behauptet.
+
+### 3.2 GitHub-Vertrag
+
+- Es wird kein zweites leeres Repository angelegt.
+- Das bestehende Repository wird erst kurz vor der 4.2-Veröffentlichung von `Hank1210/FlowDictate` in `Hank1210/NativeDictate` umbenannt.
+- Issues, Tags, Releases, Stars, Followers und Git-Historie bleiben im bestehenden Repository.
+- Das alte Repository `Hank1210/FlowDictate` wird nach der Umbenennung nicht neu angelegt, damit GitHub-Weiterleitungen erhalten bleiben.
+- Lokale Remotes und alle hart codierten Repository-URLs werden auf das neue Ziel aktualisiert.
+- GitHub Pages ist nicht Bestandteil des Rebrandings.
+
+### 3.3 Technischer Kompatibilitätsvertrag
+
+Folgende Identitäten und Pfade bleiben in NativeDictate 4.2.0 absichtlich unverändert:
+
+- Bundle-Identifier `de.mcc.FlowDictate`,
+- bestehende macOS-Container- und UserDefaults-Identität,
+- Keychain-Service auf Basis des Bundle-Identifiers,
+- persistente `Application Support/FlowDictate`-Pfade,
+- History-, Jobs-, Profile-, Smart-Dictation-, Modell- und Transkriptionsverzeichnisse,
+- gespeichertes Recording-Folder-Bookmark,
+- vorhandene Serial-Queue-, Logger- und interne Diagnose-Identifier, soweit sie nicht benutzersichtbar sind.
+
+Diese Legacy-Namen sind keine fortgesetzte öffentliche Produktbezeichnung, sondern Kompatibilitätsanker. Sie dürfen dauerhaft bestehen bleiben. Eine spätere Bundle-ID-Änderung ist ein separates Migrationsprojekt und kein Rebranding-Nachlauf.
+
+### 3.4 Historischer Vertrag
+
+Unverändert bleiben:
+
+- Tags bis einschließlich `v4.1.0`,
+- bereits veröffentlichte Release-Titel und Release-Archive,
+- alte Checksummen,
+- historische Release Notes und abgeschlossene PRDs,
+- Git-Committexte und Git-Historie,
+- historische Aussagen, die sich ausdrücklich auf eine damalige FlowDictate-Version beziehen.
+
+Aktuelle Einstiegsdokumente dürfen auf die Umbenennung hinweisen und auf historische Dokumente verlinken. Historische Dateien werden nur korrigiert, wenn sie unabhängig vom Rebranding sachlich falsch oder sicherheitskritisch sind.
+
+## 4. Ausgangslage und Inventar
+
+Am 2. Oktober 2026 enthielt das Repository bei einer ersten Inventur 686 Fundzeilen in 75 Dateien für `FlowDictate`, `de.mcc.FlowDictate` oder `de.euler.FlowDictate`. Der reproduzierte R0-Snapshot vom 3. Oktober 2026 enthält nach Aufnahme des vollständigen Rebranding-Plans 710 Fundzeilen in weiterhin exakt 75 Ausgangsdateien. Die vollständige Dateiklassifikation liegt maschinenlesbar in `docs/engineering/REBRANDING_NAME_INVENTORY.tsv`; die Inventardatei selbst ist kein Bestandteil ihres eigenen Scans.
+
+Die Treffer gehören mindestens zu diesen Gruppen:
+
+| Gruppe | Beispiele | Behandlung |
+|---|---|---|
+| sichtbare App-Texte | Fenster, Menüs, Onboarding, Fehlermeldungen | in 4.2 umbenennen |
+| aktuelle Dokumentation | README, Features, Installation, Privacy, Release Guide | in 4.2 umbenennen und Migration erklären |
+| Releasepaket | App-Name, ZIP, Checksummenname, enthaltene Anleitungen | in 4.2 umbenennen |
+| Repository-Verweise | README-Links, Release-API, Downloadlinks | zum Umschaltzeitpunkt aktualisieren |
+| persistente Pfade | `Application Support/FlowDictate`, Modelle, History, Jobs | als Legacy-Vertrag beibehalten |
+| technische Identität | `de.mcc.FlowDictate`, Keychain-Service | beibehalten |
+| interne Typen und Dateinamen | `FlowDictateApp`, `FlowDictateMenu`, Xcode-Scheme | optional später bereinigen |
+| historische Dokumente | alte PRDs und Release Notes | nicht global ersetzen |
+| alte Identität | `de.euler.FlowDictate` in 4.1-Migrationshinweisen | historisch beibehalten |
+
+Vor der Umsetzung wird aus diesem Inventar eine maschinenprüfbare Allowlist für zulässige Legacy- und Historientreffer abgeleitet. Ein globales Suchen-und-Ersetzen ist ausdrücklich ausgeschlossen.
+
+## 5. Zielbild und Reihenfolge
+
+```text
+4.1.0 Releasebasis
+       │
+       ▼
+Namens- und Kompatibilitätsvertrag
+       │
+       ▼
+Sichtbare App-Identität + aktuelle Dokumentation
+       │
+       ▼
+Packaging + Upgradepfad + automatisierte Tests
+       │
+       ▼
+Manueller 4.1.0-→4.2.0-Migrationstest
+       │
+       ▼
+GitHub-Repository umbenennen + URLs umstellen
+       │
+       ▼
+NativeDictate 4.2.0 Release-Gate
+       │
+       ▼
+Optionale interne Namensbereinigung in späteren Versionen
+```
+
+| Schritt | Status | Voraussetzung | Entsperrt |
+|---|---|---|---|
+| R0 Vertrags- und Baseline-Gate | `ERLEDIGT` | 4.1.0 | sichere Arbeitsbasis |
+| R1 Identitätsgrenzen und Regressionstests | `OFFEN` | R0 | geschützte Legacy-Verträge |
+| R2 sichtbare Produktumbenennung | `OFFEN` | R1 | NativeDictate-Appoberfläche |
+| R3 Packaging und Installationsmigration | `OFFEN` | R2 | testbares 4.2-Paket |
+| R4 aktuelle Dokumentation und Historiengrenze | `OFFEN` | R2 | konsistente Projektkommunikation |
+| R5 automatisierte und manuelle Migrationstests | `OFFEN` | R3, R4 | Freigabe für GitHub-Umschaltung |
+| R6 GitHub-Umschaltung | `OFFEN` | R5 | kanonische neue Projektadresse |
+| R7 Release-Gate NativeDictate 4.2.0 | `OFFEN` | R6 | Veröffentlichungsentscheidung |
+| R8 optionale interne Bereinigung | `OFFEN` | stabiler 4.2-Nachweis | langfristige Codekonsistenz |
+
+## 6. R0 – Vertrags- und Baseline-Gate
+
+**Status:** `ERLEDIGT`
+
+### 6.1 Arbeiten
+
+- Arbeitsbranch `codex/rebrand-native-dictate` von Tag `v4.1.0` beziehungsweise Commit `afa02eb` erstellen.
+- Prüfen, dass `main`, `origin/main` und `v4.1.0` weiterhin auf der dokumentierten Basis liegen.
+- Vollständige Testsuite auf der unveränderten Basis ausführen.
+- Aktuelle Community-Release-Erstellung einmal unverändert verifizieren oder den letzten akzeptierten 4.1-Nachweis referenzieren.
+- Namens-, GitHub-, Bundle-ID-, Speicher- und Historienverträge dieses Plans reviewen.
+- Umfang der 75 Funddateien erneut ermitteln und nach den Gruppen aus Abschnitt 4 klassifizieren.
+
+### 6.2 Nicht erlaubt
+
+- keine neue Produktfunktion,
+- keine Schemaänderung,
+- keine Bundle-ID-Änderung,
+- keine GitHub-Umbenennung,
+- kein globales Ersetzen aller Vorkommen.
+
+### 6.3 Nachweis vom 3. Oktober 2026
+
+- Der Branch `codex/rebrand-native-dictate` wurde direkt auf dem aufgelösten Tagziel `v4.1.0^{}` beziehungsweise Commit `afa02eb451b03b0a2cfb63a0e7bfad058ac53feb` angelegt.
+- Der Live-Abgleich mit GitHub zeigte zwei nach der Veröffentlichung auf `main` hinzugekommene README-only-Commits: `3c11274` und `1c1f5ad`. Sie ergänzen ein Installationsvideo und bereinigen Leerzeilen; App-Code, Paketierung und technische Identitäten bleiben unverändert. Der Arbeitsbranch wurde daraufhin per Fast-Forward mit `main` und `origin/main` synchronisiert. Sein Merge-Base mit `v4.1.0` bleibt exakt `afa02eb`.
+- Die vollständige serielle macOS-Suite lief mit `SWT_USE_SERIAL_EXECUTION=1` und deaktiviertem Xcode-Paralleltesting: 222 von 222 Tests bestanden, 0 Fehler, 0 Skips und 0 Runtime-Warnungen auf macOS 26.7.1. Der Ergebnisbundle-Titel lautet `Test - FlowDictate`.
+- Ein vorausgegangener paralleler Standardlauf zeigte auf demselben unveränderten Quellstand zwei nicht reproduzierte Last-/Timingfehler in `historyStoreHandlesOneThousandRecordsIncludingMeetingSummaries()` und `openAIReturnsBeforeSlowTemporaryFileCleanupFinishes()`. Beide sind in der für den bisherigen Release-Nachweis maßgeblichen seriellen Gesamtsuite bestanden. Der erste Build meldete außerdem eine bestehende Swift-Actor-Isolation-Compilerwarnung am Defaultwert von `makeCoordinatorHarness`; dies ist keine Runtime-Warnung und wurde in R0 nicht mit einer Codeänderung vermischt.
+- Das vorhandene, bereits veröffentlichte Build-33-Artefakt wurde nicht neu gebaut. Die lokale Datei `dist/FlowDictate-4.1.0-Community-macOS.zip` besteht ihre Prüfsummendatei weiterhin mit SHA-256 `e22b1b4d73e0cea50986569bc14bc16ea0dd0be37a48b4e7b09ece12906b5002`. Der übrige akzeptierte Paket- und Realtestnachweis bleibt in `RELEASE.md` und `docs/releases/RELEASE_NOTES_4.1.0.md` erhalten.
+- Der Namensscan umfasst 75 Ausgangsdateien und 710 Fundzeilen. `docs/engineering/REBRANDING_NAME_INVENTORY.tsv` ordnet jede Datei genau einer der Kategorien `sichtbar`, `aktuell`, `legacy`, `historisch` oder `optional intern` zu und dokumentiert für Mischdateien zusätzlich, welche geschützten Werte erhalten bleiben müssen.
+- Mit der Freigabe dieses Plans sind Namens-, GitHub-, Bundle-ID-, Speicher- und Historienvertrag ausdrücklich bestätigt. R0 hat keine Produktfunktion, kein Schema, keine Bundle-ID, keine GitHub-Adresse und keine Nutzerdaten verändert.
+
+### 6.4 Exit
+
+- [x] Arbeitsbranch basiert exakt auf dem akzeptierten 4.1.0-Stand.
+- [x] Baseline-Tests sind grün und dokumentiert.
+- [x] Jede Funddatei besitzt eine Zielkategorie: `sichtbar`, `aktuell`, `legacy`, `historisch` oder `optional intern`.
+- [x] Die Kompatibilitätsentscheidungen sind ausdrücklich bestätigt.
+
+## 7. R1 – Identitätsgrenzen und Regressionstests
+
+**Status:** `OFFEN`
+
+### 7.1 Ziel
+
+Vor sichtbaren Umbenennungen werden die Werte geschützt, die bestehende Installationen zusammenhalten. Tests sollen verhindern, dass eine spätere mechanische Umbenennung versehentlich Bundle-ID, Keychain-Service oder Speicherorte ändert.
+
+### 7.2 Arbeiten
+
+- Bestehende Produkt- und Persistenzkonstanten erfassen und, soweit sinnvoll, zentralisieren.
+- Einen klaren Unterschied zwischen `displayName = NativeDictate` und Legacy-Identifiern herstellen.
+- Regressionstests beziehungsweise Buildprüfungen ergänzen für:
+  - Bundle-Identifier `de.mcc.FlowDictate`,
+  - Keychain-Service,
+  - History-Pfad,
+  - Modell-Pfad,
+  - Jobs-, Profile- und Smart-Dictation-Pfade,
+  - Transkriptionssession-Pfad,
+  - Recording-Folder-Bookmark und UserDefaults-Kontinuität.
+- Sicherstellen, dass 4.2 keine Datenmigration allein aufgrund des neuen Anzeigenamens auslöst.
+- Zulässige Legacy-Vorkommen in einer prüfbaren Liste dokumentieren.
+
+### 7.3 Voraussichtlich betroffene Dateien
+
+- `FlowDictate.xcodeproj/project.pbxproj`
+- `FlowDictate/Settings/KeychainCredentialStore.swift`
+- `FlowDictate/History/DictationHistoryStore.swift`
+- `FlowDictate/Jobs/DictationJobStore.swift`
+- `FlowDictate/Profiles/AppDictationProfile.swift`
+- `FlowDictate/SmartDictation/SmartDictationStores.swift`
+- `FlowDictate/Transcription/Local/LocalModelManager.swift`
+- `FlowDictate/Transcription/LongForm/TranscriptionSessionStore.swift`
+- `FlowDictate/Audio/AudioStore.swift`
+- `FlowDictateTests/FlowDictateTests.swift`
+
+### 7.4 Exit
+
+- [ ] Automatisierte Tests schlagen fehl, wenn ein geschützter Legacy-Identifier versehentlich auf `NativeDictate` geändert wird.
+- [ ] Der neue Anzeigename kann unabhängig von Persistenz- und Bundle-Identität gesetzt werden.
+- [ ] Keine Nutzerdaten werden kopiert, verschoben oder gelöscht.
+
+## 8. R2 – Sichtbare Produktumbenennung
+
+**Status:** `OFFEN`
+
+### 8.1 Pflichtumfang
+
+- App-, Fenster- und Menütitel,
+- Onboarding und Settings,
+- Aufnahmeoverlay und History,
+- Berechtigungs- und Datenschutztexte,
+- sichtbare Fehler-, Diagnose- und Updatehinweise,
+- neue Exportdateinamen,
+- sichtbare Audio-Geräte- und Capture-Bezeichnungen,
+- Copyright-/About-Informationen, soweit vorhanden,
+- App-Icon nur dann, wenn es den alten Namen oder alte Initialen enthält.
+
+### 8.2 Interne Namen
+
+Diese Namen dürfen zunächst bestehen bleiben, sofern sie nicht benutzersichtbar sind:
+
+- Swift-Typen wie `FlowDictateApp`, `FlowDictateMenu` und `FlowDictateVersion`,
+- Source- und Testordner,
+- Xcode-Projekt-, Target- und Scheme-Namen,
+- Entitlements- und Info-Plist-Dateinamen,
+- Queue-Labels und interne Log-Subsystem-Fallbacks,
+- temporäre Kompatibilitätspfade.
+
+Die Umbenennung interner Symbole darf nicht den eigentlichen Produktwechsel blockieren.
+
+### 8.3 Textregeln
+
+- Aktuelle Benutzeroberfläche verwendet nur `NativeDictate`.
+- Ein Übergangshinweis darf `NativeDictate, formerly FlowDictate` verwenden.
+- `FlowDictate` bleibt in aktuellen Texten nur zulässig, wenn eine alte Installation, ein Legacy-Pfad oder eine historische Version gemeint ist.
+- Neue Fehlermeldungen dürfen keine alten Produktnamen enthalten.
+
+### 8.4 Exit
+
+- [ ] Eine normale App-Nutzung zeigt keinen unbeabsichtigten alten Produktnamen.
+- [ ] Berechtigungsdialoge und Systemeinstellungen nennen soweit technisch steuerbar NativeDictate.
+- [ ] Exportierte neue Nutzerdateien verwenden NativeDictate im vorgeschlagenen Dateinamen.
+- [ ] Alle verbleibenden FlowDictate-Treffer sind klassifiziert und begründet.
+
+## 9. R3 – Packaging und Installationsmigration
+
+**Status:** `OFFEN`
+
+### 9.1 Zielartefakte
+
+- `NativeDictate.app`
+- `NativeDictate-4.2.0-Community-macOS.zip`
+- `NativeDictate-4.2.0-Community-macOS.zip.sha256`
+
+Das Paket enthält weiterhin Lizenz, Third-Party Notices, Privacy, Changelog sowie deutsche und englische Installationsanleitungen.
+
+### 9.2 Buildanpassungen
+
+- Produkt- beziehungsweise App-Ausgabename auf NativeDictate setzen, ohne den Bundle-Identifier zu ändern.
+- Build- und Packaging-Skripte auf neue Artefaktnamen umstellen.
+- Temporäre Buildverzeichnisse dürfen später umbenannt werden, müssen aber keine Nutzerdaten migrieren.
+- Codesign-, Entitlements-, Universal-Binary- und Sandbox-Verträge unverändert prüfen.
+- Releasepaket auf alte unerwünschte App-Bundles und doppelte Anwendungen prüfen.
+
+### 9.3 Upgradevertrag 4.1.0 → 4.2.0
+
+Da `FlowDictate.app` und `NativeDictate.app` unterschiedliche Dateinamen besitzen, ersetzt Finder die alte App nicht automatisch. Die Anleitung muss deshalb verbindlich vorgeben:
+
+1. FlowDictate vollständig beenden.
+2. NativeDictate nach `/Applications` kopieren.
+3. NativeDictate starten und vorhandene Einstellungen, History, Modell und Aufnahmeordner prüfen.
+4. FlowDictate nicht parallel starten.
+5. Nach erfolgreicher Prüfung die alte `FlowDictate.app` entfernen.
+6. Bedienungshilfen, Mikrofon, Speech Recognition sowie Systemaudio gegebenenfalls erneut freigeben.
+7. `Launch at login` bei Bedarf einmal deaktivieren und erneut aktivieren.
+
+Die Migration löscht keine Container oder Application-Support-Verzeichnisse. Ein automatisches Entfernen der alten App ist nicht Bestandteil von 4.2.
+
+### 9.4 Exit
+
+- [ ] Das Paket enthält exakt eine `NativeDictate.app`.
+- [ ] Die App meldet Version 4.2.0 und den unveränderten Bundle-Identifier `de.mcc.FlowDictate`.
+- [ ] ZIP- und Checksum-Dateinamen verwenden NativeDictate.
+- [ ] Die Upgradeanleitung verhindert ausdrücklich parallelen Betrieb beider App-Bundles.
+
+## 10. R4 – Aktuelle Dokumentation und Historiengrenze
+
+**Status:** `OFFEN`
+
+### 10.1 Zu aktualisieren
+
+- `README.md`
+- `docs/README.md`
+- `docs/FEATURES.md`
+- `docs/MANUAL_VERIFICATION.md`
+- `COMMUNITY_INSTALLATION.md`
+- `COMMUNITY_INSTALLATION_EN.md`
+- `PRIVACY.md`
+- `RELEASE.md`
+- `CHANGELOG.md` mit neuem 4.2-Eintrag
+- neue `docs/releases/RELEASE_NOTES_4.2.0.md`
+- `.env.example`, sofern Produktvariablen oder Kommentare betroffen sind
+- aktuelle GitHub-, Download- und Release-Links
+
+### 10.2 Historisch zu erhalten
+
+- Release Notes bis 4.1.0,
+- abgeschlossene PRDs bis 4.1,
+- archivierte technische Spikes,
+- alte Paketnamen in historischen Nachweisen,
+- Erklärungen des Wechsels von `de.euler.FlowDictate` zu `de.mcc.FlowDictate`.
+
+### 10.3 README-Übergangshinweis
+
+Mindestens für 4.2 enthält das README einen knappen Hinweis:
+
+> NativeDictate was previously released as FlowDictate. The project was renamed to avoid confusion with an unrelated commercial product. Existing release history remains available in this repository.
+
+Der Hinweis behauptet keine Verbindung zum anderen Produkt und verlinkt nicht werbend auf dieses.
+
+### 10.4 Exit
+
+- [ ] Neue Nutzer finden ausschließlich NativeDictate-Installations- und Buildbefehle.
+- [ ] Bestehende Nutzer finden einen eindeutigen 4.1-→4.2-Upgradepfad.
+- [ ] Historische Dokumente bleiben als historische Dokumente erkennbar und wahrheitsgemäß.
+- [ ] Keine aktuelle Downloadanweisung verweist auf ein neues FlowDictate-Artefakt.
+
+## 11. R5 – Automatisierte und manuelle Migrationstests
+
+**Status:** `OFFEN`
+
+### 11.1 Automatisierte Gates
+
+- vollständige Unit- und UI-Testtargets kompilieren,
+- komplette bestehende Testsuite ausführen,
+- neue Identitäts- und Persistenztests aus R1 ausführen,
+- `git diff --check`,
+- kontrollierter Brand-Scan mit Legacy-/Historien-Allowlist,
+- Paketinhalt und Checksummen prüfen,
+- `plutil`-Prüfung der gebauten `Info.plist`,
+- `codesign --verify --deep --strict`,
+- Entitlements prüfen,
+- Architekturen `arm64` und `x86_64` prüfen,
+- sicherstellen, dass keine Zugangsdaten, Aufnahmen, Transkripte oder lokalen Modelle im Paket liegen.
+
+### 11.2 Manueller Upgrade-Test
+
+Ausgangslage ist die akzeptierte FlowDictate-4.1.0-Community-App mit repräsentativem, nicht sensiblem Testzustand:
+
+- abgeschlossene History-Einträge,
+- persönliches Wörterbuch und Writing Style,
+- App-Profil,
+- ausgewählter Aufnahmeordner,
+- heruntergeladenes lokales Modell,
+- optionaler Test-API-Key,
+- konfigurierte Hotkeys,
+- aktiviertes oder deaktiviertes Launch-at-login.
+
+Zu prüfen:
+
+- NativeDictate sieht dieselben Einstellungen und Daten,
+- vorhandene History lässt sich öffnen, abspielen, kopieren und exportieren,
+- lokales Modell wird nicht erneut heruntergeladen,
+- Recording-Folder-Bookmark funktioniert oder fordert kontrolliert zur Neuauswahl auf,
+- Keychain-Zugriff funktioniert oder zeigt einen klaren, einmaligen Wiederherstellungspfad,
+- Mikrofon-, Systemaudio- und Mixed-Aufnahme funktionieren,
+- Accessibility-Insertion funktioniert,
+- Updateprüfung zeigt keine falsche alte Produktmeldung,
+- nur eine Instanz beziehungsweise ein Produktbundle läuft,
+- Entfernung der alten App löscht keine Nutzerdaten.
+
+### 11.3 Manueller Clean-Install-Test
+
+- NativeDictate ohne vorhandenen FlowDictate-Container installieren,
+- vollständiges Onboarding durchlaufen,
+- lokale und optionale BYOK-Transkription prüfen,
+- alle drei Aufnahmequellen prüfen,
+- History, Export, Recovery und Neustart prüfen,
+- Installationsanleitung gegen den tatsächlichen Gatekeeper- und TCC-Ablauf lesen.
+
+### 11.4 Exit
+
+- [ ] Upgrade-Test bewahrt den dokumentierten Zustand oder jede notwendige Neufreigabe ist ausdrücklich dokumentiert.
+- [ ] Clean Install besteht den Kernablauf.
+- [ ] Keine zweite vollständige Neueinrichtung wird durch eine versehentliche Bundle-ID-Änderung ausgelöst.
+- [ ] Keine offene Abweichung gefährdet Nutzerdaten oder parallelen App-Betrieb.
+
+## 12. R6 – GitHub-Umschaltung
+
+**Status:** `OFFEN`
+
+### 12.1 Voraussetzungen
+
+- R5 ist vollständig bestanden.
+- Der Releasekandidat ist lokal reproduzierbar.
+- Alle vorgesehenen Repository-URLs sind auf `Hank1210/NativeDictate` vorbereitet.
+- Es existiert kein separates Ziel-Repository, das die Umbenennung blockiert.
+
+### 12.2 Umschaltreihenfolge
+
+1. Rebranding-Branch final reviewen und in `main` integrieren.
+2. Bestehendes GitHub-Repository in den Settings von `FlowDictate` zu `NativeDictate` umbenennen.
+3. Lokalen Remote aktualisieren:
+
+   ```bash
+   git remote set-url origin https://github.com/Hank1210/NativeDictate.git
+   git remote -v
+   ```
+
+4. Push, Fetch und Webzugriff über die neue Adresse prüfen.
+5. Weiterleitung von `https://github.com/Hank1210/FlowDictate` auf das neue Repository prüfen.
+6. Hart codierte Release-API und aktuelle Links gegen das neue Repository testen.
+7. Repository-Beschreibung und Topics auf NativeDictate aktualisieren.
+8. Altes Repository nicht neu anlegen.
+
+### 12.3 Besonders zu prüfen
+
+- `FlowDictate/Productivity/ProductivityServices.swift` enthält aktuell die alte GitHub-Release-API.
+- README, Release Guide und Installationsdokumente enthalten alte Repository-Links.
+- Externe Klone funktionieren zunächst über GitHubs Redirect, sollen aber die neue Remote-URL dokumentiert bekommen.
+- GitHub Pages und ein veröffentlichtes GitHub-Marketplace-Action-Repository sind nicht im Scope. Falls sie wider Erwarten existieren, muss R6 vor der Umschaltung neu bewertet werden.
+
+### 12.4 Exit
+
+- [ ] Neue und alte Repository-URL führen erwartungsgemäß zum selben Projekt.
+- [ ] Lokale Fetch-/Push-Operationen verwenden die neue Remote-URL.
+- [ ] Releaseprüfung ruft das neue Repository auf.
+- [ ] Issues, Tags und bisherige Releases sind weiterhin vorhanden.
+
+## 13. R7 – Release-Gate NativeDictate 4.2.0
+
+**Status:** `OFFEN`
+
+### 13.1 Releaseinhalt
+
+- NativeDictate 4.2.0 Community,
+- Rebranding ohne absichtliche neue Produktfunktion,
+- unveränderte technische App-Identität `de.mcc.FlowDictate`,
+- dokumentierter manueller Wechsel von `FlowDictate.app` zu `NativeDictate.app`,
+- vollständige deutsche und englische Installationsanleitung,
+- Release Notes mit Begründung und Kompatibilitätsinformationen.
+
+### 13.2 Freigabegates
+
+- [ ] alle R5-Tests und manuellen Matrizen bestanden,
+- [ ] Repository-Umschaltung R6 bestanden,
+- [ ] exakter Release-Commit dokumentiert,
+- [ ] exakte SHA-256 dokumentiert,
+- [ ] extrahiertes ZIP erneut unabhängig geprüft,
+- [ ] Appname, Version, Build und Bundle-ID stimmen,
+- [ ] keine private Datei oder Zugangsinformation enthalten,
+- [ ] Upgradehinweis ist im GitHub Release sichtbar,
+- [ ] Rollback auf 4.1.0 wurde hinsichtlich Datenformaten bewertet,
+- [ ] Veröffentlichung ausdrücklich autorisiert.
+
+### 13.3 Exit
+
+NativeDictate 4.2.0 ist erst veröffentlichungsbereit, wenn sowohl eine Neuinstallation als auch der reale Wechsel von FlowDictate 4.1.0 ohne Verlust des dokumentierten Nutzerzustands nachgewiesen sind.
+
+## 14. R8 – Optionale interne Namensbereinigung
+
+**Status:** `OFFEN`
+
+Dieser Schritt ist kein Gate für 4.2. Er darf erst beginnen, nachdem NativeDictate 4.2 stabil ist.
+
+Mögliche spätere Arbeiten:
+
+- Swift-Typen und Quelldateien umbenennen,
+- Source- und Testordner umbenennen,
+- Xcode-Projekt, Targets und Schemes umbenennen,
+- Entitlements- und Plist-Dateinamen bereinigen,
+- interne Logger- und Queue-Namen aktualisieren,
+- Build-Umgebungsvariablen wie `FLOWDICTATE_VERSION` durch neue Namen ersetzen und mit einer begrenzten Kompatibilitätsphase versehen.
+
+Nicht Bestandteil dieser Bereinigung:
+
+- Bundle-Identifier ändern,
+- Legacy-Speicherpfade verschieben,
+- alte Keychain-Einträge löschen,
+- historische Dokumente umschreiben.
+
+Jede interne Bereinigung wird mechanisch getrennt, mit kleinen Commits und vollständiger Testsuite durchgeführt.
+
+## 15. Rollback-Strategie
+
+### 15.1 Vor der GitHub-Umschaltung
+
+- Rebranding-Branch nicht integrieren beziehungsweise den noch unveröffentlichten Commit regulär revertieren.
+- Keine Tags oder Releaseartefakte umschreiben.
+- 4.1.0 bleibt unveränderte Releasebasis.
+
+### 15.2 Nach GitHub-Umschaltung, vor Veröffentlichung
+
+- Keine 4.2-Tags oder Releases erzeugen, solange die neue Adresse oder Updateprüfung nicht funktioniert.
+- Repository nur bei einem echten Blocker zurückbenennen; zunächst Links und Releasechecker korrigieren.
+- Weiterleitungen nach jeder Namensänderung erneut prüfen.
+
+### 15.3 Nach Veröffentlichung
+
+- Fehler durch einen neuen Patch-Release korrigieren; veröffentlichte Tags und Archive nicht ersetzen.
+- Bei kritischem Migrationsfehler 4.2 als problematisch kennzeichnen und 4.1.0 als dokumentierten Rollback anbieten.
+- Keine automatische Datenrückmigration ausführen.
+- Da 4.2 keine Schemaänderung enthalten soll, muss ein kontrollierter Start von 4.1.0 mit unveränderten Daten vorab bewertet werden.
+
+## 16. Definition of Done
+
+Das Rebranding ist abgeschlossen, wenn:
+
+- [ ] das Projekt auf GitHub unter `Hank1210/NativeDictate` erreichbar ist,
+- [ ] alte GitHub-Links weiterhin weitergeleitet werden,
+- [ ] die gebaute und verteilte App `NativeDictate.app` heißt,
+- [ ] alle aktuellen Benutzertexte NativeDictate verwenden,
+- [ ] aktuelle Dokumentation, Paketnamen und Releaseprüfung auf NativeDictate zeigen,
+- [ ] der Bundle-Identifier weiterhin `de.mcc.FlowDictate` lautet,
+- [ ] bestehende 4.1-Nutzerdaten in 4.2 sichtbar und funktionsfähig sind,
+- [ ] keine parallele alte und neue App-Instanz erforderlich oder empfohlen ist,
+- [ ] verbleibende FlowDictate-Vorkommen ausschließlich Legacy-, Migrations- oder historische Bedeutung besitzen,
+- [ ] vollständige Testsuite, Upgrade-Test, Clean-Install-Test und Paketprüfung bestanden sind,
+- [ ] NativeDictate 4.2.0 mit unveränderlicher SHA-256 und dokumentiertem Release-Commit veröffentlicht ist.
+
+## 17. Unmittelbar nächster Schritt
+
+R0 ist abgeschlossen. Als nächstes beginnt R1:
+
+1. sichtbaren Anzeigenamen und technische Legacy-Identitäten eindeutig trennen,
+2. Bundle-ID, Keychain-Service und persistente Pfade erfassen,
+3. diese Verträge mit Regressionstests beziehungsweise Buildprüfungen absichern,
+4. die dateibasierte Inventur in eine trefferbezogene Legacy-/Historien-Allowlist überführen,
+5. erst nach bestandenem R1-Exit sichtbare Produkttexte ändern.

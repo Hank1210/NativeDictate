@@ -13,6 +13,7 @@ xcuserdata/
 # Local implementation work plans
 ARBEITSPLAN_*.md
 !docs/engineering/ARBEITSPLAN_PHASE_4_1.md
+!docs/engineering/ARBEITSPLAN_REBRANDING_NATIVEDICTATE.md
 TESTING_4_0.md
 TESTING_4_1.md
 FlowDictate-Feature-Briefing_4.1.md

@@ -12,6 +12,7 @@ The [main README](../README.md) is the starting point for installation, requirem
 
 - [Phase 4.1 requirements](requirements/FlowDictate_PRD_Phase_4_1.md) and [earlier PRDs](requirements/README.md)
 - [Phase 4.1 work plan](engineering/ARBEITSPLAN_PHASE_4_1.md) and [capture spike](engineering/CAPTURE_SPIKE_PHASE_4_1.md)
+- [Rebranding work plan: FlowDictate to NativeDictate](engineering/ARBEITSPLAN_REBRANDING_NATIVEDICTATE.md) and [classified name inventory](engineering/REBRANDING_NAME_INVENTORY.tsv)
 - [Manual verification checklist](MANUAL_VERIFICATION.md)
 - [Release guide](../RELEASE.md)
 
