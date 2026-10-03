@@ -17,6 +17,110 @@ import Testing
 @testable import FlowDictate
 
 struct FlowDictateTests {
+    @Test func rebrandingKeepsLegacyIdentityAndStorageContracts() throws {
+        #expect(ProductIdentity.displayName == "NativeDictate")
+        #expect(ProductIdentity.Legacy.bundleIdentifier == "de.mcc.FlowDictate")
+        #expect(ProductIdentity.Legacy.testHostBundleIdentifier == "de.mcc.FlowDictate.TestHost")
+        #expect(KeychainCredentialStore.defaultService == "de.mcc.FlowDictate")
+
+        let fileManager = FileManager.default
+        let applicationSupport = ProductIdentity.Legacy.applicationSupportDirectory(
+            fileManager: fileManager
+        )
+        #expect(applicationSupport.lastPathComponent == "FlowDictate")
+        #expect(applicationSupport.lastPathComponent != ProductIdentity.displayName)
+
+        let expectedPaths = [
+            applicationSupport.appendingPathComponent("Recordings", isDirectory: true),
+            applicationSupport
+                .appendingPathComponent("History", isDirectory: true)
+                .appendingPathComponent("dictations.json"),
+            applicationSupport.appendingPathComponent("Jobs", isDirectory: true),
+            applicationSupport
+                .appendingPathComponent("Profiles", isDirectory: true)
+                .appendingPathComponent("app-profiles.json"),
+            applicationSupport
+                .appendingPathComponent("SmartDictation", isDirectory: true)
+                .appendingPathComponent("dictionary.json"),
+            applicationSupport
+                .appendingPathComponent("SmartDictation", isDirectory: true)
+                .appendingPathComponent("styles.json"),
+            applicationSupport.appendingPathComponent("Models", isDirectory: true),
+            applicationSupport.appendingPathComponent(
+                "TranscriptionSessions",
+                isDirectory: true
+            )
+        ]
+        let actualPaths = [
+            AudioStore.defaultRecordingsDirectory(fileManager: fileManager),
+            DictationHistoryStore.defaultFileURL(fileManager: fileManager),
+            DictationJobStore.defaultDirectory(fileManager: fileManager),
+            AppProfileStore.defaultFileURL(fileManager: fileManager),
+            DictionaryStore.defaultFileURL(fileManager: fileManager),
+            WritingStyleStore.defaultFileURL(fileManager: fileManager),
+            LocalModelManager.defaultModelsRoot(fileManager: fileManager),
+            TranscriptionSessionStore.defaultRootURL(fileManager: fileManager)
+        ]
+
+        #expect(actualPaths == expectedPaths)
+        #expect(actualPaths.allSatisfy { !$0.path.contains(ProductIdentity.displayName) })
+    }
+
+    @Test func productionBuildSettingsKeepLegacyBundleIdentity() throws {
+        let repositoryRoot = URL(fileURLWithPath: #filePath)
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+        let projectFile = repositoryRoot
+            .appendingPathComponent("FlowDictate.xcodeproj", isDirectory: true)
+            .appendingPathComponent("project.pbxproj")
+        let contents = try String(contentsOf: projectFile, encoding: .utf8)
+        let productionSetting = "PRODUCT_BUNDLE_IDENTIFIER = \(ProductIdentity.Legacy.bundleIdentifier);"
+        let testHostSetting = "PRODUCT_BUNDLE_IDENTIFIER = \(ProductIdentity.Legacy.testHostBundleIdentifier);"
+
+        #expect(contents.components(separatedBy: productionSetting).count - 1 == 2)
+        #expect(contents.components(separatedBy: testHostSetting).count - 1 == 1)
+    }
+
+    @Test func recordingFolderBookmarkKeepsLegacyUserDefaultsKeys() {
+        let suiteName = "FlowDictateIdentityDefaults-\(UUID())"
+        let defaults = UserDefaults(suiteName: suiteName)!
+        defer { defaults.removePersistentDomain(forName: suiteName) }
+        defaults.set(Data([0x01]), forKey: "recordingDirectoryBookmark")
+        defaults.set("/legacy/recordings", forKey: "recordingDirectoryDisplayPath")
+
+        let store = RecordingLocationStore(defaults: defaults)
+
+        #expect(RecordingLocationStore.bookmarkDefaultsKey == "recordingDirectoryBookmark")
+        #expect(RecordingLocationStore.displayPathDefaultsKey == "recordingDirectoryDisplayPath")
+        #expect(store.isConfigured)
+        #expect(store.displayPath == "/legacy/recordings")
+    }
+
+    @Test func legacyAllowlistEntriesResolveToCurrentSources() throws {
+        let repositoryRoot = URL(fileURLWithPath: #filePath)
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+        let allowlistURL = repositoryRoot
+            .appendingPathComponent("docs/engineering/REBRANDING_LEGACY_ALLOWLIST.tsv")
+        let rows = try String(contentsOf: allowlistURL, encoding: .utf8)
+            .split(separator: "\n", omittingEmptySubsequences: true)
+            .dropFirst()
+
+        #expect(!rows.isEmpty)
+        for row in rows {
+            let columns = row.split(separator: "\t", omittingEmptySubsequences: false)
+            let path = try #require(columns.first.map(String.init))
+            let allowedMatch = try #require(columns.dropFirst(2).first.map(String.init))
+            let sourceURL = repositoryRoot.appendingPathComponent(path)
+            let contents = try String(contentsOf: sourceURL, encoding: .utf8)
+            let alternatives = allowedMatch.split(separator: "|").map(String.init)
+            #expect(
+                alternatives.contains(where: contents.contains),
+                "Stale rebranding allowlist entry for \(path): \(allowedMatch)"
+            )
+        }
+    }
+
     @Test func selectedMicrophoneRenderBufferAdvertisesWritablePCMBytes() throws {
         for channels: AVAudioChannelCount in [1, 2] {
             let format = try #require(AVAudioFormat(

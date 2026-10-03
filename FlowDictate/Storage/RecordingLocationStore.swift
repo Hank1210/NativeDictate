@@ -22,10 +22,8 @@ enum RecordingLocationError: LocalizedError {
 }
 
 nonisolated final class RecordingLocationStore: @unchecked Sendable {
-    private enum Key {
-        static let bookmark = "recordingDirectoryBookmark"
-        static let displayPath = "recordingDirectoryDisplayPath"
-    }
+    static let bookmarkDefaultsKey = ProductIdentity.Legacy.recordingDirectoryBookmarkDefaultsKey
+    static let displayPathDefaultsKey = ProductIdentity.Legacy.recordingDirectoryDisplayPathDefaultsKey
 
     private let defaults: UserDefaults
     private let fileManager: FileManager
@@ -45,11 +43,11 @@ nonisolated final class RecordingLocationStore: @unchecked Sendable {
     }
 
     var isConfigured: Bool {
-        defaults.data(forKey: Key.bookmark) != nil
+        defaults.data(forKey: Self.bookmarkDefaultsKey) != nil
     }
 
     var displayPath: String? {
-        defaults.string(forKey: Key.displayPath)
+        defaults.string(forKey: Self.displayPathDefaultsKey)
     }
 
     func resolvedDirectory() throws -> URL {
@@ -70,7 +68,7 @@ nonisolated final class RecordingLocationStore: @unchecked Sendable {
             return activeDirectory
         }
 
-        guard let data = defaults.data(forKey: Key.bookmark) else {
+        guard let data = defaults.data(forKey: Self.bookmarkDefaultsKey) else {
             throw RecordingLocationError.notConfigured
         }
 
@@ -167,8 +165,8 @@ nonisolated final class RecordingLocationStore: @unchecked Sendable {
 
     func clear() {
         deactivateDirectoryAccess()
-        defaults.removeObject(forKey: Key.bookmark)
-        defaults.removeObject(forKey: Key.displayPath)
+        defaults.removeObject(forKey: Self.bookmarkDefaultsKey)
+        defaults.removeObject(forKey: Self.displayPathDefaultsKey)
     }
 
     private func deactivateDirectoryAccess() {
@@ -189,7 +187,7 @@ nonisolated final class RecordingLocationStore: @unchecked Sendable {
             includingResourceValuesForKeys: nil,
             relativeTo: nil
         )
-        defaults.set(data, forKey: Key.bookmark)
-        defaults.set(url.path, forKey: Key.displayPath)
+        defaults.set(data, forKey: Self.bookmarkDefaultsKey)
+        defaults.set(url.path, forKey: Self.displayPathDefaultsKey)
     }
 }

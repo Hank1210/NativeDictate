@@ -15,6 +15,10 @@ nonisolated enum SmartDictationStoreError: LocalizedError {
 }
 
 actor DictionaryStore {
+    nonisolated static func defaultFileURL(fileManager: FileManager = .default) -> URL {
+        ProductIdentity.Legacy.dictionaryFileURL(fileManager: fileManager)
+    }
+
     private struct Envelope: Codable {
         var schemaVersion: Int
         var entries: [DictionaryEntry]
@@ -26,8 +30,7 @@ actor DictionaryStore {
 
     init(fileURL: URL? = nil, fileManager: FileManager = .default) {
         self.fileManager = fileManager
-        self.fileURL = fileURL ?? Self.defaultDirectory(fileManager: fileManager)
-            .appendingPathComponent("dictionary.json")
+        self.fileURL = fileURL ?? Self.defaultFileURL(fileManager: fileManager)
     }
 
     func all() throws -> [DictionaryEntry] {
@@ -115,14 +118,13 @@ actor DictionaryStore {
         guard !duplicate else { throw SmartDictationStoreError.duplicateDictionaryEntry }
     }
 
-    private static func defaultDirectory(fileManager: FileManager) -> URL {
-        fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
-            .appendingPathComponent("FlowDictate", isDirectory: true)
-            .appendingPathComponent("SmartDictation", isDirectory: true)
-    }
 }
 
 actor WritingStyleStore {
+    nonisolated static func defaultFileURL(fileManager: FileManager = .default) -> URL {
+        ProductIdentity.Legacy.writingStylesFileURL(fileManager: fileManager)
+    }
+
     private struct Envelope: Codable {
         var schemaVersion: Int
         var styles: [WritingStyleProfile]
@@ -134,10 +136,7 @@ actor WritingStyleStore {
 
     init(fileURL: URL? = nil, fileManager: FileManager = .default) {
         self.fileManager = fileManager
-        let base = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
-            .appendingPathComponent("FlowDictate", isDirectory: true)
-            .appendingPathComponent("SmartDictation", isDirectory: true)
-        self.fileURL = fileURL ?? base.appendingPathComponent("styles.json")
+        self.fileURL = fileURL ?? Self.defaultFileURL(fileManager: fileManager)
     }
 
     func all() throws -> [WritingStyleProfile] {

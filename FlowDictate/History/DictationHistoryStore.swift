@@ -23,6 +23,10 @@ nonisolated struct HistoryRetentionResult: Equatable, Sendable {
 }
 
 actor DictationHistoryStore {
+    nonisolated static func defaultFileURL(fileManager: FileManager = .default) -> URL {
+        ProductIdentity.Legacy.historyFileURL(fileManager: fileManager)
+    }
+
     private nonisolated struct Envelope: Codable, Sendable {
         var schemaVersion: Int
         var records: [DictationRecord]
@@ -45,11 +49,7 @@ actor DictationHistoryStore {
         if let fileURL {
             self.fileURL = fileURL
         } else {
-            let base = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
-            self.fileURL = base
-                .appendingPathComponent("FlowDictate", isDirectory: true)
-                .appendingPathComponent("History", isDirectory: true)
-                .appendingPathComponent("dictations.json")
+            self.fileURL = Self.defaultFileURL(fileManager: fileManager)
         }
     }
 

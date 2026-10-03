@@ -1,6 +1,10 @@
 import Foundation
 
 actor DictationJobStore {
+    nonisolated static func defaultDirectory(fileManager: FileManager = .default) -> URL {
+        ProductIdentity.Legacy.jobsDirectory(fileManager: fileManager)
+    }
+
     private nonisolated struct SequenceEnvelope: Codable, Sendable {
         var schemaVersion: Int
         var lastSequence: Int64
@@ -13,10 +17,7 @@ actor DictationJobStore {
 
     init(directory: URL? = nil, fileManager: FileManager = .default) {
         self.fileManager = fileManager
-        let resolved = directory ?? fileManager.urls(
-            for: .applicationSupportDirectory,
-            in: .userDomainMask
-        )[0].appendingPathComponent("FlowDictate/Jobs", isDirectory: true)
+        let resolved = directory ?? Self.defaultDirectory(fileManager: fileManager)
         self.directory = resolved
         sequenceURL = resolved.appendingPathComponent("sequence.json")
     }

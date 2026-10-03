@@ -1,7 +1,7 @@
 # FlowDictate → NativeDictate – Rebranding-Arbeitsplan
 
 **Vorhaben:** Umbenennung des Open-Source-Projekts und der sichtbaren macOS-App von FlowDictate zu NativeDictate
-**Status:** `IN ARBEIT` – R0 abgeschlossen, R1 als nächster Schritt
+**Status:** `IN ARBEIT` – R0 und R1 abgeschlossen, R2 als nächster Schritt
 **Stand:** 3. Oktober 2026
 **Ausgangsbasis:** FlowDictate 4.1.0, Build 33, Tag `v4.1.0`, Commit `afa02eb`
 **Zielversion:** NativeDictate 4.2.0
@@ -135,7 +135,7 @@ Optionale interne Namensbereinigung in späteren Versionen
 | Schritt | Status | Voraussetzung | Entsperrt |
 |---|---|---|---|
 | R0 Vertrags- und Baseline-Gate | `ERLEDIGT` | 4.1.0 | sichere Arbeitsbasis |
-| R1 Identitätsgrenzen und Regressionstests | `OFFEN` | R0 | geschützte Legacy-Verträge |
+| R1 Identitätsgrenzen und Regressionstests | `ERLEDIGT` | R0 | geschützte Legacy-Verträge |
 | R2 sichtbare Produktumbenennung | `OFFEN` | R1 | NativeDictate-Appoberfläche |
 | R3 Packaging und Installationsmigration | `OFFEN` | R2 | testbares 4.2-Paket |
 | R4 aktuelle Dokumentation und Historiengrenze | `OFFEN` | R2 | konsistente Projektkommunikation |
@@ -184,7 +184,7 @@ Optionale interne Namensbereinigung in späteren Versionen
 
 ## 7. R1 – Identitätsgrenzen und Regressionstests
 
-**Status:** `OFFEN`
+**Status:** `ERLEDIGT`
 
 ### 7.1 Ziel
 
@@ -218,11 +218,22 @@ Vor sichtbaren Umbenennungen werden die Werte geschützt, die bestehende Install
 - `FlowDictate/Audio/AudioStore.swift`
 - `FlowDictateTests/FlowDictateTests.swift`
 
-### 7.4 Exit
+### 7.4 Nachweis vom 3. Oktober 2026
 
-- [ ] Automatisierte Tests schlagen fehl, wenn ein geschützter Legacy-Identifier versehentlich auf `NativeDictate` geändert wird.
-- [ ] Der neue Anzeigename kann unabhängig von Persistenz- und Bundle-Identität gesetzt werden.
-- [ ] Keine Nutzerdaten werden kopiert, verschoben oder gelöscht.
+- `ProductIdentity.displayName` definiert den künftigen sichtbaren Namen unabhängig von `ProductIdentity.Legacy`. Unter `Legacy` stehen die unveränderte Produktions-Bundle-ID `de.mcc.FlowDictate`, die Testhost-ID, der Keychain-Service, die Application-Support-Wurzel sowie die beiden Recording-Folder-Defaults-Schlüssel.
+- Audio, History, Jobs, App-Profile, Dictionary, Writing Styles, lokales Modell und Long-Form-Transkriptionssessions beziehen ihre Standardpfade nun aus den zentralen Legacy-Konstanten. Das ist eine verhaltensneutrale Quellzentralisierung; die resultierenden Pfade sind bytegenau dieselben wie in 4.1.0.
+- `KeychainCredentialStore` verwendet den expliziten Legacy-Service statt den Service aus dem sichtbaren Produktnamen abzuleiten. `RecordingLocationStore` verwendet weiterhin `recordingDirectoryBookmark` und `recordingDirectoryDisplayPath` im unveränderten UserDefaults-Container.
+- Vier neue Regressionstests sichern Anzeigename-Entkopplung, Bundle- und Testhost-ID im Xcode-Projekt, Keychain-Service, alle acht Standardpfade, Bookmark-Schlüssel sowie die Gültigkeit jeder Allowlist-Zeile. Die bereits vorhandene AppSettings-Regression prüft weiterhin das Roundtrip der bestehenden UserDefaults-Schlüssel.
+- Die gezielten R1-Tests bestanden 4/4. Anschließend bestand die vollständige serielle macOS-Suite mit 226/226 Tests, 0 Fehlern, 0 Skips und 0 Runtime-Warnungen auf macOS 26.7.1.
+- Die aufgelösten Release-Buildsettings melden weiterhin `PRODUCT_BUNDLE_IDENTIFIER = de.mcc.FlowDictate`, `PRODUCT_NAME = FlowDictate` und `FULL_PRODUCT_NAME = FlowDictate.app`. Produkt- und App-Ausgabename werden erst in R2/R3 geändert.
+- `docs/engineering/REBRANDING_LEGACY_ALLOWLIST.tsv` enthält die zulässigen technischen Legacy-Werte und vollständig historischen Dateien als maschinenlesbare Ausgangsliste. Aktuelle Benutzertexte sind nicht pauschal erlaubt und müssen in R2 beziehungsweise R4 einzeln bereinigt werden.
+- R1 enthält keine Kopier-, Verschiebe-, Lösch- oder Schemaoperation für Nutzerdaten. Alle Änderungen betreffen Konstantenauflösung, Testzugriff und Regressionen.
+
+### 7.5 Exit
+
+- [x] Automatisierte Tests schlagen fehl, wenn ein geschützter Legacy-Identifier versehentlich auf `NativeDictate` geändert wird.
+- [x] Der neue Anzeigename kann unabhängig von Persistenz- und Bundle-Identität gesetzt werden.
+- [x] Keine Nutzerdaten werden kopiert, verschoben oder gelöscht.
 
 ## 8. R2 – Sichtbare Produktumbenennung
 
@@ -545,10 +556,10 @@ Das Rebranding ist abgeschlossen, wenn:
 
 ## 17. Unmittelbar nächster Schritt
 
-R0 ist abgeschlossen. Als nächstes beginnt R1:
+R0 und R1 sind abgeschlossen. Als nächstes beginnt R2:
 
-1. sichtbaren Anzeigenamen und technische Legacy-Identitäten eindeutig trennen,
-2. Bundle-ID, Keychain-Service und persistente Pfade erfassen,
-3. diese Verträge mit Regressionstests beziehungsweise Buildprüfungen absichern,
-4. die dateibasierte Inventur in eine trefferbezogene Legacy-/Historien-Allowlist überführen,
-5. erst nach bestandenem R1-Exit sichtbare Produkttexte ändern.
+1. App-, Fenster- und Menütitel auf NativeDictate umstellen,
+2. Onboarding, Settings, History, Overlay und sichtbare Fehlermeldungen bereinigen,
+3. neue Export- und Diagnose-Dateinamen auf NativeDictate umstellen,
+4. sichtbare Audio-Geräte- und Capture-Bezeichnungen aktualisieren,
+5. anschließend alle verbleibenden FlowDictate-Treffer gegen Inventar und Allowlist prüfen.

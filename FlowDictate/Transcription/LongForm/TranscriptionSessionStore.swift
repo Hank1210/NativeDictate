@@ -1,6 +1,10 @@
 import Foundation
 
 actor TranscriptionSessionStore {
+    nonisolated static func defaultRootURL(fileManager: FileManager = .default) -> URL {
+        ProductIdentity.Legacy.transcriptionSessionsDirectory(fileManager: fileManager)
+    }
+
     private let rootURL: URL
     private let fileManager: FileManager
 
@@ -9,10 +13,7 @@ actor TranscriptionSessionStore {
         if let rootURL {
             self.rootURL = rootURL
         } else {
-            let base = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
-            self.rootURL = base
-                .appendingPathComponent("FlowDictate", isDirectory: true)
-                .appendingPathComponent("TranscriptionSessions", isDirectory: true)
+            self.rootURL = Self.defaultRootURL(fileManager: fileManager)
         }
     }
 

@@ -22,10 +22,12 @@ protocol CredentialStoring: Sendable {
 }
 
 struct KeychainCredentialStore: CredentialStoring {
+    nonisolated static let defaultService = ProductIdentity.Legacy.keychainService
+
     private let service: String
     private let account = "openai-api-key"
 
-    init(service: String = Bundle.main.bundleIdentifier ?? "de.mcc.FlowDictate") {
+    init(service: String = Self.defaultService) {
         self.service = service
     }
 

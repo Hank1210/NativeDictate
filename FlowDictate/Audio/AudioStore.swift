@@ -15,6 +15,12 @@ enum AudioStoreError: LocalizedError {
 }
 
 struct AudioStore: Sendable {
+    nonisolated static func defaultRecordingsDirectory(
+        fileManager: FileManager = .default
+    ) -> URL {
+        ProductIdentity.Legacy.recordingsDirectory(fileManager: fileManager)
+    }
+
     let fileManager: FileManager
     private let locationStore: RecordingLocationStore?
 
@@ -51,15 +57,13 @@ struct AudioStore: Sendable {
             }
         }
 
-        guard let applicationSupport = fileManager.urls(
+        guard fileManager.urls(
             for: .applicationSupportDirectory,
             in: .userDomainMask
-        ).first else {
+        ).first != nil else {
             throw AudioStoreError.applicationSupportUnavailable
         }
-        let directory = applicationSupport
-            .appendingPathComponent("FlowDictate", isDirectory: true)
-            .appendingPathComponent("Recordings", isDirectory: true)
+        let directory = Self.defaultRecordingsDirectory(fileManager: fileManager)
         try fileManager.createDirectory(at: directory, withIntermediateDirectories: true)
         return directory
     }
@@ -77,8 +81,10 @@ struct AudioStore: Sendable {
     }
 
     static func legacyRecordingsDirectory(fileManager: FileManager = .default) -> URL? {
-        fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first?
-            .appendingPathComponent("FlowDictate", isDirectory: true)
-            .appendingPathComponent("Recordings", isDirectory: true)
+        guard fileManager.urls(
+            for: .applicationSupportDirectory,
+            in: .userDomainMask
+        ).first != nil else { return nil }
+        return defaultRecordingsDirectory(fileManager: fileManager)
     }
 }

@@ -12,6 +12,10 @@ nonisolated enum LocalModelState: Equatable, Sendable {
 }
 
 actor LocalModelManager {
+    nonisolated static func defaultModelsRoot(fileManager: FileManager = .default) -> URL {
+        ProductIdentity.Legacy.modelsDirectory(fileManager: fileManager)
+    }
+
     typealias StateHandler = @MainActor @Sendable (LocalModelState) -> Void
 
     let descriptor: LocalModelDescriptor
@@ -27,10 +31,7 @@ actor LocalModelManager {
     ) {
         self.descriptor = descriptor
         self.fileManager = fileManager
-        self.modelsRoot = modelsRoot ?? fileManager.urls(
-            for: .applicationSupportDirectory,
-            in: .userDomainMask
-        )[0].appendingPathComponent("FlowDictate/Models", isDirectory: true)
+        self.modelsRoot = modelsRoot ?? Self.defaultModelsRoot(fileManager: fileManager)
 
         if RuntimeArchitecture.current != "arm64" {
             state = .unavailable(reason: "Local transcription requires an Apple Silicon Mac.")

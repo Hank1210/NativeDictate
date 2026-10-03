@@ -48,6 +48,10 @@ nonisolated struct AppDictationProfile: Codable, Identifiable, Equatable, Sendab
 }
 
 actor AppProfileStore {
+    nonisolated static func defaultFileURL(fileManager: FileManager = .default) -> URL {
+        ProductIdentity.Legacy.appProfilesFileURL(fileManager: fileManager)
+    }
+
     private struct Envelope: Codable {
         var schemaVersion: Int
         var profiles: [AppDictationProfile]
@@ -58,11 +62,7 @@ actor AppProfileStore {
 
     init(fileURL: URL? = nil, fileManager: FileManager = .default) {
         self.fileManager = fileManager
-        self.fileURL = fileURL ?? fileManager.urls(
-            for: .applicationSupportDirectory,
-            in: .userDomainMask
-        )[0]
-        .appendingPathComponent("FlowDictate/Profiles/app-profiles.json")
+        self.fileURL = fileURL ?? Self.defaultFileURL(fileManager: fileManager)
     }
 
     func all() throws -> [AppDictationProfile] {

@@ -1,0 +1,34 @@
+path	match_kind	allowed_match	reason
+FlowDictate/Utilities/ProductIdentity.swift	exact	de.mcc.FlowDictate	Produktions-Bundle-ID und Keychain-Service der bestehenden 4.1-Identität.
+FlowDictate/Utilities/ProductIdentity.swift	exact	de.mcc.FlowDictate.TestHost	Getrennte Testhost-Identität schützt die produktive TCC-Freigabe.
+FlowDictate/Utilities/ProductIdentity.swift	exact	FlowDictate	Persistente Application-Support-Wurzel der bestehenden Installation.
+FlowDictate.xcodeproj/project.pbxproj	exact	PRODUCT_BUNDLE_IDENTIFIER = de.mcc.FlowDictate;	Produktions-Bundle-ID in Debug und Release.
+FlowDictate.xcodeproj/project.pbxproj	exact	PRODUCT_BUNDLE_IDENTIFIER = de.mcc.FlowDictate.TestHost;	Dedizierte Testhost-Bundle-ID.
+FlowDictate/History/DictationHistoryStore.swift	exact	de.mcc.FlowDictate.history-file-io	Bestehendes internes Queue-Label.
+FlowDictate/Jobs/DictationJobStore.swift	exact	de.mcc.FlowDictate.job-file-io	Bestehendes internes Queue-Label.
+FlowDictate/Overlay/RecordingOverlayController.swift	exact	de.mcc.FlowDictate.success-overlay-hide	Bestehendes internes Timer-Label.
+FlowDictate/Meetings/MeetingSessionStore.swift	exact	de.mcc.FlowDictate.meeting-session-file-io	Bestehendes internes Queue-Label.
+FlowDictate/Meetings/ScreenCaptureKitSystemTrackRecorder.swift	exact	de.mcc.FlowDictate.mixed-screen-capture-audio	Bestehendes internes Queue-Label.
+FlowDictate/Meetings/SystemAudioTrackRecorder.swift	prefix	de.mcc.FlowDictate.mixed-system-audio	Bestehende Aggregate-UID und internes Queue-Label.
+FlowDictate/Meetings/CoreAudioTapCaptureProbe.swift	prefix	de.mcc.FlowDictate.core-audio-tap	Bestehende Diagnose- und Timer-Labels.
+FlowDictate/Meetings/CoreAudioTapCaptureProbe.swift	prefix	de.mcc.FlowDictate.capture-probe	Bestehende Diagnose-UID.
+FlowDictate/Audio/SystemAudioRecorder.swift	exact	FlowDictate.SystemAudioCapture	Bestehendes internes Capture-Queue-Label.
+FlowDictate/Utilities/FlowLogger.swift	exact	FlowDictate	Interner Logger-Fallback für Prozesse ohne Bundle-Identifier.
+docs/engineering/ARBEITSPLAN_PHASE_4_1.md	file	FlowDictate|de.mcc.FlowDictate|de.euler.FlowDictate	Abgeschlossener historischer 4.1-Arbeitsplan.
+docs/engineering/CAPTURE_SPIKE_PHASE_4_1.md	file	FlowDictate|de.mcc.FlowDictate|de.euler.FlowDictate	Abgeschlossener historischer Capture-Spike.
+docs/releases/RELEASE_NOTES_3.2.0.md	file	FlowDictate|de.mcc.FlowDictate|de.euler.FlowDictate	Veröffentlichte historische Release Notes.
+docs/releases/RELEASE_NOTES_3.3.0.md	file	FlowDictate|de.mcc.FlowDictate|de.euler.FlowDictate	Veröffentlichte historische Release Notes.
+docs/releases/RELEASE_NOTES_3.4.0.md	file	FlowDictate|de.mcc.FlowDictate|de.euler.FlowDictate	Veröffentlichte historische Release Notes.
+docs/releases/RELEASE_NOTES_4.0.0.md	file	FlowDictate|de.mcc.FlowDictate|de.euler.FlowDictate	Veröffentlichte historische Release Notes.
+docs/releases/RELEASE_NOTES_4.0.1.md	file	FlowDictate|de.mcc.FlowDictate|de.euler.FlowDictate	Veröffentlichte historische Release Notes.
+docs/releases/RELEASE_NOTES_4.0.2.md	file	FlowDictate|de.mcc.FlowDictate|de.euler.FlowDictate	Veröffentlichte historische Release Notes.
+docs/releases/RELEASE_NOTES_4.1.0.md	file	FlowDictate|de.mcc.FlowDictate|de.euler.FlowDictate	Veröffentlichte historische Release Notes.
+docs/requirements/FlowDictate_PRD_v1.1.md	file	FlowDictate|de.mcc.FlowDictate|de.euler.FlowDictate	Abgeschlossenes historisches PRD.
+docs/requirements/FlowDictate_PRD_Phase_2.md	file	FlowDictate|de.mcc.FlowDictate|de.euler.FlowDictate	Abgeschlossenes historisches PRD.
+docs/requirements/FlowDictate_PRD_Phase_3.md	file	FlowDictate|de.mcc.FlowDictate|de.euler.FlowDictate	Abgeschlossenes historisches PRD.
+docs/requirements/FlowDictate_PRD_Phase_3_4.md	file	FlowDictate|de.mcc.FlowDictate|de.euler.FlowDictate	Abgeschlossenes historisches PRD.
+docs/requirements/FlowDictate_PRD_Phase_4_0.md	file	FlowDictate|de.mcc.FlowDictate|de.euler.FlowDictate	Abgeschlossenes historisches PRD.
+docs/requirements/FlowDictate_PRD_Phase_4_1.md	file	FlowDictate|de.mcc.FlowDictate|de.euler.FlowDictate	Abgeschlossenes historisches PRD.
+docs/engineering/ARBEITSPLAN_REBRANDING_NATIVEDICTATE.md	file	FlowDictate|de.mcc.FlowDictate|de.euler.FlowDictate	Aktiver Migrationsplan muss alte und neue Identität ausdrücklich gegenüberstellen.
+docs/engineering/REBRANDING_NAME_INVENTORY.tsv	file	FlowDictate|de.mcc.FlowDictate|de.euler.FlowDictate	R0-Inventar dokumentiert die vor der Umbenennung gefundenen Ausgangspfade.
+docs/engineering/REBRANDING_LEGACY_ALLOWLIST.tsv	file	FlowDictate|de.mcc.FlowDictate|de.euler.FlowDictate	Allowlist muss die erlaubten Legacy- und Historienwerte selbst benennen.
