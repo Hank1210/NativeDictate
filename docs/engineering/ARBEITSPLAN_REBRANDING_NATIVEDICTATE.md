@@ -1,7 +1,7 @@
 # FlowDictate → NativeDictate – Rebranding-Arbeitsplan
 
 **Vorhaben:** Umbenennung des Open-Source-Projekts und der sichtbaren macOS-App von FlowDictate zu NativeDictate
-**Status:** `IN ARBEIT` – R0 bis R4 abgeschlossen, R5 als nächster Schritt
+**Status:** `IN ARBEIT` – R0 bis R4 abgeschlossen, R5 in Arbeit
 **Stand:** 4. Oktober 2026
 **Ausgangsbasis:** FlowDictate 4.1.0, Build 33, Tag `v4.1.0`, Commit `afa02eb`
 **Zielversion:** NativeDictate 4.2.0
@@ -139,7 +139,7 @@ Optionale interne Namensbereinigung in späteren Versionen
 | R2 sichtbare Produktumbenennung | `ERLEDIGT` | R1 | NativeDictate-Appoberfläche |
 | R3 Packaging und Installationsmigration | `ERLEDIGT` | R2 | testbares 4.2-Paket |
 | R4 aktuelle Dokumentation und Historiengrenze | `ERLEDIGT` | R2 | konsistente Projektkommunikation |
-| R5 automatisierte und manuelle Migrationstests | `OFFEN` | R3, R4 | Freigabe für GitHub-Umschaltung |
+| R5 automatisierte und manuelle Migrationstests | `IN ARBEIT` | R3, R4 | Freigabe für GitHub-Umschaltung |
 | R6 GitHub-Umschaltung | `OFFEN` | R5 | kanonische neue Projektadresse |
 | R7 Release-Gate NativeDictate 4.2.0 | `OFFEN` | R6 | Veröffentlichungsentscheidung |
 | R8 optionale interne Bereinigung | `OFFEN` | stabiler 4.2-Nachweis | langfristige Codekonsistenz |
@@ -397,7 +397,7 @@ Der Hinweis behauptet keine Verbindung zum anderen Produkt und verlinkt nicht we
 
 ## 11. R5 – Automatisierte und manuelle Migrationstests
 
-**Status:** `OFFEN`
+**Status:** `IN ARBEIT`
 
 ### 11.1 Automatisierte Gates
 
@@ -448,7 +448,18 @@ Zu prüfen:
 - History, Export, Recovery und Neustart prüfen,
 - Installationsanleitung gegen den tatsächlichen Gatekeeper- und TCC-Ablauf lesen.
 
-### 11.4 Exit
+### 11.4 Automatisierter Zwischenstand vom 4. Oktober 2026
+
+- Die vollständige serielle macOS-Suite bestand auf dem R4-Stand mit 228/228 Tests, 0 Fehlern, 0 Skips, 0 erwarteten Fehlern und 0 Runtime-Warnungen auf macOS 26.7.1. App, Unit-Test- und UI-Testtarget wurden dabei gebaut; die optionalen UI-Tests bleiben entsprechend dem Scheme-Vertrag nicht Teil des automatischen Laufs.
+- Der kontrollierte Scan aller von Git versionierten UTF-8-Dateien prüfte jede Fundzeile für `FlowDictate`, `flowdictate`, `de.mcc.FlowDictate` und `de.euler.FlowDictate` gegen die pfadbezogene Legacy-/Historien-Allowlist. Ergebnis: `unclassified=0`. Die für diesen vollständigen Scan präzisierte Allowlist löst weiterhin jede Zeile gegen eine vorhandene Quelldatei auf.
+- Der nach R4 neu gebaute Community-Arbeitsstand `NativeDictate-4.2.0-Community-macOS.zip` besteht seine `.sha256`-Prüfung. SHA-256: `0d8e603341fab35c446037b14339799030626fffbb872f1367f1127a03f21b92`. Dieses R5-Artefakt ist wegen der noch folgenden R6-Änderungen kein finales Veröffentlichungsartefakt.
+- Das unabhängig extrahierte Archiv enthält genau eine `NativeDictate.app` und kein `FlowDictate.app`. Die App meldet `NativeDictate` als Display-, Bundle- und Executable-Namen, Version `4.2.0`, Build `34` und Bundle-ID `de.mcc.FlowDictate`; das Executable enthält `arm64` und `x86_64`.
+- `plutil -lint`, `codesign --verify --deep --strict` und die Entitlements-Prüfung sind grün. Die Sandbox-, Audioeingabe-, nutzergewählte Lese-/Schreibzugriffs- und Netzwerk-Entitlements entsprechen dem dokumentierten Community-Vertrag. Der Build ist ad hoc signiert und absichtlich nicht notarisiert.
+- Changelog, Privacy, Third-Party Notices, beide Installationsanleitungen, MIT-Lizenz und FluidAudio-Lizenz im ZIP sind byteidentisch mit den geprüften Repository-Dateien. Der Inhalts- und Namensscan fand keine private Testdatei, `.env`, Zugangsdaten, Aufnahme, Transkript oder Modelldatei im Paket.
+- Für den realen Upgrade-Test war `/Applications/FlowDictate.app` vorhanden, `/Applications/NativeDictate.app` noch nicht vorhanden und FlowDictate nicht aktiv. Das exakt geprüfte Bundle wurde ohne Überschreiben zusätzlich als `/Applications/NativeDictate.app` installiert. Verzeichnisvergleich und Executable-SHA-256 `c1a757528e1430e27b1510b55e44e84946c8cd282768b72d073809a1ccd2509c` bestätigen die Identität mit der aus dem R5-ZIP extrahierten App; die alte App und Nutzerdaten wurden nicht verändert.
+- Der installierte neue Build wurde noch nicht gestartet. Reale Freigaben, gemeinsam sichtbarer Nutzerzustand und Aufnahme-/Einfügeabläufe sind daher ausdrücklich noch **nicht bestanden**. Auch der unabhängige Clean-Install-Test steht aus; R5 bleibt bis zu beiden manuellen Nachweisen `IN ARBEIT`.
+
+### 11.5 Exit
 
 - [ ] Upgrade-Test bewahrt den dokumentierten Zustand oder jede notwendige Neufreigabe ist ausdrücklich dokumentiert.
 - [ ] Clean Install besteht den Kernablauf.
