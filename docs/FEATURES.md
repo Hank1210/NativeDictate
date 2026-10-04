@@ -1,6 +1,6 @@
 # Features and settings
 
-This is the detailed companion to the [main README](../README.md). Version 4.1 supports one dictation or meeting at a time.
+This is the detailed companion to the [main README](../README.md). NativeDictate 4.2 supports one dictation or meeting at a time.
 
 ## Recording and transcription
 

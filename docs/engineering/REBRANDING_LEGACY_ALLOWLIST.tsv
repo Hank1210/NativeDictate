@@ -14,7 +14,8 @@ FlowDictate/Meetings/CoreAudioTapCaptureProbe.swift	prefix	de.mcc.FlowDictate.co
 FlowDictate/Meetings/CoreAudioTapCaptureProbe.swift	prefix	de.mcc.FlowDictate.capture-probe	Bestehende Diagnose-UID.
 FlowDictate/Audio/SystemAudioRecorder.swift	exact	FlowDictate.SystemAudioCapture	Bestehendes internes Capture-Queue-Label.
 FlowDictate/Utilities/FlowLogger.swift	exact	FlowDictate	Interner Logger-Fallback für Prozesse ohne Bundle-Identifier.
-FlowDictate.xcodeproj/project.pbxproj	prefix	FlowDictate.app|FlowDictateTests|FlowDictateUITests|FlowDictate.xcodeproj	Interne Xcode-Produkt-, Target-, Testhost- und Projektverweise bleiben gemäß R2.2 zunächst bestehen; der App-Ausgabename folgt in R3.
+FlowDictate.xcodeproj/project.pbxproj	prefix	FlowDictateTests|FlowDictateUITests|FlowDictate.xcodeproj|PRODUCT_MODULE_NAME = FlowDictate	Interne Xcode-Target-, Test-, Projekt- und Modulnamen bleiben gemäß R2.2 bestehen; der App-Ausgabename ist seit R3 NativeDictate.
+FlowDictate.xcodeproj/xcshareddata/xcschemes/FlowDictate.xcscheme	prefix	BlueprintName = "FlowDictate"|container:FlowDictate.xcodeproj|FlowDictateTests|FlowDictateUITests	Interne Scheme-, Projekt-, Target- und Testnamen bleiben bestehen; BuildableName ist NativeDictate.app.
 FlowDictate/FlowDictateApp.swift	prefix	FlowDictateApp|FlowDictateMenu|FlowDictateSettingsView	Interne Swift-Typnamen werden in R2 nicht mechanisch umbenannt.
 FlowDictate/Utilities/FlowDictateVersion.swift	prefix	FlowDictateVersion	Interner Versions-Typ bleibt gemäß R2.2 bestehen.
 FlowDictate/Productivity/ProductivityServices.swift	exact	https://api.github.com/repos/Hank1210/FlowDictate/releases/latest	Bestehende Repository-Adresse bleibt bis zur GitHub-Umschaltung in R6 aktiv.
@@ -22,6 +23,22 @@ FlowDictate/Audio/CaptureProbeArtifactStore.swift	prefix	FlowDictateCaptureProbe
 FlowDictate/Audio/AudioUploadPreparer.swift	prefix	FlowDictate-Upload-|FlowDictate-Multipart-	Interne temporäre Uploadartefakte bleiben kompatibel mit der bestehenden Bereinigung.
 FlowDictate/Transcription/MultipartUploadFileBuilder.swift	prefix	FlowDictate-Multipart-	Interne temporäre Multipart-Datei; nicht benutzersichtbar.
 FlowDictate/Transcription/OpenAITranscriptionProvider.swift	prefix	FlowDictate-	Interne Multipart-Boundary; nicht benutzersichtbar.
+.env.example	prefix	internal FlowDictate Xcode scheme|FLOWDICTATE_TRANSCRIPTION_MODEL	Bestehender interner Scheme- und Entwicklungsvariablenname; kein öffentlicher Produkt- oder Artefaktname.
+scripts/build-community-release.sh	prefix	FLOWDICTATE_|FlowDictateCommunity.entitlements|FlowDictate.xcodeproj|-scheme FlowDictate	Legacy-Umgebungsvariablen bleiben als Fallbacks kompatibel; Projekt, Scheme und Entitlements-Datei sind interne Namen.
+scripts/build-release.sh	prefix	FLOWDICTATE_|FlowDictate.xcodeproj|-scheme FlowDictate	Legacy-Umgebungsvariablen bleiben als Fallbacks kompatibel; Projekt und Scheme sind interne Namen.
+README.md	prefix	FlowDictate.xcodeproj|FlowDictate 4.1.0|FlowDictate.app|de.mcc.FlowDictate|FlowDictateUITests	Aktueller Einstieg benennt nur den früheren Produktnamen im Übergang sowie ausdrücklich erklärte interne und Legacy-Identifier.
+COMMUNITY_INSTALLATION.md	prefix	FlowDictate 4.1.0|FlowDictate.app|de.mcc.FlowDictate|Application Support/FlowDictate	Deutscher 4.1-zu-4.2-Upgradepfad muss alte App und bewahrte Legacy-Identität benennen.
+COMMUNITY_INSTALLATION_EN.md	prefix	FlowDictate 4.1.0|FlowDictate.app|de.mcc.FlowDictate|Application Support/FlowDictate	Englischer 4.1-zu-4.2-Upgradepfad muss alte App und bewahrte Legacy-Identität benennen.
+PRIVACY.md	prefix	de.mcc.FlowDictate|Application Support/FlowDictate	Aktuelle Datenschutzerklärung macht die bewahrten technischen Identitäten transparent.
+RELEASE.md	prefix	FlowDictate 4.1.0|FlowDictate.app|de.mcc.FlowDictate|FlowDictate target|FlowDictate-4.1.0	Aktueller Upgradevertrag sowie klar abgegrenzte historische 4.1-Nachweise benötigen die alten Namen.
+CHANGELOG.md	file	FlowDictate|de.mcc.FlowDictate	Versionshistorie und 4.2-Umbenennungseintrag müssen alten und neuen Namen wahrheitsgemäß gegenüberstellen.
+docs/README.md	prefix	FlowDictate_PRD_Phase_4_1.md|FlowDictate to NativeDictate	Index verlinkt historisches PRD und aktiven Umbenennungsplan mit ihren bestehenden Dateinamen/Titeln.
+docs/MANUAL_VERIFICATION.md	prefix	FlowDictate.app|FlowDictate is fully stopped	Aktuelle Upgrade-Prüfung warnt ausdrücklich vor parallelem Betrieb mit der alten App.
+docs/requirements/README.md	prefix	FlowDictate name|FlowDictate_PRD_	Aktueller Index erklärt die historische Benennung und bewahrt verlinkte PRD-Dateinamen.
+docs/releases/README.md	prefix	FlowDictate name	Release-Index kennzeichnet 4.1.0 als letzte Veröffentlichung unter dem alten Namen.
+docs/releases/RELEASE_NOTES_4.2.0.md	prefix	FlowDictate 4.1.0|FlowDictate.app|de.mcc.FlowDictate|Application Support/FlowDictate	4.2-Release Notes erklären Umbenennung, Upgrade und unveränderte technische Identität.
+FlowDictateTests/FlowDictateTests.swift	file	FlowDictate|de.mcc.FlowDictate	Interne Modul-, Test-, Fixture- und Legacy-Vertragsnamen; Benutzerbranding wird durch separate Regressionstests geschützt.
+FlowDictateUITests/FlowDictateUITests.swift	file	FlowDictate	Interne UI-Testtarget- und Testklassennamen bleiben für 4.2 bestehen.
 docs/engineering/ARBEITSPLAN_PHASE_4_1.md	file	FlowDictate|de.mcc.FlowDictate|de.euler.FlowDictate	Abgeschlossener historischer 4.1-Arbeitsplan.
 docs/engineering/CAPTURE_SPIKE_PHASE_4_1.md	file	FlowDictate|de.mcc.FlowDictate|de.euler.FlowDictate	Abgeschlossener historischer Capture-Spike.
 docs/releases/RELEASE_NOTES_3.2.0.md	file	FlowDictate|de.mcc.FlowDictate|de.euler.FlowDictate	Veröffentlichte historische Release Notes.

@@ -1,8 +1,8 @@
-# FlowDictate documentation
+# NativeDictate documentation
 
 The [main README](../README.md) is the starting point for installation, requirements and a product overview. The following documents retain the detail without crowding the repository root.
 
-## Using FlowDictate
+## Using NativeDictate
 
 - [Features, settings and behavior](FEATURES.md)
 - [Community installation (German)](../COMMUNITY_INSTALLATION.md) and [English](../COMMUNITY_INSTALLATION_EN.md)
@@ -19,6 +19,6 @@ The [main README](../README.md) is the starting point for installation, requirem
 ## Releases
 
 - [Changelog](../CHANGELOG.md)
-- [4.1.0 release notes](releases/RELEASE_NOTES_4.1.0.md) and [older release notes](releases/README.md)
+- [4.2.0 release notes](releases/RELEASE_NOTES_4.2.0.md) and [earlier release notes](releases/README.md)
 
 Historical PRDs record decisions for their respective phases; they are not a substitute for the current implementation, README or release notes. Private test evidence is not part of this repository.

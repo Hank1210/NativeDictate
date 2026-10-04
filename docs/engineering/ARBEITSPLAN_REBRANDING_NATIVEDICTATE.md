@@ -1,7 +1,7 @@
 # FlowDictate → NativeDictate – Rebranding-Arbeitsplan
 
 **Vorhaben:** Umbenennung des Open-Source-Projekts und der sichtbaren macOS-App von FlowDictate zu NativeDictate
-**Status:** `IN ARBEIT` – R0 bis R3 abgeschlossen, R4 als nächster Schritt
+**Status:** `IN ARBEIT` – R0 bis R4 abgeschlossen, R5 als nächster Schritt
 **Stand:** 4. Oktober 2026
 **Ausgangsbasis:** FlowDictate 4.1.0, Build 33, Tag `v4.1.0`, Commit `afa02eb`
 **Zielversion:** NativeDictate 4.2.0
@@ -138,7 +138,7 @@ Optionale interne Namensbereinigung in späteren Versionen
 | R1 Identitätsgrenzen und Regressionstests | `ERLEDIGT` | R0 | geschützte Legacy-Verträge |
 | R2 sichtbare Produktumbenennung | `ERLEDIGT` | R1 | NativeDictate-Appoberfläche |
 | R3 Packaging und Installationsmigration | `ERLEDIGT` | R2 | testbares 4.2-Paket |
-| R4 aktuelle Dokumentation und Historiengrenze | `OFFEN` | R2 | konsistente Projektkommunikation |
+| R4 aktuelle Dokumentation und Historiengrenze | `ERLEDIGT` | R2 | konsistente Projektkommunikation |
 | R5 automatisierte und manuelle Migrationstests | `OFFEN` | R3, R4 | Freigabe für GitHub-Umschaltung |
 | R6 GitHub-Umschaltung | `OFFEN` | R5 | kanonische neue Projektadresse |
 | R7 Release-Gate NativeDictate 4.2.0 | `OFFEN` | R6 | Veröffentlichungsentscheidung |
@@ -345,7 +345,7 @@ Die Migration löscht keine Container oder Application-Support-Verzeichnisse. Ei
 
 ## 10. R4 – Aktuelle Dokumentation und Historiengrenze
 
-**Status:** `OFFEN`
+**Status:** `ERLEDIGT`
 
 ### 10.1 Zu aktualisieren
 
@@ -378,12 +378,22 @@ Mindestens für 4.2 enthält das README einen knappen Hinweis:
 
 Der Hinweis behauptet keine Verbindung zum anderen Produkt und verlinkt nicht werbend auf dieses.
 
-### 10.4 Exit
+### 10.4 Nachweis vom 4. Oktober 2026
 
-- [ ] Neue Nutzer finden ausschließlich NativeDictate-Installations- und Buildbefehle.
-- [ ] Bestehende Nutzer finden einen eindeutigen 4.1-→4.2-Upgradepfad.
-- [ ] Historische Dokumente bleiben als historische Dokumente erkennbar und wahrheitsgemäß.
-- [ ] Keine aktuelle Downloadanweisung verweist auf ein neues FlowDictate-Artefakt.
+- `README.md`, Dokumentations- und Requirements-Index, Feature-Referenz, manuelle Prüfliste, Privacy, Third-Party Notices, Release Guide, Changelog, beide Installationsanleitungen und `.env.example` verwenden für aktuelle Produkt-, Installations- und Artefaktaussagen NativeDictate 4.2.0. Der öffentliche Kurztext und der geforderte sachliche Übergangshinweis stehen am Anfang des README.
+- `docs/releases/RELEASE_NOTES_4.2.0.md` beschreibt die Umbenennung ohne neue Produktfunktion, den unveränderten Bundle-/Speichervertrag, den manuellen 4.1-zu-4.2-Wechsel, Datenschutz, nicht notarisierten Community-Build sowie die unverändert offenen Systemaudio- und Verifikationslücken. Der Release-Index verlinkt die neuen Notes und kennzeichnet 4.1.0 als letzte Veröffentlichung unter dem alten Namen.
+- Das Changelog enthält einen eigenen 4.2.0-Release-Candidate-Eintrag. Der inzwischen veröffentlichte 4.1.0-Eintrag trägt das reale Veröffentlichungsdatum 30. September 2026; sein Inhalt und die historischen Release Notes wurden nicht umgeschrieben.
+- Der aktuelle Release Guide erzeugt und prüft ausschließlich `NativeDictate-4.2.0-Community-macOS.zip` samt `.sha256`, verwendet Tag `v4.2.0`, installiert `NativeDictate.app` und dokumentiert ein separates 4.2-Rebranding-Gate. Frühere Phase-3.4-, 4.0- und 4.1-Gates stehen unverändert unter der ausdrücklichen Überschrift „Historical release gates and 4.1 evidence“.
+- Alle aktuellen GitHub-Dokumentationslinks sind auf `Hank1210/NativeDictate` vorbereitet. Die im App-Code bis R6 absichtlich aktive alte Release-API wurde in R4 nicht vorzeitig geändert. Aktuelle Dokumente enthalten keine alte `Hank1210/FlowDictate`-URL und keine Anweisung zum Erzeugen oder Installieren eines neuen FlowDictate-4.2-Artefakts.
+- Ein kontrollierter Restscan der aktuellen Dokumentationsdateien findet 70 Fundzeilen in 12 Dateien. Sie benennen ausschließlich den 4.1-Upgradeausgangspunkt, `FlowDictate.app`, geschützte Bundle-/Application-Support-Werte, interne Xcode-/Test-/Umgebungsnamen oder klar abgegrenzte Versionshistorie. Die präzisierte `REBRANDING_LEGACY_ALLOWLIST.tsv` erfasst diese Gruppen; jede Allowlist-Zeile wurde gegen die aktuelle Quelldatei geprüft.
+- Alle lokalen Markdown-Ziele der bearbeiteten Dokumente existieren. `git diff --check`, TSV-Spaltenprüfung, Allowlist-Auflösungsprüfung und Scans auf alte Repository-URLs beziehungsweise falsche 4.2-Artefaktnamen sind grün. Es wurden keine App-Quellen oder Buildsettings nach der grünen R3-Suite verändert; die nächste vollständige Paket- und Testwiederholung gehört zum R5-Gate.
+
+### 10.5 Exit
+
+- [x] Neue Nutzer finden ausschließlich NativeDictate-Installations- und Buildbefehle; notwendige interne Xcode-Namen sind unmittelbar als technische Identifikatoren erklärt.
+- [x] Bestehende Nutzer finden einen eindeutigen 4.1-→4.2-Upgradepfad.
+- [x] Historische Dokumente bleiben als historische Dokumente erkennbar und wahrheitsgemäß.
+- [x] Keine aktuelle Downloadanweisung verweist auf ein neues FlowDictate-Artefakt.
 
 ## 11. R5 – Automatisierte und manuelle Migrationstests
 

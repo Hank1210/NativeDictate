@@ -1,10 +1,27 @@
 # Changelog
 
-All notable user-facing changes to FlowDictate are documented here.
+All notable user-facing changes to NativeDictate are documented here. Releases through 4.1.0 used the name FlowDictate.
 
 ## [Unreleased]
 
-## [4.1.0] - release candidate
+## [4.2.0] - release candidate
+
+### Changed
+
+- The public project, visible app and release artifacts are renamed from FlowDictate to NativeDictate to avoid confusion with an unrelated commercial product.
+- The app bundle is now `NativeDictate.app`; the Community archive and checksum are `NativeDictate-4.2.0-Community-macOS.zip` and `NativeDictate-4.2.0-Community-macOS.zip.sha256`.
+- The bundle identifier remains `de.mcc.FlowDictate`, and existing settings, History, Keychain service, local model, recordings-folder bookmark and `Application Support/FlowDictate` data remain shared with FlowDictate 4.1.0.
+- Upgrade instructions now require FlowDictate to be fully stopped before NativeDictate starts. Because Finder does not replace an app whose filename changed, the old app is removed manually only after the shared state and core recording flow have been verified. Both apps must never run in parallel.
+- Current documentation and future release links use the NativeDictate project name. Historical release notes, tags, checksums and 4.1-and-earlier evidence retain their original FlowDictate wording.
+
+### Compatibility
+
+- This release intentionally changes no user-data schema and performs no rename-driven data migration or deletion.
+- The Xcode project, scheme, Swift module, source directory, test targets, bundle identifier and persistent storage paths retain internal FlowDictate names in 4.2.
+- The Community app remains ad hoc signed and not notarized. macOS may request Accessibility, Microphone, Speech Recognition or System Audio permission again after the renamed app is installed.
+- The documented 4.1 System Audio gap limitation and the accepted long-duration/performance verification gaps remain unchanged; 4.2 does not claim that they were retested or resolved.
+
+## [4.1.0] - 2026-09-30
 
 ### Added
 
@@ -215,7 +232,13 @@ All notable user-facing changes to FlowDictate are documented here.
 - Persistent History, recovery, retry, Restore Last Dictation and retention controls.
 - Free ad hoc signed Community ZIP workflow with German and English installation guides.
 
-[Unreleased]: https://github.com/Hank1210/FlowDictate/compare/v3.3.0...HEAD
-[3.3.0]: https://github.com/Hank1210/FlowDictate/compare/v3.2.0...v3.3.0
-[3.2.0]: https://github.com/Hank1210/FlowDictate/compare/v2.0.0...v3.2.0
-[2.0.0]: https://github.com/Hank1210/FlowDictate/releases/tag/v2.0.0
+[Unreleased]: https://github.com/Hank1210/NativeDictate/compare/v4.2.0...HEAD
+[4.2.0]: https://github.com/Hank1210/NativeDictate/compare/v4.1.0...v4.2.0
+[4.1.0]: https://github.com/Hank1210/NativeDictate/compare/v4.0.2...v4.1.0
+[4.0.2]: https://github.com/Hank1210/NativeDictate/compare/v4.0.1...v4.0.2
+[4.0.1]: https://github.com/Hank1210/NativeDictate/compare/v4.0.0...v4.0.1
+[4.0.0]: https://github.com/Hank1210/NativeDictate/compare/v3.4.0...v4.0.0
+[3.4.0]: https://github.com/Hank1210/NativeDictate/compare/v3.3.0...v3.4.0
+[3.3.0]: https://github.com/Hank1210/NativeDictate/compare/v3.2.0...v3.3.0
+[3.2.0]: https://github.com/Hank1210/NativeDictate/compare/v2.0.0...v3.2.0
+[2.0.0]: https://github.com/Hank1210/NativeDictate/releases/tag/v2.0.0

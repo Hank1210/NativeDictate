@@ -1,5 +1,7 @@
 # Manual verification checklist
 
+Use the exact NativeDictate package being evaluated. For a 4.1.0-to-4.2.0 upgrade, first follow the installation guide and confirm that FlowDictate is fully stopped; never run `FlowDictate.app` and `NativeDictate.app` in parallel.
+
 Test short, long, German, English and mixed-language dictation in Notes, Safari, Chrome, Mail, VS Code and Word or an equivalent editor. Also verify:
 
 - rapid shortcut presses do not create overlapping recordings

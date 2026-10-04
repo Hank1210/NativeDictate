@@ -1,6 +1,6 @@
-# Product requirements archive
+# NativeDictate product requirements archive
 
-Requirements are organized by project phase. Keep these documents versioned for traceability; use the [main README](../../README.md) and [feature reference](../FEATURES.md) for current user-facing behavior.
+Requirements are organized by project phase. Documents through Phase 4.1 were written under the FlowDictate name; their filenames and historical contents remain unchanged for traceability. Use the [main README](../../README.md) and [feature reference](../FEATURES.md) for current NativeDictate behavior.
 
 1. [Original PRD v1.1](FlowDictate_PRD_v1.1.md)
 2. [Phase 2](FlowDictate_PRD_Phase_2.md)

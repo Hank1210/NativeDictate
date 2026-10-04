@@ -1,6 +1,7 @@
 # Release notes
 
-- [4.1.0](RELEASE_NOTES_4.1.0.md) — release candidate
+- [4.2.0](RELEASE_NOTES_4.2.0.md) — NativeDictate rebranding release candidate
+- [4.1.0](RELEASE_NOTES_4.1.0.md) — final release under the FlowDictate name
 - [4.0.2](RELEASE_NOTES_4.0.2.md)
 - [4.0.1](RELEASE_NOTES_4.0.1.md)
 - [4.0.0](RELEASE_NOTES_4.0.0.md)

@@ -1,6 +1,6 @@
-# FlowDictate Release Guide
+# NativeDictate Release Guide
 
-FlowDictate 4.1.0 is prepared as a standalone macOS menu bar app. A release contains neither API keys nor speech models. Each installation chooses local transcription or supplies its own OpenAI key during onboarding. `Microphone + System Audio` is opt-in and keeps two separate original tracks.
+NativeDictate 4.2.0 is prepared as a standalone macOS menu bar app. A release contains neither API keys nor speech models. Each installation chooses local transcription or supplies its own OpenAI key during onboarding. `Microphone + System Audio` is opt-in and keeps two separate original tracks.
 
 ## Free Community release
 
@@ -12,8 +12,8 @@ The Community release is intended for personal Macs and a trusted circle. It doe
 
 The script performs an unsigned universal Release build, applies an ad hoc signature with the required sandbox entitlements, verifies that signature, and creates these files in `dist/`:
 
-- `FlowDictate-4.1.0-Community-macOS.zip`
-- `FlowDictate-4.1.0-Community-macOS.zip.sha256`
+- `NativeDictate-4.2.0-Community-macOS.zip`
+- `NativeDictate-4.2.0-Community-macOS.zip.sha256`
 
 The ZIP contains the app, German and English installation guides (`INSTALLATION-DE.md` and `INSTALLATION-EN.md`), the project MIT license, third-party notices and license, Privacy notice and Changelog. Gatekeeper cannot establish an Apple developer identity for this build, so the recipient must use right-click → Open or approve it under Privacy & Security. Updates may require Microphone, Accessibility, Speech Recognition, System Audio Recording Only, Screen & System Audio Recording or Keychain permission to be granted again.
 
@@ -21,7 +21,7 @@ Verify the generated archive before uploading it:
 
 ```sh
 cd dist
-shasum -a 256 -c FlowDictate-4.1.0-Community-macOS.zip.sha256
+shasum -a 256 -c NativeDictate-4.2.0-Community-macOS.zip.sha256
 ```
 
 ## GitHub release checklist
@@ -30,7 +30,7 @@ shasum -a 256 -c FlowDictate-4.1.0-Community-macOS.zip.sha256
 2. Run the automated tests and the manual Preview/recording smoke test.
 3. Run `./scripts/build-community-release.sh` on a clean checkout.
 4. Verify the SHA-256 checksum and test the ZIP on a second macOS account or Mac.
-5. Create the annotated tag `v4.1.0` from the reviewed commit.
+5. Create the annotated tag `v4.2.0` from the reviewed commit.
 6. Create a GitHub Release for that tag using the reviewed release notes.
 7. Attach only the Community ZIP and its `.sha256` file. GitHub supplies source archives automatically.
 8. Keep the release marked as a prerelease until the downloaded asset has passed the installation test; then publish it as the latest stable release.
@@ -39,14 +39,14 @@ Do not commit the generated `dist/` or `build/` directories. They are intentiona
 
 ## Updating an existing installation
 
-The 4.1.0 app changes its bundle identifier from `de.euler.FlowDictate` to `de.mcc.FlowDictate`. This is a deliberate fresh app identity: the old settings, recordings bookmark, Keychain credential, local model and History are not imported automatically. A user must reselect the recordings folder, choose the provider and grant permissions again. Existing files in the separately selected recordings folder are not deleted. Back up or export any old History needed before replacing the previous app; do not delete its app container as part of installation. The schema-7 backup applies only when migrating History already visible to the same app identity, not to this bundle-ID transition.
+NativeDictate 4.2.0 retains FlowDictate 4.1.0's bundle identifier `de.mcc.FlowDictate`, so settings, History, the Keychain service, local model, recordings-folder bookmark and `Application Support/FlowDictate` data remain shared. The app filenames differ, and Finder therefore does not replace the old bundle automatically. Quit FlowDictate completely, install `NativeDictate.app`, verify the shared state and core recording flow without starting FlowDictate again, renew permissions or Launch at login only if needed, and remove the old `FlowDictate.app` only after the checks pass. Never run both bundles in parallel. Installing or removing either app bundle must not delete the shared container or Application Support data.
 
 The following sections describe the optional paid Developer ID workflow.
 
 ## Prerequisites
 
 - Xcode with the macOS SDK
-- the Apple Developer team configured for the FlowDictate target
+- the Apple Developer team configured for the internally named FlowDictate target that builds `NativeDictate.app`
 - a Developer ID Application certificate for distribution outside the Mac App Store
 - an optional `notarytool` Keychain profile for notarization
 
@@ -56,14 +56,14 @@ The following sections describe the optional paid Developer ID workflow.
 ./scripts/build-release.sh
 ```
 
-The versioned ZIP is written to `dist/`. The build uses the bundle identifier `de.mcc.FlowDictate`, the Release configuration, App Sandbox, outgoing network access, microphone access, and user-selected read/write folder access.
+The versioned NativeDictate ZIP is written to `dist/`. The build uses the bundle identifier `de.mcc.FlowDictate`, the Release configuration, App Sandbox, outgoing network access, microphone access, and user-selected read/write folder access.
 
 ## Notarize
 
 Store notarization credentials once using Apple's `notarytool`, then pass the profile name:
 
 ```sh
-FLOWDICTATE_NOTARY_PROFILE=FlowDictateNotary ./scripts/build-release.sh
+NATIVEDICTATE_NOTARY_PROFILE=NativeDictateNotary ./scripts/build-release.sh
 ```
 
 The script submits the ZIP, waits for Apple's result, staples the ticket to the app, and recreates the final ZIP.
@@ -71,7 +71,7 @@ The script submits the ZIP, waits for Apple's result, staples the ticket to the 
 ## Verification on another Mac
 
 1. Copy and extract the ZIP.
-2. Move `FlowDictate.app` to Applications.
+2. Move `NativeDictate.app` to Applications.
 3. Launch it and complete onboarding.
 4. Confirm `Documents/Recordings` or choose another folder.
 5. Choose local transcription on Apple Silicon or add that person's OpenAI API key.
@@ -79,17 +79,36 @@ The script submits the ZIP, waits for Apple's result, staples the ticket to the 
 7. Verify Live Preview, final transcription, Smart Dictation, a short mixed meeting and insertion in TextEdit or Notes.
 8. Interrupt processing, relaunch, and verify recovery in History.
 
-Never distribute builds containing an `.env` file, Xcode Scheme secret, personal API key, or notarization credential.
+Never distribute builds containing an `.env` file, Xcode Scheme secret, personal API key, notarization credential, recording, transcript, downloaded model or private test note.
 
-## Additional Phase 3.4 gate
+## NativeDictate 4.2 rebranding gate
+
+Before creating tag `v4.2.0` or publishing assets:
+
+1. Complete the documentation and GitHub-rename steps in the rebranding work plan.
+2. Build the exact final Community ZIP from the reviewed commit; any later source or bundled-document change requires a new ZIP and checksum.
+3. Verify the checksum, exactly one `NativeDictate.app`, version 4.2.0, final build number, bundle identifier `de.mcc.FlowDictate`, `arm64` and `x86_64`, strict code signature, entitlements and bundled documents.
+4. Run the complete automated suite and controlled legacy-name scan.
+5. On the exact ZIP, complete a clean installation and a real upgrade from the released FlowDictate 4.1.0 app. Verify shared settings, History, local model, Keychain access and recordings-folder bookmark, plus microphone, System Audio, mixed capture, insertion and restart recovery.
+6. During the upgrade test, ensure only one product bundle runs at a time. Remove `FlowDictate.app` only after NativeDictate passes, then verify that the shared user data remains.
+7. Confirm the canonical NativeDictate repository, release API and download links, and verify GitHub's old FlowDictate URL redirects without creating a replacement repository at the old name.
+8. Record the exact commit and SHA-256, independently recheck the downloaded assets, document every accepted deviation, and obtain explicit publication authorization.
+
+The 4.1 System Audio gap measurements and other accepted long-duration or performance gaps remain deviations unless separately remeasured. They must not be reported as passed 4.2 tests merely because the rebranding build succeeds.
+
+## Historical release gates and 4.1 evidence
+
+The following sections preserve the release requirements and evidence for earlier FlowDictate versions. They are historical records, not instructions for naming or publishing a new 4.2 artifact.
+
+### Phase 3.4 gate (historical)
 
 Before a Phase 3.4 release, test the exact generated Community ZIP with a recording that produces at least three segments. Pause after a successful segment, relaunch the packaged app and confirm that continuation does not upload the successful segment again. Also test one temporary segment failure, insufficient working storage guidance, ordered merged text, retained original audio and deletion of temporary segment files. Do not create a tag or GitHub Release until this packaged-app test and the existing checklist both pass.
 
-## Additional Phase 4.0 gate
+### Phase 4.0 gate (historical)
 
 Before a Phase 4.0 release, verify the exact generated ZIP on Apple Silicon with no API key: install the local model, transcribe short German and English recordings, run a long segmented recording, and complete at least three consecutive dictations. Confirm that each new recording becomes available after the previous dictation finishes, safe deferred insertion after relaunch, Fully offline network blocking, inline correction commands and model removal protection. Verify that the x86_64 slice builds with the OpenAI path even though local transcription is unavailable; perform a physical Intel launch test when suitable hardware is available and otherwise document that residual risk explicitly. Do not tag or publish until the available packaged-app tests pass and any unavailable hardware gate has been consciously accepted.
 
-## Additional Phase 4.1 gate
+### Phase 4.1 gate (historical)
 
 Before calling the 4.1.0 ZIP final, review the exact extracted archive on a fresh macOS user account, grant only the required permissions, verify a short single-source and mixed recording, the role-labelled result, History recovery/deletion, and normal insertion. Use the same ZIP for the following several-day user trial; any code change requires a new ZIP and checksum. Verify both architectures, the ad hoc signature, bundled notices and the checksum, and confirm the archive contains no recordings, transcripts, downloaded models, credentials or private test notes.
 
