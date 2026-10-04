@@ -81,6 +81,41 @@ struct FlowDictateTests {
         #expect(contents.components(separatedBy: testHostSetting).count - 1 == 1)
     }
 
+    @Test func packagingBuildSettingsUseNativeDictateWithoutChangingModuleIdentity() throws {
+        let repositoryRoot = URL(fileURLWithPath: #filePath)
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+        let projectFile = repositoryRoot
+            .appendingPathComponent("FlowDictate.xcodeproj", isDirectory: true)
+            .appendingPathComponent("project.pbxproj")
+        let projectContents = try String(contentsOf: projectFile, encoding: .utf8)
+
+        #expect(projectContents.components(separatedBy: "PRODUCT_NAME = NativeDictate;").count - 1 == 3)
+        #expect(projectContents.components(separatedBy: "PRODUCT_MODULE_NAME = FlowDictate;").count - 1 == 3)
+        #expect(projectContents.components(separatedBy: "MARKETING_VERSION = 4.2.0;").count - 1 == 3)
+        #expect(projectContents.components(separatedBy: "CURRENT_PROJECT_VERSION = 34;").count - 1 == 3)
+        #expect(
+            projectContents.components(
+                separatedBy: "$(BUILT_PRODUCTS_DIR)/NativeDictate.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/NativeDictate"
+            ).count - 1 == 3
+        )
+
+        let schemeURL = repositoryRoot.appendingPathComponent(
+            "FlowDictate.xcodeproj/xcshareddata/xcschemes/FlowDictate.xcscheme"
+        )
+        let schemeContents = try String(contentsOf: schemeURL, encoding: .utf8)
+        #expect(schemeContents.components(separatedBy: "BuildableName = \"NativeDictate.app\"").count - 1 == 3)
+        #expect(schemeContents.contains("BuildableName = \"FlowDictate.app\"") == false)
+
+        let communityScript = try String(
+            contentsOf: repositoryRoot.appendingPathComponent("scripts/build-community-release.sh"),
+            encoding: .utf8
+        )
+        #expect(communityScript.contains("PACKAGE_NAME=NativeDictate-${VERSION}-Community"))
+        #expect(communityScript.contains("PACKAGED_APP=${STAGING_DIRECTORY}/NativeDictate.app"))
+        #expect(communityScript.contains("VERSION=${NATIVEDICTATE_VERSION:-${FLOWDICTATE_VERSION:-4.2.0}}"))
+    }
+
     @Test func recordingFolderBookmarkKeepsLegacyUserDefaultsKeys() {
         let suiteName = "FlowDictateIdentityDefaults-\(UUID())"
         let defaults = UserDefaults(suiteName: suiteName)!

@@ -3,11 +3,11 @@ set -euo pipefail
 
 SCRIPT_DIRECTORY=${0:A:h}
 PROJECT_DIRECTORY=${SCRIPT_DIRECTORY:h}
-DERIVED_DATA_DIRECTORY=${FLOWDICTATE_DERIVED_DATA:-${PROJECT_DIRECTORY}/build/DerivedData}
+DERIVED_DATA_DIRECTORY=${NATIVEDICTATE_DERIVED_DATA:-${FLOWDICTATE_DERIVED_DATA:-${PROJECT_DIRECTORY}/build/DerivedData}}
 ARCHIVE_DIRECTORY=${PROJECT_DIRECTORY}/dist
-VERSION=${FLOWDICTATE_VERSION:-4.1.0}
-APP_PATH=${DERIVED_DATA_DIRECTORY}/Build/Products/Release/FlowDictate.app
-ZIP_PATH=${ARCHIVE_DIRECTORY}/FlowDictate-${VERSION}-macOS.zip
+VERSION=${NATIVEDICTATE_VERSION:-${FLOWDICTATE_VERSION:-4.2.0}}
+APP_PATH=${DERIVED_DATA_DIRECTORY}/Build/Products/Release/NativeDictate.app
+ZIP_PATH=${ARCHIVE_DIRECTORY}/NativeDictate-${VERSION}-macOS.zip
 
 mkdir -p "${ARCHIVE_DIRECTORY}"
 
@@ -21,8 +21,9 @@ DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer \
 
 /usr/bin/ditto -c -k --keepParent "${APP_PATH}" "${ZIP_PATH}"
 
-if [[ -n "${FLOWDICTATE_NOTARY_PROFILE:-}" ]]; then
-    xcrun notarytool submit "${ZIP_PATH}" --keychain-profile "${FLOWDICTATE_NOTARY_PROFILE}" --wait
+NOTARY_PROFILE=${NATIVEDICTATE_NOTARY_PROFILE:-${FLOWDICTATE_NOTARY_PROFILE:-}}
+if [[ -n "${NOTARY_PROFILE}" ]]; then
+    xcrun notarytool submit "${ZIP_PATH}" --keychain-profile "${NOTARY_PROFILE}" --wait
     xcrun stapler staple "${APP_PATH}"
     /bin/rm -f "${ZIP_PATH}"
     /usr/bin/ditto -c -k --keepParent "${APP_PATH}" "${ZIP_PATH}"

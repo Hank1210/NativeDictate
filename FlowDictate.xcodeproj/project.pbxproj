@@ -28,7 +28,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		37F7497A3032108300FFCE37 /* FlowDictate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlowDictate.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		37F7497A3032108300FFCE37 /* NativeDictate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NativeDictate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		37F749873032108500FFCE37 /* FlowDictateTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlowDictateTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		37F749913032108500FFCE37 /* FlowDictateUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlowDictateUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -90,7 +90,7 @@
 		37F7497B3032108300FFCE37 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				37F7497A3032108300FFCE37 /* FlowDictate.app */,
+				37F7497A3032108300FFCE37 /* NativeDictate.app */,
 				37F749873032108500FFCE37 /* FlowDictateTests.xctest */,
 				37F749913032108500FFCE37 /* FlowDictateUITests.xctest */,
 			);
@@ -119,8 +119,8 @@
 			packageProductDependencies = (
 				FD4000000000000000000003 /* FluidAudio */,
 			);
-			productName = FlowDictate;
-			productReference = 37F7497A3032108300FFCE37 /* FlowDictate.app */;
+			productName = NativeDictate;
+			productReference = 37F7497A3032108300FFCE37 /* NativeDictate.app */;
 			productType = "com.apple.product-type.application";
 		};
 		37F749863032108500FFCE37 /* FlowDictateTests */ = {
@@ -403,7 +403,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 33;
+				CURRENT_PROJECT_VERSION = 34;
 				ENABLE_APP_SANDBOX = NO;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
@@ -419,9 +419,10 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 4.1.0;
+				MARKETING_VERSION = 4.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = de.mcc.FlowDictate;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_MODULE_NAME = FlowDictate;
+				PRODUCT_NAME = NativeDictate;
 				REGISTER_APP_GROUPS = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -439,7 +440,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 33;
+				CURRENT_PROJECT_VERSION = 34;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
@@ -455,9 +456,10 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 4.1.0;
+				MARKETING_VERSION = 4.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = de.mcc.FlowDictate;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_MODULE_NAME = FlowDictate;
+				PRODUCT_NAME = NativeDictate;
 				REGISTER_APP_GROUPS = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -484,7 +486,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FlowDictate.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/FlowDictate";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NativeDictate.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/NativeDictate";
 			};
 			name = Debug;
 		};
@@ -504,7 +506,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FlowDictate.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/FlowDictate";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NativeDictate.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/NativeDictate";
 			};
 			name = Release;
 		};
@@ -612,7 +614,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 34;
 				ENABLE_APP_SANDBOX = NO;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
@@ -628,9 +630,10 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 3.3.0;
+				MARKETING_VERSION = 4.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = de.mcc.FlowDictate.TestHost;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_MODULE_NAME = FlowDictate;
+				PRODUCT_NAME = NativeDictate;
 				REGISTER_APP_GROUPS = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -657,7 +660,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FlowDictate.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/FlowDictate";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NativeDictate.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/NativeDictate";
 			};
 			name = DebugTests;
 		};

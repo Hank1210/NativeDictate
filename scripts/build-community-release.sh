@@ -3,10 +3,10 @@ set -euo pipefail
 
 SCRIPT_DIRECTORY=${0:A:h}
 PROJECT_DIRECTORY=${SCRIPT_DIRECTORY:h}
-DERIVED_DATA_DIRECTORY=${FLOWDICTATE_COMMUNITY_DERIVED_DATA:-${PROJECT_DIRECTORY}/build/CommunityDerivedData}
+DERIVED_DATA_DIRECTORY=${NATIVEDICTATE_COMMUNITY_DERIVED_DATA:-${FLOWDICTATE_COMMUNITY_DERIVED_DATA:-${PROJECT_DIRECTORY}/build/CommunityDerivedData}}
 DIST_DIRECTORY=${PROJECT_DIRECTORY}/dist
-VERSION=${FLOWDICTATE_VERSION:-4.1.0}
-PACKAGE_CLONE_DIRECTORY=${FLOWDICTATE_PACKAGE_CLONE_DIRECTORY:-}
+VERSION=${NATIVEDICTATE_VERSION:-${FLOWDICTATE_VERSION:-4.2.0}}
+PACKAGE_CLONE_DIRECTORY=${NATIVEDICTATE_PACKAGE_CLONE_DIRECTORY:-${FLOWDICTATE_PACKAGE_CLONE_DIRECTORY:-}}
 PACKAGE_RESOLUTION_ARGUMENTS=()
 if [[ -n ${PACKAGE_CLONE_DIRECTORY} ]]; then
     PACKAGE_RESOLUTION_ARGUMENTS=(
@@ -14,11 +14,11 @@ if [[ -n ${PACKAGE_CLONE_DIRECTORY} ]]; then
         -disableAutomaticPackageResolution
     )
 fi
-PACKAGE_NAME=FlowDictate-${VERSION}-Community
-STAGING_ROOT=$(/usr/bin/mktemp -d /private/tmp/FlowDictateCommunity.XXXXXX)
+PACKAGE_NAME=NativeDictate-${VERSION}-Community
+STAGING_ROOT=$(/usr/bin/mktemp -d /private/tmp/NativeDictateCommunity.XXXXXX)
 STAGING_DIRECTORY=${STAGING_ROOT}/${PACKAGE_NAME}
-BUILT_APP=${DERIVED_DATA_DIRECTORY}/Build/Products/Release/FlowDictate.app
-PACKAGED_APP=${STAGING_DIRECTORY}/FlowDictate.app
+BUILT_APP=${DERIVED_DATA_DIRECTORY}/Build/Products/Release/NativeDictate.app
+PACKAGED_APP=${STAGING_DIRECTORY}/NativeDictate.app
 ZIP_PATH=${DIST_DIRECTORY}/${PACKAGE_NAME}-macOS.zip
 CHECKSUM_PATH=${ZIP_PATH}.sha256
 ZIP_FILENAME=${ZIP_PATH:t}
@@ -63,7 +63,7 @@ DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer \
     ARCHS='arm64 x86_64'
 
 if [[ ! -d ${BUILT_APP} ]]; then
-    echo "The Release build did not produce FlowDictate.app." >&2
+    echo "The Release build did not produce NativeDictate.app." >&2
     exit 1
 fi
 

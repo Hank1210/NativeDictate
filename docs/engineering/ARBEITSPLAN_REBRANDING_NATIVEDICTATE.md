@@ -1,7 +1,7 @@
 # FlowDictate → NativeDictate – Rebranding-Arbeitsplan
 
 **Vorhaben:** Umbenennung des Open-Source-Projekts und der sichtbaren macOS-App von FlowDictate zu NativeDictate
-**Status:** `IN ARBEIT` – R0 bis R2 abgeschlossen, R3 als nächster Schritt
+**Status:** `IN ARBEIT` – R0 bis R3 abgeschlossen, R4 als nächster Schritt
 **Stand:** 4. Oktober 2026
 **Ausgangsbasis:** FlowDictate 4.1.0, Build 33, Tag `v4.1.0`, Commit `afa02eb`
 **Zielversion:** NativeDictate 4.2.0
@@ -137,7 +137,7 @@ Optionale interne Namensbereinigung in späteren Versionen
 | R0 Vertrags- und Baseline-Gate | `ERLEDIGT` | 4.1.0 | sichere Arbeitsbasis |
 | R1 Identitätsgrenzen und Regressionstests | `ERLEDIGT` | R0 | geschützte Legacy-Verträge |
 | R2 sichtbare Produktumbenennung | `ERLEDIGT` | R1 | NativeDictate-Appoberfläche |
-| R3 Packaging und Installationsmigration | `OFFEN` | R2 | testbares 4.2-Paket |
+| R3 Packaging und Installationsmigration | `ERLEDIGT` | R2 | testbares 4.2-Paket |
 | R4 aktuelle Dokumentation und Historiengrenze | `OFFEN` | R2 | konsistente Projektkommunikation |
 | R5 automatisierte und manuelle Migrationstests | `OFFEN` | R3, R4 | Freigabe für GitHub-Umschaltung |
 | R6 GitHub-Umschaltung | `OFFEN` | R5 | kanonische neue Projektadresse |
@@ -292,7 +292,7 @@ Die Umbenennung interner Symbole darf nicht den eigentlichen Produktwechsel bloc
 
 ## 9. R3 – Packaging und Installationsmigration
 
-**Status:** `OFFEN`
+**Status:** `ERLEDIGT`
 
 ### 9.1 Zielartefakte
 
@@ -324,12 +324,24 @@ Da `FlowDictate.app` und `NativeDictate.app` unterschiedliche Dateinamen besitze
 
 Die Migration löscht keine Container oder Application-Support-Verzeichnisse. Ein automatisches Entfernen der alten App ist nicht Bestandteil von 4.2.
 
-### 9.4 Exit
+### 9.4 Nachweis vom 4. Oktober 2026
 
-- [ ] Das Paket enthält exakt eine `NativeDictate.app`.
-- [ ] Die App meldet Version 4.2.0 und den unveränderten Bundle-Identifier `de.mcc.FlowDictate`.
-- [ ] ZIP- und Checksum-Dateinamen verwenden NativeDictate.
-- [ ] Die Upgradeanleitung verhindert ausdrücklich parallelen Betrieb beider App-Bundles.
+- Die App-Konfigurationen `Debug`, `Release` und `DebugTests` erzeugen `NativeDictate.app` mit dem Executable `NativeDictate`, Version `4.2.0` und Build `34`. Das Swift-Modul, Xcode-Projekt, Target und Scheme bleiben intern `FlowDictate`; der produktive Bundle-Identifier bleibt unverändert `de.mcc.FlowDictate`.
+- Beide Release-Skripte verwenden standardmäßig NativeDictate-Artefaktnamen. Die bisherigen `FLOWDICTATE_*`-Umgebungsvariablen bleiben als technische Fallbacks kompatibel; neue Aufrufe können die entsprechenden `NATIVEDICTATE_*`-Variablen verwenden.
+- Der Community-Paketbau lief vollständig durch und erzeugte `NativeDictate-4.2.0-Community-macOS.zip` samt gleichnamiger `.sha256`-Datei. Der SHA-256 des lokalen R3-Prüfarbeitsstands lautet `af6a72399f6e1c27a406ec115a0c042756e89dd508886b2328da4374a447aaf7`. Dieses strukturelle R3-Artefakt ist kein veröffentlichter Releasekandidat und wird nach R4/R5 erneut gebaut.
+- Das unabhängig extrahierte ZIP enthält genau ein App-Bundle, ausschließlich `NativeDictate.app`, sowie Lizenz, Third-Party Notices, FluidAudio-Lizenz, Privacy, Changelog und beide Installationsanleitungen. Ein `FlowDictate.app`-Bundle ist nicht enthalten.
+- Die extrahierte App meldet `CFBundleDisplayName`, `CFBundleName` und `CFBundleExecutable` jeweils als `NativeDictate`, `CFBundleShortVersionString = 4.2.0`, `CFBundleVersion = 34` und `CFBundleIdentifier = de.mcc.FlowDictate`. Das Executable enthält `arm64` und `x86_64`; `codesign --verify --deep --strict` ist grün.
+- Die ausgelesenen Entitlements entsprechen weiterhin dem Community-Vertrag: App Sandbox, Audioeingang, vom Nutzer gewählte Dateien mit Lese-/Schreibzugriff und ausgehende Netzwerkverbindungen. Die App ist ad hoc signiert und absichtlich nicht notarisiert.
+- Die deutsche und englische Installationsanleitung erklären den manuellen Wechsel von `FlowDictate.app` zu `NativeDictate.app`: alte App vollständig beenden, neue App zusätzlich installieren, gemeinsamen Zustand prüfen, beide Bundles niemals parallel starten, Berechtigungen und Launch-at-login bei Bedarf erneuern und die alte App erst nach erfolgreichem Funktionstest entfernen. Es wird weder eine App noch ein Container automatisch gelöscht.
+- Der neue Regressionstest `packagingBuildSettingsUseNativeDictateWithoutChangingModuleIdentity()` schützt Produkt-, Executable-, Versions-, Testhost-, Modul-, Scheme- und Community-Paketnamen. Die vollständige serielle macOS-Suite bestand auf dem endgültigen R3-Stand mit 228/228 Tests, 0 Fehlern und 0 Skips. Der rein quelltextlesende Test `productionBuildSettingsKeepLegacyBundleIdentity()` benötigte in diesem Lauf auffällige 5.607 Sekunden; das ist kein bestandener App-Performance-Nachweis und wurde nicht als solcher gewertet.
+- `zsh -n` für beide Release-Skripte, die aufgelösten Release-Buildsettings, die ZIP-Prüfsumme und `git diff --check` sind grün. Die bekannten Xcode-27-Compilerwarnungen blieben unverändert.
+
+### 9.5 Exit
+
+- [x] Das Paket enthält exakt eine `NativeDictate.app`.
+- [x] Die App meldet Version 4.2.0 und den unveränderten Bundle-Identifier `de.mcc.FlowDictate`.
+- [x] ZIP- und Checksum-Dateinamen verwenden NativeDictate.
+- [x] Die Upgradeanleitung verhindert ausdrücklich parallelen Betrieb beider App-Bundles.
 
 ## 10. R4 – Aktuelle Dokumentation und Historiengrenze
 
