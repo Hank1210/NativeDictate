@@ -73,7 +73,7 @@ private final class DebugSettingsWindowPresenter {
 
         let content = FlowDictateSettingsView(coordinator: coordinator)
         let window = NSWindow(contentViewController: NSHostingController(rootView: content))
-        window.title = "FlowDictate Settings — Test Build"
+        window.title = "NativeDictate Settings — Test Build"
         window.styleMask = [.titled, .closable, .miniaturizable, .resizable]
         window.setContentSize(NSSize(width: 820, height: 720))
         window.collectionBehavior = [.moveToActiveSpace, .fullScreenAuxiliary]

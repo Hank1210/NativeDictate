@@ -66,7 +66,7 @@ nonisolated enum TranscriptionProviderError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .missingAPIKey:
-            "No OpenAI API key is configured. Add one in FlowDictate Settings → Transcription."
+            "No OpenAI API key is configured. Add one in NativeDictate Settings → Transcription."
         case .audioFileContainsNoSamples:
             "The microphone produced no audio samples. The recording was kept; check the selected input device and try again."
         case let .audioTooShort(minimumDuration):

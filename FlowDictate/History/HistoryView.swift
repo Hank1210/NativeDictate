@@ -7,7 +7,7 @@ final class HistoryWindowController: NSWindowController, NSWindowDelegate {
 
     init(coordinator: DictationCoordinator) {
         let window = NSWindow(contentViewController: NSHostingController(rootView: HistoryView(coordinator: coordinator)))
-        window.title = "FlowDictate History"
+        window.title = "NativeDictate History"
         window.styleMask = [.titled, .closable, .miniaturizable, .resizable]
         window.setContentSize(NSSize(width: 900, height: 560))
         window.center()

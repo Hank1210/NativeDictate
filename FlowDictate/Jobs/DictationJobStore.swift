@@ -115,7 +115,7 @@ actor DictationJobStore {
                 case .preparing, .transcribing, .correcting, .formatting, .enhancing:
                     job.status = .failed
                     job.lastErrorCategory = .interrupted
-                    job.lastErrorMessage = "Processing was interrupted when FlowDictate stopped. Retry from History."
+                    job.lastErrorMessage = "Processing was interrupted when NativeDictate stopped. Retry from History."
                 case .readyToInsert:
                     job.status = .insertionDeferred
                     job.lastErrorCategory = .interrupted

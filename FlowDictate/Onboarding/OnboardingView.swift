@@ -6,7 +6,7 @@ final class OnboardingWindowController: NSWindowController {
     init(coordinator: DictationCoordinator) {
         let rootView = OnboardingView(coordinator: coordinator)
         let window = NSWindow(contentViewController: NSHostingController(rootView: rootView))
-        window.title = "Welcome to FlowDictate"
+        window.title = "Welcome to NativeDictate"
         window.styleMask = [.titled, .closable, .miniaturizable]
         window.setContentSize(NSSize(width: 680, height: 540))
         window.center()
@@ -64,7 +64,7 @@ struct OnboardingView: View {
                         .keyboardShortcut(.defaultAction)
                         .disabled(!canContinue)
                 } else {
-                    Button("Start FlowDictate") { coordinator.completeOnboarding() }
+                    Button("Start NativeDictate") { coordinator.completeOnboarding() }
                         .keyboardShortcut(.defaultAction)
                         .disabled(!coordinator.transcriptionSetupReady || !coordinator.recordingLocationConfigured)
                 }
@@ -80,7 +80,7 @@ struct OnboardingView: View {
     private var welcome: some View {
         VStack(spacing: 18) {
             Image(systemName: "waveform.circle.fill").font(.system(size: 72)).foregroundStyle(.tint)
-            Text("Welcome to FlowDictate").font(.largeTitle.bold())
+            Text("Welcome to NativeDictate").font(.largeTitle.bold())
             Text("Dictate into any app from the menu bar. Choose local transcription to keep audio on this Mac, or explicitly use OpenAI with your own API key.")
                 .multilineTextAlignment(.center).foregroundStyle(.secondary).frame(maxWidth: 520)
         }
@@ -90,7 +90,7 @@ struct OnboardingView: View {
         VStack(alignment: .leading, spacing: 18) {
             Label("Choose where recordings are stored", systemImage: "folder")
                 .font(.title2.bold())
-            Text("The recommended location is a Recordings folder inside Documents. macOS asks you to confirm the folder once so FlowDictate can keep secure write access.")
+            Text("The recommended location is a Recordings folder inside Documents. macOS asks you to confirm the folder once so NativeDictate can keep secure write access.")
                 .foregroundStyle(.secondary)
             statusRow("Recordings folder", value: coordinator.recordingLocationPath ?? "Not configured",
                       ready: coordinator.recordingLocationConfigured)
@@ -122,7 +122,7 @@ struct OnboardingView: View {
 
             if coordinator.transcriptionRestartRequired {
                 Label(
-                    "Restart FlowDictate to activate this transcription provider.",
+                    "Restart NativeDictate to activate this transcription provider.",
                     systemImage: "arrow.clockwise.circle.fill"
                 )
                 .foregroundStyle(.orange)
@@ -173,7 +173,7 @@ struct OnboardingView: View {
     private var permissions: some View {
         VStack(alignment: .leading, spacing: 18) {
             Label("Allow system access", systemImage: "checkmark.shield.fill").font(.title2.bold())
-            Text("Microphone records your voice. Speech Recognition can show an optional local live preview. Accessibility lets FlowDictate paste the final transcript.")
+            Text("Microphone records your voice. Speech Recognition can show an optional local live preview. Accessibility lets NativeDictate paste the final transcript.")
                 .foregroundStyle(.secondary)
             statusRow("Microphone", value: coordinator.microphonePermissionGranted ? "Allowed" : "Required",
                       ready: coordinator.microphonePermissionGranted)
@@ -239,11 +239,11 @@ struct OnboardingView: View {
             )
             Image(systemName: prerequisitesReady ? "checkmark.circle.fill" : "exclamationmark.triangle")
                 .font(.system(size: 72)).foregroundStyle(prerequisitesReady ? .green : .orange)
-            Text(prerequisitesReady ? "FlowDictate is ready" : "Setup needs attention")
+            Text(prerequisitesReady ? "NativeDictate is ready" : "Setup needs attention")
                 .font(.largeTitle.bold())
             Text("Place the cursor in another app and press \(coordinator.settings.dictationHotKey.displayName) to begin.")
                 .multilineTextAlignment(.center).foregroundStyle(.secondary)
-            Toggle("Launch FlowDictate at login", isOn: Binding(
+            Toggle("Launch NativeDictate at login", isOn: Binding(
                 get: { coordinator.launchAtLogin.isEnabled },
                 set: { coordinator.launchAtLogin.setEnabled($0) }
             ))

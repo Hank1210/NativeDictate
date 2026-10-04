@@ -108,7 +108,7 @@ private struct MeetingRecordingConsentView: View {
             .background(.quaternary.opacity(0.65), in: RoundedRectangle(cornerRadius: 10))
 
             Text(
-                "Before you record, inform everyone involved and obtain any consent required for your location, organization, and meeting. You are responsible for deciding whether recording is permitted. FlowDictate cannot provide legal advice."
+                "Before you record, inform everyone involved and obtain any consent required for your location, organization, and meeting. You are responsible for deciding whether recording is permitted. NativeDictate cannot provide legal advice."
             )
             .font(.body)
             .fixedSize(horizontal: false, vertical: true)

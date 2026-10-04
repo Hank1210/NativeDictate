@@ -124,7 +124,7 @@ nonisolated struct TranscriptionSessionManifest: Codable, Sendable, Equatable {
             case .preparing, .uploading:
                 segments[index].status = .interrupted
                 segments[index].errorCategory = .interrupted
-                segments[index].errorMessage = "Segment processing was interrupted when FlowDictate stopped."
+                segments[index].errorMessage = "Segment processing was interrupted when NativeDictate stopped."
             default:
                 break
             }
@@ -132,7 +132,7 @@ nonisolated struct TranscriptionSessionManifest: Codable, Sendable, Equatable {
         if [.planning, .transcribing, .merging].contains(status) {
             status = .paused
             lastErrorCategory = .interrupted
-            lastErrorMessage = "Long-form transcription was interrupted when FlowDictate stopped."
+            lastErrorMessage = "Long-form transcription was interrupted when NativeDictate stopped."
         }
         updatedAt = now
     }
@@ -235,7 +235,7 @@ nonisolated enum LongFormTranscriptionError: LocalizedError, Equatable {
         case let .insufficientWorkingStorage(requiredBytes, availableBytes):
             "Long-form transcription needs approximately \(Self.mb(requiredBytes)) MB of free space, but only \(Self.mb(availableBytes)) MB is available."
         case .invalidSegmentPlan:
-            "FlowDictate could not create a safe, complete audio segment plan."
+            "NativeDictate could not create a safe, complete audio segment plan."
         case let .segmentExportFailed(index):
             "Audio segment \(index + 1) could not be prepared. The original recording was kept."
         case let .segmentTooLarge(index, actualBytes, maximumBytes):

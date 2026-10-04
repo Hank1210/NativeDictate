@@ -75,8 +75,8 @@ struct AppProfilesSettingsView: View {
                         }
                     }
                     Text(profile.insertionPreference == .clipboard
-                         ? "Always pastes through the clipboard. macOS may show a privacy notice when FlowDictate reads or restores clipboard contents from another app."
-                         : "Inserts directly through Accessibility first. If the target app does not support direct insertion, FlowDictate uses the clipboard as a bounded fallback.")
+                         ? "Always pastes through the clipboard. macOS may show a privacy notice when NativeDictate reads or restores clipboard contents from another app."
+                         : "Inserts directly through Accessibility first. If the target app does not support direct insertion, NativeDictate uses the clipboard as a bounded fallback.")
                         .font(.caption)
                         .foregroundStyle(.secondary)
                     Button("Delete Profile", role: .destructive) {

@@ -199,7 +199,7 @@ actor DictationHistoryStore {
             if record.processingStatus == .enhancing {
                 record.processingStatus = .enhancementFailed
                 record.enhancementErrorCategory = .interrupted
-                record.enhancementErrorMessage = "Smart Dictation was interrupted when FlowDictate stopped."
+                record.enhancementErrorMessage = "Smart Dictation was interrupted when NativeDictate stopped."
                 record.updatedAt = now
                 recordsByID[id] = record
                 recovered.append(record)
@@ -216,11 +216,11 @@ actor DictationHistoryStore {
             case .transcribing:
                 record.status = .transcriptionFailed
                 record.errorCategory = .interrupted
-                record.errorMessage = "Transcription was interrupted when FlowDictate stopped."
+                record.errorMessage = "Transcription was interrupted when NativeDictate stopped."
             case .inserting:
                 record.status = .insertionUnknown
                 record.errorCategory = .interrupted
-                record.errorMessage = "Insertion may have completed before FlowDictate stopped. Review before inserting again."
+                record.errorMessage = "Insertion may have completed before NativeDictate stopped. Review before inserting again."
             default:
                 continue
             }

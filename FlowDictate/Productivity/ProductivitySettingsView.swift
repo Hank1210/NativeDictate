@@ -74,7 +74,7 @@ struct ProductivitySettingsView: View {
             }
 
             Section("Community Updates") {
-                LabeledContent("Installed", value: "FlowDictate \(FlowDictateVersion.displayString)")
+                LabeledContent("Installed", value: "NativeDictate \(FlowDictateVersion.displayString)")
                 LabeledContent("Edition", value: "Community")
                 Toggle("Check for new stable releases once per day", isOn: $settings.updateCheckEnabled)
                 Button {
@@ -101,7 +101,7 @@ struct ProductivitySettingsView: View {
                     }
                     Button("Open GitHub Release Page") { coordinator.openAvailableRelease() }
                 }
-                Text("FlowDictate never downloads or installs an update automatically.")
+                Text("NativeDictate never downloads or installs an update automatically.")
                     .font(.caption).foregroundStyle(.secondary)
             }
         }

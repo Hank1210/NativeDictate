@@ -159,7 +159,7 @@ nonisolated struct MixedRecordingSession: Codable, Sendable, Equatable, Identifi
                 tracks[index].status = .interrupted
                 tracks[index].errorCategory = .interrupted
                 tracks[index].errorMessage =
-                    "Track processing was interrupted when FlowDictate stopped."
+                    "Track processing was interrupted when NativeDictate stopped."
                 changed = true
             default:
                 break
@@ -171,7 +171,7 @@ nonisolated struct MixedRecordingSession: Codable, Sendable, Equatable, Identifi
             status = .paused
             lastErrorCategory = .interrupted
             lastErrorMessage =
-                "Meeting processing was interrupted when FlowDictate stopped. Resume from History."
+                "Meeting processing was interrupted when NativeDictate stopped. Resume from History."
             changed = true
         default:
             break

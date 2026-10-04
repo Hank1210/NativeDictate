@@ -53,7 +53,7 @@ nonisolated enum SystemAudioTrackRecorderError: LocalizedError, Sendable, Equata
         case let .operationFailed(operation, status):
             "Core Audio could not \(operation) (OSStatus \(status))."
         case .cleanupTimedOut:
-            "Core Audio did not finish releasing the system audio capture. Restart FlowDictate before trying again."
+            "Core Audio did not finish releasing the system audio capture. Restart NativeDictate before trying again."
         }
     }
 }
@@ -112,7 +112,7 @@ actor CoreAudioSystemTrackRecorder: MixedTrackRecording {
             let tapDescription = CATapDescription(
                 monoGlobalTapButExcludeProcesses: excludedProcessIDs
             )
-            tapDescription.name = "FlowDictate mixed system audio"
+            tapDescription.name = "NativeDictate mixed system audio"
             tapDescription.isPrivate = true
             tapDescription.muteBehavior = .unmuted
 
@@ -146,7 +146,7 @@ actor CoreAudioSystemTrackRecorder: MixedTrackRecording {
             let aggregateUID = "de.mcc.FlowDictate.mixed-system-audio.\(UUID().uuidString)"
             self.aggregateUID = aggregateUID
             let aggregateDescription: [String: Any] = [
-                kAudioAggregateDeviceNameKey: "FlowDictate Mixed System Audio",
+                kAudioAggregateDeviceNameKey: "NativeDictate Mixed System Audio",
                 kAudioAggregateDeviceUIDKey: aggregateUID,
                 kAudioAggregateDeviceIsPrivateKey: true,
                 kAudioAggregateDeviceIsStackedKey: false,

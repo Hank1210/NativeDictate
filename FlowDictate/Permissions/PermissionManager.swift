@@ -12,9 +12,9 @@ enum FlowPermissionError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .microphoneDenied:
-            "Microphone access is required. Enable FlowDictate in System Settings → Privacy & Security → Microphone."
+            "Microphone access is required. Enable NativeDictate in System Settings → Privacy & Security → Microphone."
         case .eventPostingDenied:
-            "Accessibility access is required to paste text. Enable FlowDictate in System Settings → Privacy & Security → Accessibility, then try again."
+            "Accessibility access is required to paste text. Enable NativeDictate in System Settings → Privacy & Security → Accessibility, then try again."
         case .speechRecognitionDenied:
             "Speech Recognition access is unavailable. Live Preview will stay off, but dictation still works."
         }

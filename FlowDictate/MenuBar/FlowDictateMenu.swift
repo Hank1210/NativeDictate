@@ -133,11 +133,11 @@ struct FlowDictateMenu: View {
 
         Divider()
 
-        Button("Quit FlowDictate") {
+        Button("Quit NativeDictate") {
             NSApplication.shared.terminate(nil)
         }
 
-        Button("Quit & Restart FlowDictate") {
+        Button("Quit & Restart NativeDictate") {
             coordinator.quitAndRestart()
         }
         .disabled(coordinator.isRecording || coordinator.isProcessing)
@@ -215,7 +215,7 @@ struct FlowDictateSettingsView: View {
         settingsForm {
             Section("Startup") {
                 Toggle(
-                    "Launch FlowDictate at login",
+                    "Launch NativeDictate at login",
                     isOn: Binding(
                         get: { launchAtLogin.isEnabled },
                         set: { launchAtLogin.setEnabled($0) }
@@ -412,7 +412,7 @@ struct FlowDictateSettingsView: View {
                         .font(.caption)
                         .foregroundStyle(.secondary)
                     if coordinator.systemAudioPermissionStatus.backend == .coreAudioTap {
-                        Text("In System Settings, use the FlowDictate switch under \u{201c}System Audio Recording Only.\u{201d} macOS may show it on the same page as screen recording access.")
+                        Text("In System Settings, use the NativeDictate switch under \u{201c}System Audio Recording Only.\u{201d} macOS may show it on the same page as screen recording access.")
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     }
@@ -462,7 +462,7 @@ struct FlowDictateSettingsView: View {
                         .font(.caption)
                         .foregroundStyle(.secondary)
 
-                    Text("Storage: at 48 kHz, the two uncompressed original tracks use about 1.4 GB per hour. Aligned working copies can roughly double that; higher microphone sample rates need more. FlowDictate warns below 500 MB free and blocks a new mixed recording only below 50 MB.")
+                    Text("Storage: at 48 kHz, the two uncompressed original tracks use about 1.4 GB per hour. Aligned working copies can roughly double that; higher microphone sample rates need more. NativeDictate warns below 500 MB free and blocks a new mixed recording only below 50 MB.")
                         .font(.caption)
                         .foregroundStyle(.secondary)
 
@@ -653,7 +653,7 @@ struct FlowDictateSettingsView: View {
                         systemImage: "arrow.clockwise.circle.fill"
                     )
                     .foregroundStyle(.orange)
-                    Text("FlowDictate will not start another dictation until it has restarted. This prevents local and OpenAI transcription resources from being mixed in one app session.")
+                    Text("NativeDictate will not start another dictation until it has restarted. This prevents local and OpenAI transcription resources from being mixed in one app session.")
                         .font(.caption)
                         .foregroundStyle(.secondary)
                     Button("Quit & Restart Now") {

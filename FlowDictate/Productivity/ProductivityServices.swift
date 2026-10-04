@@ -79,7 +79,7 @@ nonisolated struct GitHubReleaseInfo: Equatable, Sendable {
 nonisolated enum ReleaseCheckError: LocalizedError {
     case invalidResponse
 
-    var errorDescription: String? { "The FlowDictate release information is unavailable." }
+    var errorDescription: String? { "The NativeDictate release information is unavailable." }
 }
 
 nonisolated struct GitHubReleaseChecker: Sendable {

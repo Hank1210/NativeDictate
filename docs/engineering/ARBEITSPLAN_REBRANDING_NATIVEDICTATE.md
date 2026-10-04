@@ -1,8 +1,8 @@
 # FlowDictate → NativeDictate – Rebranding-Arbeitsplan
 
 **Vorhaben:** Umbenennung des Open-Source-Projekts und der sichtbaren macOS-App von FlowDictate zu NativeDictate
-**Status:** `IN ARBEIT` – R0 und R1 abgeschlossen, R2 als nächster Schritt
-**Stand:** 3. Oktober 2026
+**Status:** `IN ARBEIT` – R0 bis R2 abgeschlossen, R3 als nächster Schritt
+**Stand:** 4. Oktober 2026
 **Ausgangsbasis:** FlowDictate 4.1.0, Build 33, Tag `v4.1.0`, Commit `afa02eb`
 **Zielversion:** NativeDictate 4.2.0
 **Geplanter Arbeitsbranch:** `codex/rebrand-native-dictate`
@@ -136,7 +136,7 @@ Optionale interne Namensbereinigung in späteren Versionen
 |---|---|---|---|
 | R0 Vertrags- und Baseline-Gate | `ERLEDIGT` | 4.1.0 | sichere Arbeitsbasis |
 | R1 Identitätsgrenzen und Regressionstests | `ERLEDIGT` | R0 | geschützte Legacy-Verträge |
-| R2 sichtbare Produktumbenennung | `OFFEN` | R1 | NativeDictate-Appoberfläche |
+| R2 sichtbare Produktumbenennung | `ERLEDIGT` | R1 | NativeDictate-Appoberfläche |
 | R3 Packaging und Installationsmigration | `OFFEN` | R2 | testbares 4.2-Paket |
 | R4 aktuelle Dokumentation und Historiengrenze | `OFFEN` | R2 | konsistente Projektkommunikation |
 | R5 automatisierte und manuelle Migrationstests | `OFFEN` | R3, R4 | Freigabe für GitHub-Umschaltung |
@@ -237,7 +237,7 @@ Vor sichtbaren Umbenennungen werden die Werte geschützt, die bestehende Install
 
 ## 8. R2 – Sichtbare Produktumbenennung
 
-**Status:** `OFFEN`
+**Status:** `ERLEDIGT`
 
 ### 8.1 Pflichtumfang
 
@@ -271,12 +271,24 @@ Die Umbenennung interner Symbole darf nicht den eigentlichen Produktwechsel bloc
 - `FlowDictate` bleibt in aktuellen Texten nur zulässig, wenn eine alte Installation, ein Legacy-Pfad oder eine historische Version gemeint ist.
 - Neue Fehlermeldungen dürfen keine alten Produktnamen enthalten.
 
-### 8.4 Exit
+### 8.4 Nachweis vom 4. Oktober 2026
 
-- [ ] Eine normale App-Nutzung zeigt keinen unbeabsichtigten alten Produktnamen.
-- [ ] Berechtigungsdialoge und Systemeinstellungen nennen soweit technisch steuerbar NativeDictate.
-- [ ] Exportierte neue Nutzerdateien verwenden NativeDictate im vorgeschlagenen Dateinamen.
-- [ ] Alle verbleibenden FlowDictate-Treffer sind klassifiziert und begründet.
+- Die sichtbaren Fenster-, Menü-, Onboarding-, Settings-, History-, Berechtigungs-, Datenschutz-, Fehler-, Diagnose- und Update-Texte verwenden `NativeDictate`. Dazu gehören auch die Hinweise für Mikrofon, Bedienungshilfen, Systemaudio, Login Items, Aufnahmeordner und Meeting-Einwilligung.
+- `CFBundleDisplayName` ist in der Quell-Info-Plist auf `NativeDictate` gesetzt. Der gebaute Testhost enthält außerdem ausschließlich `NativeDictate` in den drei steuerbaren TCC-Nutzungstexten für Mikrofon, Speech Recognition und Systemaudio. `CFBundleName`, Executable, Xcode-Projekt, Target und Scheme heißen bis R3 beziehungsweise einer optionalen internen Bereinigung weiterhin technisch `FlowDictate`; der Bundle-Identifier bleibt absichtlich `de.mcc.FlowDictate`.
+- Neue vorgeschlagene Nutzerexporte heißen `NativeDictate-<ID>.txt`, `NativeDictate-Diagnostics.json`, `NativeDictate-Dictionary.json` und `NativeDictate-Writing-Styles.json`.
+- Die im Core-Audio-System sichtbaren Tap- und Aggregate-Device-Namen verwenden `NativeDictate`. Interne Aggregate-UIDs, Queue-Labels, temporäre Uploaddateien und Logger-Fallbacks bleiben als technische Legacy-Namen erhalten.
+- Das vorhandene App-Icon zeigt Mikrofon, Wellenform und Aufnahmepunkt ohne alten Namen oder alte Initialen. Es wurde deshalb entsprechend dem Pflichtumfang nicht verändert. Eine eigene About- oder Copyright-Oberfläche existiert im aktuellen Quellstand nicht.
+- Der neue Regressionstest `visibleProductBrandingUsesNativeDictate()` scannt die 24 benutzersichtbaren Produktionsquellen, die Quell-Info-Plist, die TCC-Buildsettings und die neuen Exportnamen. Das ausdrücklich erlaubte Queue-Label `FlowDictate.SystemAudioCapture` ist eng begrenzt ausgenommen. Der korrigierte Test bestand zunächst gezielt 1/1.
+- Anschließend bestand die vollständige serielle macOS-Suite auf dem endgültigen R2-Stand mit 227/227 Tests, 0 Fehlern und 0 Skips. Der Lauf schließt alle 226 bestehenden Regressionstests und den neuen Brand-Test ein.
+- Der kontrollierte Restscan findet in App-Code, Info-Plist und Xcode-Projekt noch 104 Zeilen beziehungsweise 34 String-Literale mit `FlowDictate`. Sie gehören ausschließlich zu den in R2.2 erlaubten internen Typ-, Datei-, Projekt-, Target- und Produktnamen, den in R1 geschützten Bundle-/Speicher-/Queue-Verträgen, temporären internen Dateinamen, Kommentaren oder der bis R6 absichtlich aktiven alten GitHub-API-Adresse. `REBRANDING_LEGACY_ALLOWLIST.tsv` dokumentiert die zusätzlichen R2-Ausnahmen.
+- `plutil -lint` für die Quell-Info-Plist und `git diff --check` sind grün. Die bekannten, bereits in R0/R1 dokumentierten Xcode-27-Compilerwarnungen blieben unverändert.
+
+### 8.5 Exit
+
+- [x] Eine normale App-Nutzung zeigt keinen unbeabsichtigten alten Produktnamen.
+- [x] Berechtigungsdialoge und Systemeinstellungen nennen soweit technisch steuerbar NativeDictate.
+- [x] Exportierte neue Nutzerdateien verwenden NativeDictate im vorgeschlagenen Dateinamen.
+- [x] Alle verbleibenden FlowDictate-Treffer sind klassifiziert und begründet.
 
 ## 9. R3 – Packaging und Installationsmigration
 

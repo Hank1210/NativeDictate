@@ -14,6 +14,14 @@ FlowDictate/Meetings/CoreAudioTapCaptureProbe.swift	prefix	de.mcc.FlowDictate.co
 FlowDictate/Meetings/CoreAudioTapCaptureProbe.swift	prefix	de.mcc.FlowDictate.capture-probe	Bestehende Diagnose-UID.
 FlowDictate/Audio/SystemAudioRecorder.swift	exact	FlowDictate.SystemAudioCapture	Bestehendes internes Capture-Queue-Label.
 FlowDictate/Utilities/FlowLogger.swift	exact	FlowDictate	Interner Logger-Fallback für Prozesse ohne Bundle-Identifier.
+FlowDictate.xcodeproj/project.pbxproj	prefix	FlowDictate.app|FlowDictateTests|FlowDictateUITests|FlowDictate.xcodeproj	Interne Xcode-Produkt-, Target-, Testhost- und Projektverweise bleiben gemäß R2.2 zunächst bestehen; der App-Ausgabename folgt in R3.
+FlowDictate/FlowDictateApp.swift	prefix	FlowDictateApp|FlowDictateMenu|FlowDictateSettingsView	Interne Swift-Typnamen werden in R2 nicht mechanisch umbenannt.
+FlowDictate/Utilities/FlowDictateVersion.swift	prefix	FlowDictateVersion	Interner Versions-Typ bleibt gemäß R2.2 bestehen.
+FlowDictate/Productivity/ProductivityServices.swift	exact	https://api.github.com/repos/Hank1210/FlowDictate/releases/latest	Bestehende Repository-Adresse bleibt bis zur GitHub-Umschaltung in R6 aktiv.
+FlowDictate/Audio/CaptureProbeArtifactStore.swift	prefix	FlowDictateCaptureProbes	Nur internes temporäres Diagnoseverzeichnis; kein neuer Nutzerexport und kein Persistenzvertrag.
+FlowDictate/Audio/AudioUploadPreparer.swift	prefix	FlowDictate-Upload-|FlowDictate-Multipart-	Interne temporäre Uploadartefakte bleiben kompatibel mit der bestehenden Bereinigung.
+FlowDictate/Transcription/MultipartUploadFileBuilder.swift	prefix	FlowDictate-Multipart-	Interne temporäre Multipart-Datei; nicht benutzersichtbar.
+FlowDictate/Transcription/OpenAITranscriptionProvider.swift	prefix	FlowDictate-	Interne Multipart-Boundary; nicht benutzersichtbar.
 docs/engineering/ARBEITSPLAN_PHASE_4_1.md	file	FlowDictate|de.mcc.FlowDictate|de.euler.FlowDictate	Abgeschlossener historischer 4.1-Arbeitsplan.
 docs/engineering/CAPTURE_SPIKE_PHASE_4_1.md	file	FlowDictate|de.mcc.FlowDictate|de.euler.FlowDictate	Abgeschlossener historischer Capture-Spike.
 docs/releases/RELEASE_NOTES_3.2.0.md	file	FlowDictate|de.mcc.FlowDictate|de.euler.FlowDictate	Veröffentlichte historische Release Notes.

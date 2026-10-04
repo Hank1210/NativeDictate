@@ -59,7 +59,7 @@ struct SmartDictationSettingsView: View {
                                 }
                             } else {
                                 Label(
-                                    "\(selectedStyle.name) is inactive because OpenAI improvement is not permitted. FlowDictate will insert the locally processed text.",
+                                    "\(selectedStyle.name) is inactive because OpenAI improvement is not permitted. NativeDictate will insert the locally processed text.",
                                     systemImage: "cloud.slash"
                                 )
                                 .font(.caption)
@@ -143,7 +143,7 @@ struct SmartDictationSettingsView: View {
         VStack(alignment: .leading, spacing: 7) {
             Label("How it works", systemImage: "info.circle")
                 .font(.headline)
-            Text("After transcription, FlowDictate first applies spoken commands and your personal dictionary locally. The selected default writing style then creates the final text.")
+            Text("After transcription, NativeDictate first applies spoken commands and your personal dictionary locally. The selected default writing style then creates the final text.")
             Text("The style is applied automatically to every new dictation—you do not need to say its name. Original makes no additional AI request; all other styles send text, but not audio, to OpenAI.")
                 .foregroundStyle(.secondary)
         }

@@ -11,7 +11,7 @@ enum DirectInsertionError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .unsupported: "The focused control does not support direct text insertion."
-        case .protectedField: "FlowDictate will not insert text into a protected field."
+        case .protectedField: "NativeDictate will not insert text into a protected field."
         case .writeFailed: "Direct text insertion failed."
         }
     }

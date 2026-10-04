@@ -208,7 +208,7 @@ nonisolated enum CoreAudioTapProbeError: LocalizedError, Equatable {
         case .noAudioCallbacks:
             "The Core Audio tap started but delivered no audio callbacks."
         case .cleanupTimedOut:
-            "Core Audio did not finish releasing the audio-only capture. Restart FlowDictate before trying again."
+            "Core Audio did not finish releasing the audio-only capture. Restart NativeDictate before trying again."
         case .invalidCycleCount:
             "The Core Audio tap repetition count must be between 1 and 100."
         }
@@ -256,7 +256,7 @@ actor CoreAudioTapCaptureProbe {
             let tapDescription = CATapDescription(
                 monoGlobalTapButExcludeProcesses: excludedProcessIDs
             )
-            tapDescription.name = "FlowDictate 4.1 audio-only capture probe"
+            tapDescription.name = "NativeDictate audio-only capture probe"
             tapDescription.isPrivate = true
             tapDescription.muteBehavior = .unmuted
 
@@ -271,7 +271,7 @@ actor CoreAudioTapCaptureProbe {
             let aggregateUID = "de.mcc.FlowDictate.capture-probe.\(UUID().uuidString)"
             createdAggregateUID = aggregateUID
             let aggregateDescription: [String: Any] = [
-                kAudioAggregateDeviceNameKey: "FlowDictate 4.1 Capture Probe",
+                kAudioAggregateDeviceNameKey: "NativeDictate Capture Probe",
                 kAudioAggregateDeviceUIDKey: aggregateUID,
                 kAudioAggregateDeviceIsPrivateKey: true,
                 kAudioAggregateDeviceIsStackedKey: false,

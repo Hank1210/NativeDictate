@@ -17,7 +17,7 @@ enum LaunchAtLoginState: Equatable {
         case .disabled, .enabled:
             nil
         case .requiresApproval:
-            "Allow FlowDictate under System Settings → General → Login Items."
+            "Allow NativeDictate under System Settings → General → Login Items."
         case .unavailable:
             "Launch at login is unavailable for this build. Install and sign the app consistently."
         }

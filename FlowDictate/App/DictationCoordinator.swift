@@ -432,7 +432,7 @@ final class DictationCoordinator: ObservableObject {
             try? await Task.sleep(for: .milliseconds(400))
             self.showOnboarding()
         }
-        FlowLogger.app.info("FlowDictate \(FlowDictateVersion.displayString, privacy: .public) started")
+        FlowLogger.app.info("NativeDictate \(FlowDictateVersion.displayString, privacy: .public) started")
     }
 
     deinit {
@@ -579,7 +579,7 @@ final class DictationCoordinator: ObservableObject {
         let panel = NSOpenPanel()
         panel.title = "Choose Audio for a Local Transcription Test"
         panel.prompt = "Test Locally"
-        panel.message = "Choose an existing audio file. FlowDictate will transcribe it locally without inserting text or creating a History entry."
+        panel.message = "Choose an existing audio file. NativeDictate will transcribe it locally without inserting text or creating a History entry."
         panel.allowedContentTypes = [.audio]
         panel.allowsMultipleSelection = false
         guard panel.runModal() == .OK, let url = panel.url else { return }
@@ -799,7 +799,7 @@ final class DictationCoordinator: ObservableObject {
 
     func quitAndRestart() {
         guard !isRecording, !isProcessing else {
-            setupMessage = "Finish or cancel the current dictation before restarting FlowDictate."
+            setupMessage = "Finish or cancel the current dictation before restarting NativeDictate."
             return
         }
         guard !isRestarting else { return }
@@ -814,10 +814,10 @@ final class DictationCoordinator: ObservableObject {
                 isRestarting = false
                 do {
                     try registerConfiguredHotKeys()
-                    setupMessage = "FlowDictate could not restart: \(launchError.localizedDescription)"
+                    setupMessage = "NativeDictate could not restart: \(launchError.localizedDescription)"
                 } catch let restoreError {
                     state = .failed(message: restoreError.localizedDescription, retainedAudioURL: nil)
-                    setupMessage = "FlowDictate could not restart (\(launchError.localizedDescription)) or restore its hotkeys: \(restoreError.localizedDescription)"
+                    setupMessage = "NativeDictate could not restart (\(launchError.localizedDescription)) or restore its hotkeys: \(restoreError.localizedDescription)"
                 }
             }
         }
@@ -930,7 +930,7 @@ final class DictationCoordinator: ObservableObject {
     private func beginCriticalInteractionActivityIfNeeded() {
         guard criticalInteractionActivity == nil else { return }
         criticalInteractionActivity = processActivityManager.beginUserInitiatedActivity(
-            reason: "Recording and completing a FlowDictate dictation"
+            reason: "Recording and completing a NativeDictate dictation"
         )
         FlowLogger.app.notice("Critical dictation activity began")
     }
@@ -975,7 +975,7 @@ final class DictationCoordinator: ObservableObject {
             return
         }
         settings.onboardingVersion = Self.currentOnboardingVersion
-        setupMessage = "FlowDictate is ready."
+        setupMessage = "NativeDictate is ready."
         onboardingWindowController?.close()
     }
 
@@ -1073,7 +1073,7 @@ final class DictationCoordinator: ObservableObject {
         guard let text = record.finalText ?? record.originalTranscript else { return }
         let panel = NSSavePanel()
         panel.title = "Export Dictation Text"
-        panel.nameFieldStringValue = "FlowDictate-\(record.id.uuidString).txt"
+        panel.nameFieldStringValue = "NativeDictate-\(record.id.uuidString).txt"
         guard panel.runModal() == .OK, let url = panel.url else { return }
         do { try text.write(to: url, atomically: true, encoding: .utf8) }
         catch { fail(error, retainedAudioURL: nil) }
@@ -1081,8 +1081,8 @@ final class DictationCoordinator: ObservableObject {
 
     func exportDiagnostics() {
         let panel = NSSavePanel()
-        panel.title = "Export FlowDictate Diagnostics"
-        panel.nameFieldStringValue = "FlowDictate-Diagnostics.json"
+        panel.title = "Export NativeDictate Diagnostics"
+        panel.nameFieldStringValue = "NativeDictate-Diagnostics.json"
         guard panel.runModal() == .OK, let url = panel.url else { return }
         let statusCounts = Dictionary(grouping: historyRecords, by: { $0.status.rawValue })
             .mapValues(\.count)
@@ -1555,7 +1555,7 @@ final class DictationCoordinator: ObservableObject {
         mixedCaptureTestTask = Task { [weak self] in
             guard let self else { return }
             let activity = processActivityManager.beginUserInitiatedActivity(
-                reason: "Testing synchronized FlowDictate mixed capture"
+                reason: "Testing synchronized NativeDictate mixed capture"
             )
             defer {
                 processActivityManager.endActivity(activity)
@@ -1766,7 +1766,7 @@ final class DictationCoordinator: ObservableObject {
         coreAudioTapProbeTask = Task { [weak self] in
             guard let self else { return }
             let activity = processActivityManager.beginUserInitiatedActivity(
-                reason: "Measuring FlowDictate audio-only capture"
+                reason: "Measuring NativeDictate audio-only capture"
             )
             defer {
                 processActivityManager.endActivity(activity)
@@ -1828,7 +1828,7 @@ final class DictationCoordinator: ObservableObject {
         coreAudioTapProbeTask = Task { [weak self] in
             guard let self else { return }
             let activity = processActivityManager.beginUserInitiatedActivity(
-                reason: "Measuring repeated FlowDictate audio-only capture"
+                reason: "Measuring repeated NativeDictate audio-only capture"
             )
             defer {
                 processActivityManager.endActivity(activity)
@@ -1936,7 +1936,7 @@ final class DictationCoordinator: ObservableObject {
         systemAudioTestTask = Task { [weak self] in
             guard let self else { return }
             let activity = processActivityManager.beginUserInitiatedActivity(
-                reason: "Measuring FlowDictate ScreenCaptureKit system audio"
+                reason: "Measuring NativeDictate ScreenCaptureKit system audio"
             )
             var temporaryURL: URL?
             var probeArtifactURL: URL?
@@ -2168,13 +2168,13 @@ final class DictationCoordinator: ObservableObject {
             if let release, GitHubReleaseChecker.isNewer(release.version, than: current) {
                 availableRelease = release
                 if manual {
-                    let message = "FlowDictate \(release.version) is available."
+                    let message = "NativeDictate \(release.version) is available."
                     updateCheckMessage = message
                     setupMessage = message
                 }
             } else if manual {
                 availableRelease = nil
-                let message = "FlowDictate is up to date."
+                let message = "NativeDictate is up to date."
                 updateCheckMessage = message
                 setupMessage = message
             }
@@ -2246,8 +2246,8 @@ final class DictationCoordinator: ObservableObject {
         }
     }
 
-    func exportDictionary() { chooseSmartDictationExport(filename: "FlowDictate-Dictionary.json") { url in try await self.dictionaryStore.export(to: url) } }
-    func exportWritingStyles() { chooseSmartDictationExport(filename: "FlowDictate-Writing-Styles.json") { url in try await self.writingStyleStore.export(to: url) } }
+    func exportDictionary() { chooseSmartDictationExport(filename: "NativeDictate-Dictionary.json") { url in try await self.dictionaryStore.export(to: url) } }
+    func exportWritingStyles() { chooseSmartDictationExport(filename: "NativeDictate-Writing-Styles.json") { url in try await self.writingStyleStore.export(to: url) } }
     func importDictionary() { chooseSmartDictationImport { url in try await self.dictionaryStore.importFile(from: url) } }
     func importWritingStyles() { chooseSmartDictationImport { url in try await self.writingStyleStore.importFile(from: url) } }
 

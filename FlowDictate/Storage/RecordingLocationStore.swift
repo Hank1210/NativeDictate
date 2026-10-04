@@ -14,7 +14,7 @@ enum RecordingLocationError: LocalizedError {
         case .bookmarkInvalid:
             "The saved recordings folder is no longer available. Choose it again."
         case .accessDenied:
-            "FlowDictate no longer has permission to write to the recordings folder."
+            "NativeDictate no longer has permission to write to the recordings folder."
         case .selectionCancelled:
             "No recordings folder was selected."
         }
@@ -137,8 +137,8 @@ nonisolated final class RecordingLocationStore: @unchecked Sendable {
         let panel = NSOpenPanel()
         panel.title = recommended ? "Choose Documents to create Recordings" : "Choose Recordings Folder"
         panel.message = recommended
-            ? "Select your Documents folder. FlowDictate will create and use a Recordings folder inside it."
-            : "Choose the folder where FlowDictate should store audio recordings."
+            ? "Select your Documents folder. NativeDictate will create and use a Recordings folder inside it."
+            : "Choose the folder where NativeDictate should store audio recordings."
         panel.prompt = recommended ? "Use Documents" : "Choose Folder"
         panel.canChooseFiles = false
         panel.canChooseDirectories = true

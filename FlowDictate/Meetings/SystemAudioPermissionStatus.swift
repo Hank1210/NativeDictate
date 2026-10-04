@@ -44,7 +44,7 @@ nonisolated struct SystemAudioPermissionStatus: Sendable, Equatable {
             // doesn't expose a public preflight API that can support this claim.
             "System Audio access must be reviewed in System Settings."
         case (.screenCaptureKit, .authorized):
-            "Screen & System Audio Recording access is allowed. FlowDictate registers only an audio output and saves no video."
+            "Screen & System Audio Recording access is allowed. NativeDictate registers only an audio output and saves no video."
         case (.screenCaptureKit, .requestRequired):
             "macOS will request Screen & System Audio Recording access when System Audio starts."
         case (.screenCaptureKit, .verifiedWhenCaptureStarts):

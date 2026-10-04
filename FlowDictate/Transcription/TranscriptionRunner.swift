@@ -13,7 +13,7 @@ struct TranscriptionPersistenceFailure: LocalizedError {
     let record: DictationRecord
 
     var errorDescription: String? {
-        "The recording was saved, but FlowDictate could not update its history: \(underlyingError.localizedDescription)"
+        "The recording was saved, but NativeDictate could not update its history: \(underlyingError.localizedDescription)"
     }
 }
 

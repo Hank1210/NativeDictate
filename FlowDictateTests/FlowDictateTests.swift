@@ -121,6 +121,100 @@ struct FlowDictateTests {
         }
     }
 
+    @Test func visibleProductBrandingUsesNativeDictate() throws {
+        let repositoryRoot = URL(fileURLWithPath: #filePath)
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+        let visibleSourcePaths = [
+            "FlowDictate/App/DictationCoordinator.swift",
+            "FlowDictate/Audio/SystemAudioRecorder.swift",
+            "FlowDictate/FlowDictateApp.swift",
+            "FlowDictate/History/DictationHistoryStore.swift",
+            "FlowDictate/History/HistoryView.swift",
+            "FlowDictate/Insertion/AccessibilityTextInserter.swift",
+            "FlowDictate/Jobs/DictationJobStore.swift",
+            "FlowDictate/Meetings/CoreAudioTapCaptureProbe.swift",
+            "FlowDictate/Meetings/MeetingRecordingConsentView.swift",
+            "FlowDictate/Meetings/MixedRecordingSession.swift",
+            "FlowDictate/Meetings/SystemAudioPermissionStatus.swift",
+            "FlowDictate/Meetings/SystemAudioTrackRecorder.swift",
+            "FlowDictate/MenuBar/FlowDictateMenu.swift",
+            "FlowDictate/Onboarding/OnboardingView.swift",
+            "FlowDictate/Permissions/PermissionManager.swift",
+            "FlowDictate/Productivity/ProductivityServices.swift",
+            "FlowDictate/Productivity/ProductivitySettingsView.swift",
+            "FlowDictate/Profiles/AppProfilesSettingsView.swift",
+            "FlowDictate/Settings/LaunchAtLoginManager.swift",
+            "FlowDictate/Settings/SmartDictationSettingsView.swift",
+            "FlowDictate/Storage/RecordingLocationStore.swift",
+            "FlowDictate/Transcription/LongForm/LongFormTranscriptionModels.swift",
+            "FlowDictate/Transcription/TranscriptionProvider.swift",
+            "FlowDictate/Transcription/TranscriptionRunner.swift"
+        ]
+        let legacyVisibleName = try NSRegularExpression(
+            pattern: #"(?:^|[\"\s])FlowDictate\b"#
+        )
+        let allowedTechnicalNames = [
+            "FlowDictate.SystemAudioCapture"
+        ]
+
+        for path in visibleSourcePaths {
+            let contents = try String(
+                contentsOf: repositoryRoot.appendingPathComponent(path),
+                encoding: .utf8
+            )
+            let uncommentedLines = contents
+                .split(separator: "\n", omittingEmptySubsequences: false)
+                .filter { !$0.trimmingCharacters(in: .whitespaces).hasPrefix("//") }
+                .joined(separator: "\n")
+            let userFacingLines = allowedTechnicalNames.reduce(uncommentedLines) { result, name in
+                result.replacingOccurrences(of: name, with: "")
+            }
+            let range = NSRange(userFacingLines.startIndex..., in: userFacingLines)
+            #expect(
+                legacyVisibleName.firstMatch(in: userFacingLines, range: range) == nil,
+                "Legacy product name remains in user-facing source: \(path)"
+            )
+        }
+
+        let infoPlistURL = repositoryRoot.appendingPathComponent("config/FlowDictateInfo.plist")
+        let infoPlistData = try Data(contentsOf: infoPlistURL)
+        let infoPlist = try #require(
+            PropertyListSerialization.propertyList(from: infoPlistData, format: nil)
+                as? [String: String]
+        )
+        #expect(infoPlist["CFBundleDisplayName"] == ProductIdentity.displayName)
+        #expect(infoPlist["NSAudioCaptureUsageDescription"]?.contains("NativeDictate") == true)
+        #expect(infoPlist.values.allSatisfy { !$0.contains("FlowDictate") })
+
+        let projectFile = repositoryRoot
+            .appendingPathComponent("FlowDictate.xcodeproj", isDirectory: true)
+            .appendingPathComponent("project.pbxproj")
+        let projectContents = try String(contentsOf: projectFile, encoding: .utf8)
+        #expect(
+            projectContents.components(
+                separatedBy: "NativeDictate records your voice to create a transcription."
+            ).count - 1 == 3
+        )
+        #expect(
+            projectContents.components(
+                separatedBy: "NativeDictate uses on-device speech recognition"
+            ).count - 1 == 3
+        )
+        #expect(projectContents.contains("FlowDictate records your voice") == false)
+        #expect(projectContents.contains("FlowDictate uses on-device speech recognition") == false)
+
+        let coordinator = try String(
+            contentsOf: repositoryRoot.appendingPathComponent(
+                "FlowDictate/App/DictationCoordinator.swift"
+            ),
+            encoding: .utf8
+        )
+        #expect(coordinator.contains("NativeDictate-Diagnostics.json"))
+        #expect(coordinator.contains("NativeDictate-Dictionary.json"))
+        #expect(coordinator.contains("NativeDictate-Writing-Styles.json"))
+    }
+
     @Test func selectedMicrophoneRenderBufferAdvertisesWritablePCMBytes() throws {
         for channels: AVAudioChannelCount in [1, 2] {
             let format = try #require(AVAudioFormat(

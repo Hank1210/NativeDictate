@@ -15,7 +15,7 @@ enum SystemAudioRecorderError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .permissionDenied:
-            "System Audio access is required. Enable FlowDictate in System Settings → Privacy & Security → Screen & System Audio Recording."
+            "System Audio access is required. Enable NativeDictate in System Settings → Privacy & Security → Screen & System Audio Recording."
         case .unavailable:
             "macOS did not provide a usable System Audio source."
         case .noAudioReceived:
