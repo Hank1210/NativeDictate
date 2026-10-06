@@ -469,14 +469,15 @@ Zu prüfen:
 - Zwei erste reale Systemaudio-Aufnahmen enthielten absichtlich beziehungsweise testbedingt nur Stille, weil die Wiedergabe aus dem NativeDictate-History-Fenster erfolgte und `excludesCurrentProcessAudio` den eigenen App-Ton vertragsgemäß ausschließt. Die Dateien waren technisch valide, aber mit konstant −91 dB still; die daraus folgenden `Transcription failed`-Einträge sind keine Capture-Regression und wurden nicht gelöscht. Der Wiederholungstest mit Sprache aus Google Chrome bestand: 11,805 Sekunden, 97.691 Byte, −29,5 dB Mittel, −8,8 dB Spitze, lokale Parakeet-Transkription und History-Status `completed`.
 - Der reale Mixed-Test bestand mit getrennten Originalspuren und gelabeltem Transkript. Mikrofon und Systemaudio wurden als 48-kHz-Mono-CAF mit 1.099.776 beziehungsweise 1.112.064 Byte gespeichert; beide Spuren enthielten echten Pegel, wurden transkribiert und auf einer 29 Einträge umfassenden Timeline zusammengeführt. Der Session-Status ist `completed`, Synchronisationsqualität `good`, mit 0 Lücken, 0 verworfenen Puffern und 0 Clipping-Frames.
 - NativeDictate erkannte den geerbten Keychain-Eintrag als `API key — Configured`. Nach ausdrücklicher Freigabe wurde eine 5,643 Sekunden lange, nicht sensible Mikrofon-Testphrase mit `gpt-4o-mini-transcribe` an OpenAI übertragen, im ersten Versuch korrekt transkribiert, als `completed` archiviert und per Accessibility in TextEdit eingefügt. Der geheime API-Key-Wert wurde dabei weder gelesen noch ausgegeben. Danach wurden `Fully offline`, der lokale Anbieter und die Mikrofonquelle wiederhergestellt; ein kontrollierter Neustart aktivierte diese Werte. Es lief anschließend genau eine NativeDictate-Instanz, der gemeinsame Verlauf enthielt 125 valide Einträge.
-- Die alte `/Applications/FlowDictate.app` ist weiterhin als Rückfalloption installiert, aber nicht aktiv; Container und Nutzerdaten wurden nicht entfernt. Ein Writing Style und App-Profil waren im vorgefundenen Ausgangskonto nicht vorhanden und konnten deshalb nicht als Bestandsmigration geprüft werden. Offen sind noch die ausdrücklich freizugebende Entfernung des alten Bundles mit anschließender Datenkontrolle sowie der unabhängige Clean-Install-Test. R5 bleibt bis zu diesen Nachweisen `IN ARBEIT`.
+- Nach ausdrücklicher Bestätigung wurde die nicht laufende `/Applications/FlowDictate.app` als `FlowDictate 4.1.0 Build 33.app` wiederherstellbar in den Papierkorb verschoben; eine dort bereits vorhandene 3.3.0-App blieb unangetastet. Danach fehlte nur das alte Bundle unter `/Applications`, während genau eine NativeDictate-Instanz weiterlief. Der gemeinsame Container enthielt unverändert 125 valide History-Einträge, `Fully offline`, den lokalen Anbieter, die Mikrofonquelle sowie 23 nicht leere Modelldateien mit insgesamt 483.257.242 Byte. Die Bundle-Entfernung löschte damit keine Nutzerdaten.
+- Ein Writing Style und App-Profil waren im vorgefundenen Ausgangskonto nicht vorhanden und konnten deshalb nicht als Bestandsmigration geprüft werden; diese Abweichung ist ausdrücklich dokumentiert und gefährdet keine vorhandenen Nutzerdaten. Der Upgrade-Test ist für den tatsächlich vorgefundenen Zustand abgeschlossen. Offen bleibt der unabhängige Clean-Install-Test; R5 bleibt deshalb `IN ARBEIT`.
 
 ### 11.6 Exit
 
-- [ ] Upgrade-Test bewahrt den dokumentierten Zustand oder jede notwendige Neufreigabe ist ausdrücklich dokumentiert.
+- [x] Upgrade-Test bewahrt den dokumentierten Zustand oder jede notwendige Neufreigabe ist ausdrücklich dokumentiert.
 - [ ] Clean Install besteht den Kernablauf.
-- [ ] Keine zweite vollständige Neueinrichtung wird durch eine versehentliche Bundle-ID-Änderung ausgelöst.
-- [ ] Keine offene Abweichung gefährdet Nutzerdaten oder parallelen App-Betrieb.
+- [x] Keine zweite vollständige Neueinrichtung wird durch eine versehentliche Bundle-ID-Änderung ausgelöst.
+- [x] Keine offene Abweichung gefährdet Nutzerdaten oder parallelen App-Betrieb.
 
 ## 12. R6 – GitHub-Umschaltung
 
@@ -615,8 +616,7 @@ Das Rebranding ist abgeschlossen, wenn:
 
 R0 bis R4 sowie die automatisierten R5-Gates sind abgeschlossen. Als Nächstes wird R5 manuell fortgesetzt:
 
-1. nach ausdrücklicher Bestätigung die alte `FlowDictate.app` entfernen und die fortbestehenden Nutzerdaten erneut kontrollieren,
-2. den separaten Clean-Install-Test in einem frischen macOS-Benutzerkonto oder einer gleichwertig isolierten Umgebung durchführen,
-3. erst danach R5 abschließen und R6 freigeben.
+1. den separaten Clean-Install-Test in einem frischen macOS-Benutzerkonto oder einer gleichwertig isolierten Umgebung durchführen,
+2. danach R5 abschließen und R6 freigeben.
 
 R6 bleibt bis zum vollständigen R5-Exit gesperrt.
