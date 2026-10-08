@@ -1,13 +1,13 @@
 # FlowDictate → NativeDictate – Rebranding-Arbeitsplan
 
 **Vorhaben:** Umbenennung des Open-Source-Projekts und der sichtbaren macOS-App von FlowDictate zu NativeDictate
-**Status:** `IN ARBEIT` – R0 bis R5 abgeschlossen, R6 offen
-**Stand:** 6. Oktober 2026
+**Status:** `IN ARBEIT` – R0 bis R6 abgeschlossen, R7 offen
+**Stand:** 8. Oktober 2026
 **Ausgangsbasis:** FlowDictate 4.1.0, Build 33, Tag `v4.1.0`, Commit `afa02eb`
 **Zielversion:** NativeDictate 4.2.0
 **Geplanter Arbeitsbranch:** `codex/rebrand-native-dictate`
-**Bestehendes Repository:** `Hank1210/FlowDictate`
-**Ziel-Repository:** `Hank1210/NativeDictate`
+**Ausgangs-Repository:** `Hank1210/FlowDictate`
+**Aktuelles Repository:** `Hank1210/NativeDictate`
 **Kanonische Schreibweise:** `NativeDictate`
 **Ablage:** öffentlich und versioniert unter `docs/engineering/`
 
@@ -140,7 +140,7 @@ Optionale interne Namensbereinigung in späteren Versionen
 | R3 Packaging und Installationsmigration | `ERLEDIGT` | R2 | testbares 4.2-Paket |
 | R4 aktuelle Dokumentation und Historiengrenze | `ERLEDIGT` | R2 | konsistente Projektkommunikation |
 | R5 automatisierte und manuelle Migrationstests | `ERLEDIGT` | R3, R4 | Freigabe für GitHub-Umschaltung |
-| R6 GitHub-Umschaltung | `OFFEN` | R5 | kanonische neue Projektadresse |
+| R6 GitHub-Umschaltung | `ERLEDIGT` | R5 | kanonische neue Projektadresse |
 | R7 Release-Gate NativeDictate 4.2.0 | `OFFEN` | R6 | Veröffentlichungsentscheidung |
 | R8 optionale interne Bereinigung | `OFFEN` | stabiler 4.2-Nachweis | langfristige Codekonsistenz |
 
@@ -487,7 +487,7 @@ Zu prüfen:
 
 ## 12. R6 – GitHub-Umschaltung
 
-**Status:** `OFFEN`
+**Status:** `ERLEDIGT`
 
 ### 12.1 Voraussetzungen
 
@@ -515,17 +515,25 @@ Zu prüfen:
 
 ### 12.3 Besonders zu prüfen
 
-- `FlowDictate/Productivity/ProductivityServices.swift` enthält aktuell die alte GitHub-Release-API.
-- README, Release Guide und Installationsdokumente enthalten alte Repository-Links.
+- `FlowDictate/Productivity/ProductivityServices.swift` enthielt bis zur Umschaltung absichtlich die alte GitHub-Release-API.
+- README, Release Guide und Installationsdokumente enthalten alte Repository-Links nur noch mit ausdrücklicher historischer oder Migrationsbedeutung.
 - Externe Klone funktionieren zunächst über GitHubs Redirect, sollen aber die neue Remote-URL dokumentiert bekommen.
 - GitHub Pages und ein veröffentlichtes GitHub-Marketplace-Action-Repository sind nicht im Scope. Falls sie wider Erwarten existieren, muss R6 vor der Umschaltung neu bewertet werden.
 
-### 12.4 Exit
+### 12.4 Nachweis vom 8. Oktober 2026
 
-- [ ] Neue und alte Repository-URL führen erwartungsgemäß zum selben Projekt.
-- [ ] Lokale Fetch-/Push-Operationen verwenden die neue Remote-URL.
-- [ ] Releaseprüfung ruft das neue Repository auf.
-- [ ] Issues, Tags und bisherige Releases sind weiterhin vorhanden.
+- Der vollständig geprüfte Rebranding-Branch wurde per Fast-forward in den lokalen `main` integriert. Vor der GitHub-Änderung war `Hank1210/FlowDictate` weiterhin das öffentliche Admin-Repository; ein kollidierendes `Hank1210/NativeDictate` existierte nicht.
+- Das bestehende Repository wurde zu `Hank1210/NativeDictate` umbenannt. `origin` verwendet für Fetch und Push `https://github.com/Hank1210/NativeDictate.git`; der alte Webpfad antwortet mit HTTP 301 auf die neue Adresse. Beschreibung und Topics waren bereits markenneutral beziehungsweise NativeDictate-gerecht und benötigten keine weitere Änderung.
+- `main` wurde erfolgreich an die neue Adresse gepusht und anschließend gefetcht. Nach dem URL-Umschaltcommit `0b21534` stimmten lokaler `HEAD`, `origin/main` und Remote-HEAD überein; der historische Tag `v4.1.0` sowie acht vorhandene Releases blieben erreichbar. Der vorliegende R6-Abschlussnachweis folgt als eigener Dokumentationscommit.
+- Die produktive Releaseprüfung verwendet jetzt `https://api.github.com/repos/Hank1210/NativeDictate/releases/latest`. Der Live-Endpunkt antwortete mit HTTP 200 und lieferte den weiterhin stabilen Release `v4.1.0` unter der neuen Repository-Adresse. Die zeitlich begrenzte alte URL wurde aus der Legacy-Allowlist entfernt; der einzige verbleibende ungefilterte alte Repository-Verweis außerhalb der Rebranding-Dateien liegt in einem historischen Phase-3-PRD.
+- Nach der URL-Änderung bestand die vollständige serielle macOS-Suite mit 228/228 Tests und `TEST SUCCEEDED`. Xcode meldete dabei die bereits im Testhelfer liegende Actor-Isolation-Warnung für den Standardwert `MockCredentialStore()`; dieser Lauf wird deshalb nicht als warnungsfrei bezeichnet.
+
+### 12.5 Exit
+
+- [x] Neue und alte Repository-URL führen erwartungsgemäß zum selben Projekt.
+- [x] Lokale Fetch-/Push-Operationen verwenden die neue Remote-URL.
+- [x] Releaseprüfung ruft das neue Repository auf.
+- [x] Issues, Tags und bisherige Releases sind weiterhin vorhanden.
 
 ## 13. R7 – Release-Gate NativeDictate 4.2.0
 
@@ -542,8 +550,8 @@ Zu prüfen:
 
 ### 13.2 Freigabegates
 
-- [ ] alle R5-Tests und manuellen Matrizen bestanden,
-- [ ] Repository-Umschaltung R6 bestanden,
+- [x] alle R5-Tests und manuellen Matrizen bestanden,
+- [x] Repository-Umschaltung R6 bestanden,
 - [ ] exakter Release-Commit dokumentiert,
 - [ ] exakte SHA-256 dokumentiert,
 - [ ] extrahiertes ZIP erneut unabhängig geprüft,
@@ -620,8 +628,9 @@ Das Rebranding ist abgeschlossen, wenn:
 
 ## 17. Unmittelbar nächster Schritt
 
-R0 bis R5 sind abgeschlossen. R6 ist freigegeben. Als Nächstes wird die GitHub-Umschaltung aus Abschnitt 12 kontrolliert durchgeführt:
+R0 bis R6 sind abgeschlossen. Als Nächstes beginnt das R7-Release-Gate, noch ohne Tag oder Veröffentlichung:
 
-1. Rebranding-Branch final reviewen und in `main` integrieren,
-2. das bestehende Repository von `Hank1210/FlowDictate` zu `Hank1210/NativeDictate` umbenennen,
-3. lokalen Remote, Push/Fetch, neue Adresse und Weiterleitung der alten Adresse prüfen.
+1. exakten Releasekandidaten aus dem aktuellen `main` bauen und Commit sowie SHA-256 festhalten,
+2. ZIP unabhängig extrahieren und App-Identität, Architekturen, Signatur, Entitlements, Paketinhalt und Notices erneut prüfen,
+3. Rollback-Bewertung und GitHub-Release-Text finalisieren,
+4. erst danach eine ausdrückliche Veröffentlichungsentscheidung treffen.
