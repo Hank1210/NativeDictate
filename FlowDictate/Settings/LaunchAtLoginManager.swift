@@ -64,7 +64,7 @@ final class LaunchAtLoginManager: ObservableObject {
 
     func refresh() {
         state = LaunchAtLoginState(serviceStatus: SMAppService.mainApp.status)
-        FlowLogger.app.info("Launch at login status: \(String(describing: self.state), privacy: .public)")
+        NativeDictateLogger.app.info("Launch at login status: \(String(describing: self.state), privacy: .public)")
     }
 
     func setEnabled(_ enabled: Bool) {
@@ -77,11 +77,11 @@ final class LaunchAtLoginManager: ObservableObject {
             }
             errorMessage = nil
             refresh()
-            FlowLogger.app.info("Launch at login preference updated")
+            NativeDictateLogger.app.info("Launch at login preference updated")
         } catch {
             errorMessage = error.localizedDescription
             refresh()
-            FlowLogger.app.error(
+            NativeDictateLogger.app.error(
                 "Launch at login update failed: \(error.localizedDescription, privacy: .public)"
             )
         }

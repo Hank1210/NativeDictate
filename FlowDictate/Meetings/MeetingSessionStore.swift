@@ -35,7 +35,7 @@ actor MeetingSessionStore {
     private let explicitRootURL: URL?
     private let recordingLocationStore: RecordingLocationStore
     private let fileManager: FileManager
-    private let fileIO = SerialFileIO(label: "de.mcc.FlowDictate.meeting-session-file-io")
+    private let fileIO = SerialFileIO(label: "de.mcc.NativeDictate.meeting-session-file-io")
 
     init(
         rootURL: URL? = nil,

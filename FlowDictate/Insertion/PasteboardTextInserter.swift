@@ -56,7 +56,7 @@ final class PasteboardTextInserter: TextInserting {
         await waitForModifierRelease()
         let modifierReleaseCompleted = ContinuousClock.now
         guard await target.activate() else {
-            FlowLogger.insertion.notice(
+            NativeDictateLogger.insertion.notice(
                 "Paste target activation failed after \(String(describing: modifierReleaseCompleted.duration(to: .now)), privacy: .public)"
             )
             throw TextInsertionError.targetUnavailable
@@ -68,7 +68,7 @@ final class PasteboardTextInserter: TextInserting {
             // web composer has regained keyboard focus.
             try await Task.sleep(for: .milliseconds(250))
             guard await target.activate() else {
-                FlowLogger.insertion.notice(
+                NativeDictateLogger.insertion.notice(
                     "Paste target reactivation failed after \(String(describing: targetActivationCompleted.duration(to: .now)), privacy: .public)"
                 )
                 throw TextInsertionError.targetUnavailable
@@ -77,7 +77,7 @@ final class PasteboardTextInserter: TextInserting {
         let focusSettleCompleted = ContinuousClock.now
 
         pendingRestorationTask?.cancel()
-        FlowLogger.insertion.info("Clipboard snapshot starting")
+        NativeDictateLogger.insertion.info("Clipboard snapshot starting")
         let snapshotStarted = ContinuousClock.now
         let snapshot: PasteboardSnapshot
         if let pendingOriginalSnapshot,
@@ -114,7 +114,7 @@ final class PasteboardTextInserter: TextInserting {
             guard !Task.isCancelled else { return }
             self?.restoreClipboardIfUnchanged(expectedChangeCount: injectedChangeCount)
         }
-        FlowLogger.insertion.info(
+        NativeDictateLogger.insertion.info(
             "Paste shortcut posted for \(target.bundleIdentifier ?? "unknown", privacy: .public); modifiers=\(String(describing: insertionStarted.duration(to: modifierReleaseCompleted)), privacy: .public), activation=\(String(describing: modifierReleaseCompleted.duration(to: targetActivationCompleted)), privacy: .public), settle=\(String(describing: targetActivationCompleted.duration(to: focusSettleCompleted)), privacy: .public), snapshot=\(String(describing: snapshotStarted.duration(to: snapshotCompleted)), privacy: .public), clipboardWrite=\(String(describing: snapshotCompleted.duration(to: clipboardWriteCompleted)), privacy: .public), eventPost=\(String(describing: clipboardWriteCompleted.duration(to: .now)), privacy: .public), total=\(String(describing: insertionStarted.duration(to: .now)), privacy: .public); clipboard restoration scheduled"
         )
     }
@@ -126,17 +126,17 @@ final class PasteboardTextInserter: TextInserting {
             pendingInjectedChangeCount = nil
         }
         guard pasteboard.changeCount == expectedChangeCount else {
-            FlowLogger.insertion.notice(
+            NativeDictateLogger.insertion.notice(
                 "Clipboard changed after paste; skipped restoration to avoid overwriting newer content"
             )
             return
         }
         guard let snapshot = pendingOriginalSnapshot,
               snapshot.restore(to: pasteboard) else {
-            FlowLogger.insertion.error("Clipboard restoration returned false")
+            NativeDictateLogger.insertion.error("Clipboard restoration returned false")
             return
         }
-        FlowLogger.insertion.info("Clipboard restored after completed paste")
+        NativeDictateLogger.insertion.info("Clipboard restored after completed paste")
     }
 
     private func waitForModifierRelease(timeout: Duration = .seconds(2)) async {
@@ -187,13 +187,13 @@ final class PasteboardTextInserter: TextInserting {
             let keyDownCompleted = ContinuousClock.now
             try? await Task.sleep(for: .milliseconds(30))
             keyUp.postToPid(target.processIdentifier)
-            FlowLogger.insertion.info(
+            NativeDictateLogger.insertion.info(
                 "Targeted paste event timing: create=\(String(describing: creationStarted.duration(to: creationCompleted)), privacy: .public), keyDown=\(String(describing: creationCompleted.duration(to: keyDownCompleted)), privacy: .public), keyUp=\(String(describing: keyDownCompleted.duration(to: .now)), privacy: .public)"
             )
         } else {
             keyDown.post(tap: .cghidEventTap)
             keyUp.post(tap: .cghidEventTap)
-            FlowLogger.insertion.info(
+            NativeDictateLogger.insertion.info(
                 "Global paste event timing: \(String(describing: creationStarted.duration(to: .now)), privacy: .public)"
             )
         }

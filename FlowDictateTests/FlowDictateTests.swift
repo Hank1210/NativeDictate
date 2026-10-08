@@ -189,10 +189,6 @@ struct FlowDictateTests {
         let legacyVisibleName = try NSRegularExpression(
             pattern: #"(?:^|[\"\s])FlowDictate\b"#
         )
-        let allowedTechnicalNames = [
-            "FlowDictate.SystemAudioCapture"
-        ]
-
         for path in visibleSourcePaths {
             let contents = try String(
                 contentsOf: repositoryRoot.appendingPathComponent(path),
@@ -202,12 +198,9 @@ struct FlowDictateTests {
                 .split(separator: "\n", omittingEmptySubsequences: false)
                 .filter { !$0.trimmingCharacters(in: .whitespaces).hasPrefix("//") }
                 .joined(separator: "\n")
-            let userFacingLines = allowedTechnicalNames.reduce(uncommentedLines) { result, name in
-                result.replacingOccurrences(of: name, with: "")
-            }
-            let range = NSRange(userFacingLines.startIndex..., in: userFacingLines)
+            let range = NSRange(uncommentedLines.startIndex..., in: uncommentedLines)
             #expect(
-                legacyVisibleName.firstMatch(in: userFacingLines, range: range) == nil,
+                legacyVisibleName.firstMatch(in: uncommentedLines, range: range) == nil,
                 "Legacy product name remains in user-facing source: \(path)"
             )
         }

@@ -162,7 +162,7 @@ final class RecordingOverlayController: RecordingOverlayPresenting {
     private var overlayPosition: OverlayPosition = .bottomTrailing
     private var currentScreen: NSScreen?
     private static let successHideQueue = DispatchQueue(
-        label: "de.mcc.FlowDictate.success-overlay-hide",
+        label: "de.mcc.NativeDictate.success-overlay-hide",
         qos: .userInitiated
     )
 
@@ -183,7 +183,7 @@ final class RecordingOverlayController: RecordingOverlayPresenting {
         panel.orderFrontRegardless()
         if case .success = status {
             scheduleSuccessHide(generation: generation, after: 0.35)
-            FlowLogger.app.notice("Inserted overlay shown; auto-hide scheduled")
+            NativeDictateLogger.app.notice("Inserted overlay shown; auto-hide scheduled")
         }
     }
 
@@ -246,7 +246,7 @@ final class RecordingOverlayController: RecordingOverlayPresenting {
                       case .success = self.model.status else { return }
                 self.logSuccessHideLateness(deadline: deadline)
                 self.hide()
-                FlowLogger.app.notice("Inserted overlay auto-hidden")
+                NativeDictateLogger.app.notice("Inserted overlay auto-hidden")
             }
         }
         successHideTimer = timer
@@ -265,13 +265,13 @@ final class RecordingOverlayController: RecordingOverlayPresenting {
               now >= deadline else { return }
         logSuccessHideLateness(deadline: deadline, now: now)
         hide()
-        FlowLogger.app.notice("Inserted overlay auto-hidden")
+        NativeDictateLogger.app.notice("Inserted overlay auto-hidden")
     }
 
     private func logSuccessHideLateness(deadline: Date, now: Date = Date()) {
         let lateness = now.timeIntervalSince(deadline)
         guard lateness > 0.5 else { return }
-        FlowLogger.app.notice(
+        NativeDictateLogger.app.notice(
             "Inserted overlay auto-hide fired late by \(lateness, format: .fixed(precision: 3), privacy: .public)s"
         )
     }

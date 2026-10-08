@@ -38,11 +38,11 @@ actor MeetingHistorySynchronizer {
         targetBundleIdentifier: String? = nil,
         targetApplicationName: String? = nil
     ) async throws -> DictationRecord {
-        let signpost = FlowLogger.meetingSignposter.beginInterval(
+        let signpost = NativeDictateLogger.meetingSignposter.beginInterval(
             "Meeting History Persist", id: .exclusive,
             "session: \(session.id.uuidString, privacy: .public), status: \(session.status.rawValue, privacy: .public)"
         )
-        defer { FlowLogger.meetingSignposter.endInterval("Meeting History Persist", signpost) }
+        defer { NativeDictateLogger.meetingSignposter.endInterval("Meeting History Persist", signpost) }
         let existing = try await historyStore.record(id: session.recordID)
         // Completed archived rows are deliberately compact. A later startup
         // must not rehydrate transcript or target metadata from the manifest.
@@ -80,8 +80,8 @@ actor MeetingHistorySynchronizer {
     /// MeetingSessions directory but are not user dictations.
     @discardableResult
     func recoverLinkedSessions(now: Date = Date()) async throws -> [DictationRecord] {
-        let signpost = FlowLogger.meetingSignposter.beginInterval("Meeting Recovery")
-        defer { FlowLogger.meetingSignposter.endInterval("Meeting Recovery", signpost) }
+        let signpost = NativeDictateLogger.meetingSignposter.beginInterval("Meeting Recovery")
+        defer { NativeDictateLogger.meetingSignposter.endInterval("Meeting Recovery", signpost) }
         let linkedRecords = try await historyStore.all()
             .filter { $0.meetingSummary != nil }
         var recovered: [DictationRecord] = []
@@ -95,7 +95,7 @@ actor MeetingHistorySynchronizer {
             session.normalizeInterruptedWork(now: max(now, session.updatedAt))
             if session != previous {
                 try await sessionStore.save(session)
-                FlowLogger.meetingSignposter.emitEvent(
+                NativeDictateLogger.meetingSignposter.emitEvent(
                     "Meeting Recovery Normalized", id: .exclusive,
                     "session: \(session.id.uuidString, privacy: .public), from: \(previous.status.rawValue, privacy: .public), to: \(session.status.rawValue, privacy: .public)"
                 )

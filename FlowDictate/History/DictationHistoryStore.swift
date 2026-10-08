@@ -39,7 +39,7 @@ actor DictationHistoryStore {
 
     private let fileURL: URL
     private let fileManager: FileManager
-    private let fileIO = SerialFileIO(label: "de.mcc.FlowDictate.history-file-io", qos: .userInitiated)
+    private let fileIO = SerialFileIO(label: "de.mcc.NativeDictate.history-file-io", qos: .userInitiated)
     private var recordsByID: [UUID: DictationRecord] = [:]
     private var loaded = false
     private var loadTask: Task<LoadSnapshot?, Error>?

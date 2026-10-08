@@ -153,7 +153,7 @@ final class MicrophoneRecorder: AudioRecording {
               tapFormat.sampleRate > 0, tapFormat.channelCount > 0 else {
             throw AudioRecorderError.unavailableInput
         }
-        FlowLogger.audio.info(
+        NativeDictateLogger.audio.info(
             "Opening microphone: \(tapFormat.sampleRate, privacy: .public) Hz/\(tapFormat.channelCount, privacy: .public) ch, selected input \(selectedInput != nil, privacy: .public)"
         )
 
@@ -199,7 +199,7 @@ final class MicrophoneRecorder: AudioRecording {
         recordingID = id
         recordingURL = url
         startedAt = Date()
-        FlowLogger.audio.info("Recording started: \(url.lastPathComponent, privacy: .public)")
+        NativeDictateLogger.audio.info("Recording started: \(url.lastPathComponent, privacy: .public)")
     }
 
     func stop() async throws -> AudioRecordingResult {
@@ -237,7 +237,7 @@ final class MicrophoneRecorder: AudioRecording {
                 channelCount: Int(recordedFormat.channelCount)
             )
         )
-        FlowLogger.audio.info(
+        NativeDictateLogger.audio.info(
             "Recording stopped after \(result.duration, format: .fixed(precision: 2)) seconds"
         )
         return result
@@ -280,7 +280,7 @@ nonisolated final class MicrophoneRecordingSink: @unchecked Sendable {
             writtenFrames += Int64(buffer.frameLength)
         } catch {
             failure = .captureFailed(error.localizedDescription)
-            FlowLogger.audio.error(
+            NativeDictateLogger.audio.error(
                 "Audio file write failed: \(error.localizedDescription, privacy: .public)"
             )
             return

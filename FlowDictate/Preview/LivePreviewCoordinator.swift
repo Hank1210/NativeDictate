@@ -44,7 +44,7 @@ final class LivePreviewCoordinator {
         self.diagnostics = diagnostics
         characterLimit = min(max(configuration.characterLimit, 50), 800)
         state = .waiting
-        FlowLogger.audio.info(
+        NativeDictateLogger.audio.info(
             "Live Preview diagnostics started: locale=\(configuration.localeIdentifier, privacy: .public), characterLimit=\(self.characterLimit, privacy: .public)"
         )
         startDiagnosticsMonitor(diagnostics, channel: channel)
@@ -251,11 +251,11 @@ nonisolated private final class LivePreviewDiagnostics: @unchecked Sendable {
         }
 
         if let gap = snapshot.secondsSincePreviousPreview {
-            FlowLogger.audio.info(
+            NativeDictateLogger.audio.info(
                 "Live Preview event: kind=\(kind, privacy: .public), count=\(snapshot.eventCount, privacy: .public), textLength=\(textLength, privacy: .public), gap=\(gap, format: .fixed(precision: 3), privacy: .public)s, audioBuffers=\(snapshot.audioBufferCount, privacy: .public), droppedBuffers=\(snapshot.droppedBufferCount, privacy: .public)"
             )
         } else {
-            FlowLogger.audio.info(
+            NativeDictateLogger.audio.info(
                 "Live Preview first event: kind=\(kind, privacy: .public), textLength=\(textLength, privacy: .public), after=\(snapshot.secondsSinceStart, format: .fixed(precision: 3), privacy: .public)s, audioBuffers=\(snapshot.audioBufferCount, privacy: .public), droppedBuffers=\(snapshot.droppedBufferCount, privacy: .public)"
             )
         }
@@ -284,7 +284,7 @@ nonisolated private final class LivePreviewDiagnostics: @unchecked Sendable {
             )
         }
         guard let snapshot else { return }
-        FlowLogger.audio.notice(
+        NativeDictateLogger.audio.notice(
             "Live Preview stalled: no provisional text for \(snapshot.secondsWithoutPreview, format: .fixed(precision: 2), privacy: .public)s while audio continues; audioBuffers=\(snapshot.audioBufferCount, privacy: .public), previewEvents=\(snapshot.previewEventCount, privacy: .public), droppedBuffers=\(snapshot.droppedBufferCount, privacy: .public)"
         )
     }
@@ -298,7 +298,7 @@ nonisolated private final class LivePreviewDiagnostics: @unchecked Sendable {
                 droppedBufferCount: droppedBufferCount
             )
         }
-        FlowLogger.audio.info(
+        NativeDictateLogger.audio.info(
             "Live Preview diagnostics finished: reason=\(reason, privacy: .public), duration=\(snapshot.duration, format: .fixed(precision: 3), privacy: .public)s, audioBuffers=\(snapshot.audioBufferCount, privacy: .public), previewEvents=\(snapshot.previewEventCount, privacy: .public), droppedBuffers=\(snapshot.droppedBufferCount, privacy: .public)"
         )
     }

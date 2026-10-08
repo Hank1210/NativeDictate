@@ -365,12 +365,12 @@ actor MixedRecordingSessionCoordinator {
             )
         }
 
-        let signpostID = FlowLogger.meetingSignposter.makeSignpostID()
-        let signpost = FlowLogger.meetingSignposter.beginInterval(
+        let signpostID = NativeDictateLogger.meetingSignposter.makeSignpostID()
+        let signpost = NativeDictateLogger.meetingSignposter.beginInterval(
             "Mixed Session Start", id: signpostID,
             "session: \(request.sessionID.uuidString, privacy: .public)"
         )
-        defer { FlowLogger.meetingSignposter.endInterval("Mixed Session Start", signpost) }
+        defer { NativeDictateLogger.meetingSignposter.endInterval("Mixed Session Start", signpost) }
 
         let operationID = UUID()
         activeOperationID = operationID
@@ -388,7 +388,7 @@ actor MixedRecordingSessionCoordinator {
             let paths = try await store.prepareSession(id: request.sessionID)
             var session = makePreparingSession(request: request)
             try await store.create(session)
-            FlowLogger.meetingSignposter.emitEvent(
+            NativeDictateLogger.meetingSignposter.emitEvent(
                 "Meeting Manifest Persisted", id: signpostID,
                 "status: \(session.status.rawValue, privacy: .public)"
             )
@@ -408,7 +408,7 @@ actor MixedRecordingSessionCoordinator {
                 )
             }
             try ensureActive(operationID)
-            FlowLogger.meetingSignposter.emitEvent(
+            NativeDictateLogger.meetingSignposter.emitEvent(
                 "Meeting Track Prepared", id: signpostID, "role: microphone"
             )
 
@@ -426,7 +426,7 @@ actor MixedRecordingSessionCoordinator {
                 )
             }
             try ensureActive(operationID)
-            FlowLogger.meetingSignposter.emitEvent(
+            NativeDictateLogger.meetingSignposter.emitEvent(
                 "Meeting Track Prepared", id: signpostID, "role: system-audio"
             )
 
@@ -474,18 +474,18 @@ actor MixedRecordingSessionCoordinator {
             }
             applyStart(microphoneResult, role: .localSpeaker, to: &session)
             applyStart(systemAudioResult, role: .systemAudio, to: &session)
-            FlowLogger.meetingSignposter.emitEvent(
+            NativeDictateLogger.meetingSignposter.emitEvent(
                 "Meeting First Sample", id: signpostID,
                 "role: microphone, hostTime: \(microphoneResult.firstAnchor.hostTime)"
             )
-            FlowLogger.meetingSignposter.emitEvent(
+            NativeDictateLogger.meetingSignposter.emitEvent(
                 "Meeting First Sample", id: signpostID,
                 "role: system-audio, hostTime: \(systemAudioResult.firstAnchor.hostTime)"
             )
             session.status = .recording
             session.updatedAt = now()
             try await store.save(session)
-            FlowLogger.meetingSignposter.emitEvent(
+            NativeDictateLogger.meetingSignposter.emitEvent(
                 "Meeting Manifest Persisted", id: signpostID,
                 "status: \(session.status.rawValue, privacy: .public)"
             )
@@ -519,13 +519,13 @@ actor MixedRecordingSessionCoordinator {
             throw MixedRecordingCoordinatorError.notRecording
         }
         let operationID = try requireOperationID()
-        let signpostID = FlowLogger.meetingSignposter.makeSignpostID()
-        let signpost = FlowLogger.meetingSignposter.beginInterval(
+        let signpostID = NativeDictateLogger.meetingSignposter.makeSignpostID()
+        let signpost = NativeDictateLogger.meetingSignposter.beginInterval(
             "Mixed Session Stop", id: signpostID,
             "session: \(sessionID.uuidString, privacy: .public)"
         )
-        defer { FlowLogger.meetingSignposter.endInterval("Mixed Session Stop", signpost) }
-        FlowLogger.meetingSignposter.emitEvent("Meeting Stop Requested", id: signpostID)
+        defer { NativeDictateLogger.meetingSignposter.endInterval("Mixed Session Stop", signpost) }
+        NativeDictateLogger.meetingSignposter.emitEvent("Meeting Stop Requested", id: signpostID)
         state = .finalizing(sessionID)
         session.status = .finalizing
         session.updatedAt = now()
@@ -544,24 +544,24 @@ actor MixedRecordingSessionCoordinator {
         ] {
             switch outcome {
             case let .success(result):
-                FlowLogger.meetingSignposter.emitEvent(
+                NativeDictateLogger.meetingSignposter.emitEvent(
                     "Meeting Last Sample", id: signpostID,
                     "role: \(role.rawValue, privacy: .public), hostTime: \(result.lastHostTime), bytes: \(result.byteCount), gaps: \(result.gaps.count), dropped: \(result.quality.droppedBufferCount), clipped: \(result.quality.clippedFrameCount)"
                 )
-                FlowLogger.meetingSignposter.emitEvent(
+                NativeDictateLogger.meetingSignposter.emitEvent(
                     "Meeting Writer Finalized", id: signpostID,
                     "role: \(role.rawValue, privacy: .public), bytes: \(result.byteCount)"
                 )
-                if FlowLogger.meetingSignposter.isEnabled {
+                if NativeDictateLogger.meetingSignposter.isEnabled {
                     for gap in result.gaps {
-                        FlowLogger.meetingSignposter.emitEvent(
+                        NativeDictateLogger.meetingSignposter.emitEvent(
                             "Meeting Track Gap", id: signpostID,
                             "role: \(role.rawValue, privacy: .public), startMs: \(gap.startMilliseconds), endMs: \(gap.endMilliseconds), reason: \(gap.reason.rawValue, privacy: .public)"
                         )
                     }
                 }
             case let .failure(failure):
-                FlowLogger.meetingSignposter.emitEvent(
+                NativeDictateLogger.meetingSignposter.emitEvent(
                     "Meeting Track Lost", id: signpostID,
                     "role: \(role.rawValue, privacy: .public), origin: \(failure.origin.rawValue, privacy: .public), category: \(failure.category.rawValue, privacy: .public)"
                 )
@@ -570,11 +570,11 @@ actor MixedRecordingSessionCoordinator {
 
         applyStop(microphoneOutcome, role: .localSpeaker, to: &session)
         applyStop(systemAudioOutcome, role: .systemAudio, to: &session)
-        let analysisSignpost = FlowLogger.meetingSignposter.beginInterval(
+        let analysisSignpost = NativeDictateLogger.meetingSignposter.beginInterval(
             "Meeting Synchronization", id: signpostID
         )
         applyAnalysis(to: &session)
-        FlowLogger.meetingSignposter.endInterval(
+        NativeDictateLogger.meetingSignposter.endInterval(
             "Meeting Synchronization", analysisSignpost,
             "quality: \(session.synchronization?.quality.rawValue ?? "not-analyzed", privacy: .public), gaps: \(session.qualityReport?.totalGapCount ?? 0)"
         )
@@ -594,7 +594,7 @@ actor MixedRecordingSessionCoordinator {
         }
         do {
             try await store.save(session)
-            FlowLogger.meetingSignposter.emitEvent(
+            NativeDictateLogger.meetingSignposter.emitEvent(
                 "Meeting Manifest Persisted", id: signpostID,
                 "status: \(session.status.rawValue, privacy: .public)"
             )
@@ -836,7 +836,7 @@ actor MixedRecordingSessionCoordinator {
         session.lastErrorCategory = category
         session.lastErrorMessage = message
         try await store.save(session)
-        FlowLogger.meetingSignposter.emitEvent(
+        NativeDictateLogger.meetingSignposter.emitEvent(
             "Meeting Track Lost", id: .exclusive,
             "role: \(role.rawValue, privacy: .public), phase: \(phase.rawValue, privacy: .public), origin: \(origin.rawValue, privacy: .public), category: \(category.rawValue, privacy: .public)"
         )

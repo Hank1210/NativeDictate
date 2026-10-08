@@ -71,7 +71,7 @@ nonisolated final class AudioUploadPreparer: AudioUploadPreparing, @unchecked Se
         } catch is CancellationError {
             throw CancellationError()
         } catch {
-            FlowLogger.audio.notice(
+            NativeDictateLogger.audio.notice(
                 "Compact upload conversion unavailable; using the original recording: \(error.localizedDescription, privacy: .public)"
             )
             return PreparedAudioUpload(

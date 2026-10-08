@@ -69,7 +69,7 @@ final class LongFormTranscriptionRunner {
         progress(.inspecting)
         let inspectionStarted = ContinuousClock.now
         let inspection = try await inspector.inspect(audioURL)
-        FlowLogger.transcription.info(
+        NativeDictateLogger.transcription.info(
             "Long-form inspection completed in \(String(describing: inspectionStarted.duration(to: .now)), privacy: .public)"
         )
         let mode = modeResolver.mode(for: inspection, hasExistingSession: existing != nil)
@@ -122,7 +122,7 @@ final class LongFormTranscriptionRunner {
                     )
                 }
             )
-            FlowLogger.transcription.info(
+            NativeDictateLogger.transcription.info(
                 "Planned \(segments.count, privacy: .public) segments in \(String(describing: planningStarted.duration(to: .now)), privacy: .public)"
             )
             let now = Date()
@@ -156,12 +156,12 @@ final class LongFormTranscriptionRunner {
 
             for index in manifest.segments.indices
                 where ![.succeeded, .silent].contains(manifest.segments[index].status) {
-                let segmentSignpost = FlowLogger.transcriptionSignposter.beginInterval(
+                let segmentSignpost = NativeDictateLogger.transcriptionSignposter.beginInterval(
                     "Transcription Segment", id: .exclusive,
                     "record: \(record.id.uuidString, privacy: .public), index: \(index), total: \(manifest.segments.count)"
                 )
                 defer {
-                    FlowLogger.transcriptionSignposter.endInterval(
+                    NativeDictateLogger.transcriptionSignposter.endInterval(
                         "Transcription Segment", segmentSignpost
                     )
                 }
@@ -190,7 +190,7 @@ final class LongFormTranscriptionRunner {
                     segment: manifest.segments[index],
                     destinationURL: workURL
                 )
-                FlowLogger.transcription.info(
+                NativeDictateLogger.transcription.info(
                     "Exported segment \(index + 1, privacy: .public)/\(total, privacy: .public) in \(String(describing: exportStarted.duration(to: .now)), privacy: .public)"
                 )
                 manifest.segments[index].preparedRelativePath = workURL.lastPathComponent
@@ -223,7 +223,7 @@ final class LongFormTranscriptionRunner {
                                 prompt: promptBuilder.prompt(previousTranscript: previous)
                             )
                         )
-                        FlowLogger.transcription.info(
+                        NativeDictateLogger.transcription.info(
                             "Transcribed segment \(index + 1, privacy: .public)/\(total, privacy: .public) in \(String(describing: uploadStarted.duration(to: .now)), privacy: .public)"
                         )
                         break
@@ -249,7 +249,7 @@ final class LongFormTranscriptionRunner {
                             updateSummary(record: &updated, manifest: manifest)
                             updated.updatedAt = Date()
                             try await persist(updated)
-                            FlowLogger.transcription.info(
+                            NativeDictateLogger.transcription.info(
                                 "Verified silent segment \(index + 1, privacy: .public)/\(total, privacy: .public)"
                             )
                             verifiedSilent = true
@@ -279,7 +279,7 @@ final class LongFormTranscriptionRunner {
                 manifest.modelID = result.model
                 manifest.updatedAt = Date()
                 try await sessionStore.save(manifest)
-                FlowLogger.transcriptionSignposter.emitEvent(
+                NativeDictateLogger.transcriptionSignposter.emitEvent(
                     "Transcription Segment Persisted", id: .exclusive,
                     "index: \(index), bytes: \(byteCount), attempts: \(manifest.segments[index].attemptCount)"
                 )
@@ -301,7 +301,7 @@ final class LongFormTranscriptionRunner {
             guard allowsEmptyTranscript || !text.isEmpty else {
                 throw LongFormTranscriptionError.transcriptMergeFailed
             }
-            FlowLogger.transcription.info(
+            NativeDictateLogger.transcription.info(
                 "Merged \(manifest.segments.count, privacy: .public) segments in \(String(describing: mergeStarted.duration(to: .now)), privacy: .public)"
             )
             manifest.mergedTranscript = text
@@ -426,7 +426,7 @@ final class LongFormTranscriptionRunner {
                 try await historyStore.upsert(record)
             }
         } catch {
-            FlowLogger.app.error("Long-form session recovery failed: \(error.localizedDescription, privacy: .public)")
+            NativeDictateLogger.app.error("Long-form session recovery failed: \(error.localizedDescription, privacy: .public)")
         }
     }
 

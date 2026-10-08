@@ -147,7 +147,7 @@ nonisolated struct SystemAudioPermissionService: Sendable {
 final class SystemAudioRecorder: NSObject, AudioRecording {
     private let store: AudioStore
     private let permissionService: SystemAudioPermissionService
-    private let captureQueue = DispatchQueue(label: "FlowDictate.SystemAudioCapture")
+    private let captureQueue = DispatchQueue(label: "NativeDictate.SystemAudioCapture")
 
     private var stream: SCStream?
     nonisolated(unsafe) private var captureWriter: SystemAudioFileWriter?
@@ -226,7 +226,7 @@ final class SystemAudioRecorder: NSObject, AudioRecording {
 
         do {
             try await stream.startCapture()
-            FlowLogger.audio.info("System Audio recording started: \(url.lastPathComponent, privacy: .public)")
+            NativeDictateLogger.audio.info("System Audio recording started: \(url.lastPathComponent, privacy: .public)")
         } catch {
             reset(removeFile: true)
             throw error
@@ -261,7 +261,7 @@ final class SystemAudioRecorder: NSObject, AudioRecording {
 
         if let writerError {
             if receivedAudio, Self.isReadableAudioFile(url) {
-                FlowLogger.audio.notice(
+                NativeDictateLogger.audio.notice(
                     "System Audio capture ended early; preserving usable partial recording"
                 )
                 return AudioRecordingResult(
@@ -321,7 +321,7 @@ final class SystemAudioRecorder: NSObject, AudioRecording {
             }
         } catch {
             captureWriter.record(error)
-            FlowLogger.audio.error("System Audio write failed: \(error.localizedDescription, privacy: .public)")
+            NativeDictateLogger.audio.error("System Audio write failed: \(error.localizedDescription, privacy: .public)")
         }
     }
 }
@@ -338,7 +338,7 @@ extension SystemAudioRecorder: SCStreamOutput, SCStreamDelegate {
 
     nonisolated func stream(_ stream: SCStream, didStopWithError error: Error) {
         captureWriter?.record(SystemAudioRecorderError.interrupted(error.localizedDescription))
-        FlowLogger.audio.error(
+        NativeDictateLogger.audio.error(
             "System Audio stream stopped: \(error.localizedDescription, privacy: .public)"
         )
     }

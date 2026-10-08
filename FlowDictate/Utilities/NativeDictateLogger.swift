@@ -1,8 +1,8 @@
 import Foundation
 import OSLog
 
-enum FlowLogger {
-    nonisolated private static let subsystem = Bundle.main.bundleIdentifier ?? "FlowDictate"
+enum NativeDictateLogger {
+    nonisolated private static let subsystem = Bundle.main.bundleIdentifier ?? "NativeDictate"
 
     nonisolated static let app = Logger(subsystem: subsystem, category: "app")
     nonisolated static let hotkey = Logger(subsystem: subsystem, category: "hotkey")

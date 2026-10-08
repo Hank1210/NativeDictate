@@ -392,11 +392,11 @@ actor MeetingTranscriptMergeRunner {
         guard [.merging, .paused, .failed].contains(session.status) else {
             throw TimedTranscriptMergeError.invalidSessionState(session.status)
         }
-        let signpost = FlowLogger.meetingSignposter.beginInterval(
+        let signpost = NativeDictateLogger.meetingSignposter.beginInterval(
             "Meeting Transcript Merge", id: .exclusive,
             "session: \(sessionID.uuidString, privacy: .public)"
         )
-        defer { FlowLogger.meetingSignposter.endInterval("Meeting Transcript Merge", signpost) }
+        defer { NativeDictateLogger.meetingSignposter.endInterval("Meeting Transcript Merge", signpost) }
         let paths = try await store.prepareSession(id: sessionID)
         session.status = .merging
         session.lastErrorCategory = nil
@@ -433,7 +433,7 @@ actor MeetingTranscriptMergeRunner {
             session.lastErrorMessage = nil
             session.updatedAt = max(now(), session.updatedAt)
             try await store.save(session)
-            FlowLogger.meetingSignposter.emitEvent(
+            NativeDictateLogger.meetingSignposter.emitEvent(
                 "Meeting Timeline Persisted", id: .exclusive,
                 "entries: \(timeline.entries.count), status: \(session.status.rawValue, privacy: .public)"
             )

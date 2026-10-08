@@ -89,7 +89,7 @@ nonisolated final class LivePreviewBufferChannel: @unchecked Sendable {
                 return true
             }
             if shouldLog {
-                FlowLogger.audio.notice("Live Preview audio buffer dropped; keeping newest buffered audio")
+                NativeDictateLogger.audio.notice("Live Preview audio buffer dropped; keeping newest buffered audio")
             }
         }
     }

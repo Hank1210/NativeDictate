@@ -268,7 +268,7 @@ actor CoreAudioTapCaptureProbe {
             createdTapUID = tapUID
             let tapFormat = try tapFormat(for: tapID)
 
-            let aggregateUID = "de.mcc.FlowDictate.capture-probe.\(UUID().uuidString)"
+            let aggregateUID = "de.mcc.NativeDictate.capture-probe.\(UUID().uuidString)"
             createdAggregateUID = aggregateUID
             let aggregateDescription: [String: Any] = [
                 kAudioAggregateDeviceNameKey: "NativeDictate Capture Probe",
@@ -291,7 +291,7 @@ actor CoreAudioTapCaptureProbe {
             )
 
             let callbackQueue = DispatchQueue(
-                label: "de.mcc.FlowDictate.core-audio-tap-probe",
+                label: "de.mcc.NativeDictate.core-audio-tap-probe",
                 qos: .userInitiated
             )
             try check(
@@ -591,7 +591,7 @@ nonisolated final class CoreAudioTapTimedStop: @unchecked Sendable {
 
     private let lock = NSLock()
     private let queue = DispatchQueue(
-        label: "de.mcc.FlowDictate.core-audio-tap-timed-stop",
+        label: "de.mcc.NativeDictate.core-audio-tap-timed-stop",
         qos: .userInteractive
     )
     private let stopAction: () -> OSStatus

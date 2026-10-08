@@ -81,7 +81,7 @@ final class TranscriptionRunner {
             updated.errorMessage = nil
             updated.updatedAt = Date()
             try await store(updated, persistToDisk: !deferSuccessfulPersistence)
-            FlowLogger.transcription.info(
+            NativeDictateLogger.transcription.info(
                 "Verified silent short meeting track; provider request skipped"
             )
             return updated
@@ -115,7 +115,7 @@ final class TranscriptionRunner {
                 do {
                     try await historyStore.upsert(updated)
                 } catch {
-                    FlowLogger.app.error(
+                    NativeDictateLogger.app.error(
                         "Could not persist transcription failure: \(error.localizedDescription, privacy: .public)"
                     )
                 }

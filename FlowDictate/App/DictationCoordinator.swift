@@ -368,12 +368,12 @@ final class DictationCoordinator: ObservableObject {
         do {
             let removed = try captureProbeArtifactStore.removeAbandonedArtifacts()
             if !removed.isEmpty {
-                FlowLogger.audio.notice(
+                NativeDictateLogger.audio.notice(
                     "Removed \(removed.count, privacy: .public) abandoned capture-probe artifact(s)"
                 )
             }
         } catch {
-            FlowLogger.audio.error(
+            NativeDictateLogger.audio.error(
                 "Could not clean capture-probe artifacts: \(error.localizedDescription, privacy: .public)"
             )
         }
@@ -389,20 +389,20 @@ final class DictationCoordinator: ObservableObject {
             self?.overlay.updatePreview(state)
             switch state {
             case .waiting:
-                FlowLogger.audio.info("Live Preview recognition started")
+                NativeDictateLogger.audio.info("Live Preview recognition started")
             case .active:
                 if self?.didLogLivePreviewText == false {
                     self?.didLogLivePreviewText = true
-                    FlowLogger.audio.info("Live Preview produced provisional text")
+                    NativeDictateLogger.audio.info("Live Preview produced provisional text")
                 }
             case let .unavailable(message):
                 self?.recorder.previewBufferHandler = nil
-                FlowLogger.audio.notice(
+                NativeDictateLogger.audio.notice(
                     "Live Preview unavailable: \(message, privacy: .public)"
                 )
             case let .failed(message):
                 self?.recorder.previewBufferHandler = nil
-                FlowLogger.audio.error(
+                NativeDictateLogger.audio.error(
                     "Live Preview recognition failed: \(message, privacy: .public)"
                 )
             case .disabled:
@@ -432,7 +432,7 @@ final class DictationCoordinator: ObservableObject {
             try? await Task.sleep(for: .milliseconds(400))
             self.showOnboarding()
         }
-        FlowLogger.app.info("NativeDictate \(NativeDictateVersion.displayString, privacy: .public) started")
+        NativeDictateLogger.app.info("NativeDictate \(NativeDictateVersion.displayString, privacy: .public) started")
     }
 
     deinit {
@@ -614,15 +614,15 @@ final class DictationCoordinator: ObservableObject {
     func requestToggle() {
         let now = Date()
         guard activeDictationTask == nil else {
-            FlowLogger.hotkey.notice("Ignored duplicate toggle while a recording transition is still running")
+            NativeDictateLogger.hotkey.notice("Ignored duplicate toggle while a recording transition is still running")
             return
         }
         guard now.timeIntervalSince(lastHotKeyDate) >= 0.12 else {
-            FlowLogger.hotkey.notice("Ignored duplicate toggle inside the debounce interval")
+            NativeDictateLogger.hotkey.notice("Ignored duplicate toggle inside the debounce interval")
             return
         }
         lastHotKeyDate = now
-        FlowLogger.hotkey.info(
+        NativeDictateLogger.hotkey.info(
             "Accepted toggle request; recording=\(self.isCaptureActive, privacy: .public)"
         )
         if isCaptureActive {
@@ -744,7 +744,7 @@ final class DictationCoordinator: ObservableObject {
             }
         } catch {
             inputDevices = []
-            FlowLogger.audio.error("Could not enumerate input devices: \(error.localizedDescription, privacy: .public)")
+            NativeDictateLogger.audio.error("Could not enumerate input devices: \(error.localizedDescription, privacy: .public)")
         }
     }
 
@@ -922,7 +922,7 @@ final class DictationCoordinator: ObservableObject {
         guard !transcriptionRestartRequired else { return }
         transcriptionRestartRequired = true
         setupMessage = "Transcription settings changed. Quit & Restart is required before the next dictation."
-        FlowLogger.transcription.notice(
+        NativeDictateLogger.transcription.notice(
             "Transcription configuration changed; restart required before recording"
         )
     }
@@ -932,14 +932,14 @@ final class DictationCoordinator: ObservableObject {
         criticalInteractionActivity = processActivityManager.beginUserInitiatedActivity(
             reason: "Recording and completing a NativeDictate dictation"
         )
-        FlowLogger.app.notice("Critical dictation activity began")
+        NativeDictateLogger.app.notice("Critical dictation activity began")
     }
 
     private func endCriticalInteractionActivityIfNeeded() {
         guard let activity = criticalInteractionActivity else { return }
         criticalInteractionActivity = nil
         processActivityManager.endActivity(activity)
-        FlowLogger.app.notice("Critical dictation activity ended")
+        NativeDictateLogger.app.notice("Critical dictation activity ended")
     }
 
     private func refreshLivePreviewAvailability() {
@@ -1141,7 +1141,7 @@ final class DictationCoordinator: ObservableObject {
                     try await jobStore.delete(id: jobID)
                 }
             } catch {
-                FlowLogger.app.error("History deletion failed: \(error.localizedDescription, privacy: .public)")
+                NativeDictateLogger.app.error("History deletion failed: \(error.localizedDescription, privacy: .public)")
             }
             await refreshHistory()
         }
@@ -1257,7 +1257,7 @@ final class DictationCoordinator: ObservableObject {
             } catch let failure as TranscriptionRunFailure {
                 updated = failure.record
             } catch let failure as TranscriptionPersistenceFailure {
-                FlowLogger.app.error("Retry history persistence failed: \(failure.localizedDescription, privacy: .public)")
+                NativeDictateLogger.app.error("Retry history persistence failed: \(failure.localizedDescription, privacy: .public)")
                 fail(failure, retainedAudioURL: try? audioURL(for: record))
             } catch let failure as SmartDictationRunFailure {
                 updated = failure.record
@@ -1359,7 +1359,7 @@ final class DictationCoordinator: ObservableObject {
                 }
                 reinsert(record)
             } catch {
-                FlowLogger.app.error("History restore lookup failed: \(error.localizedDescription, privacy: .public)")
+                NativeDictateLogger.app.error("History restore lookup failed: \(error.localizedDescription, privacy: .public)")
                 fail(error, retainedAudioURL: nil)
             }
         }
@@ -1451,7 +1451,7 @@ final class DictationCoordinator: ObservableObject {
                 setupMessage = "Live Preview test cancelled."
             } catch {
                 setupMessage = error.localizedDescription
-                FlowLogger.audio.error(
+                NativeDictateLogger.audio.error(
                     "Live Preview test could not start: \(error.localizedDescription, privacy: .public)"
                 )
             }
@@ -1460,7 +1460,7 @@ final class DictationCoordinator: ObservableObject {
                 do {
                     testAudioURL = try await recorder.stop().url
                 } catch {
-                    FlowLogger.audio.error(
+                    NativeDictateLogger.audio.error(
                         "Preview test recorder cleanup failed: \(error.localizedDescription, privacy: .public)"
                     )
                 }
@@ -1471,7 +1471,7 @@ final class DictationCoordinator: ObservableObject {
             if let testAudioURL {
                 do { try FileManager.default.removeItem(at: testAudioURL) }
                 catch {
-                    FlowLogger.audio.error(
+                    NativeDictateLogger.audio.error(
                         "Preview test audio cleanup failed: \(error.localizedDescription, privacy: .public)"
                     )
                 }
@@ -1624,7 +1624,7 @@ final class DictationCoordinator: ObservableObject {
                 setupMessage = message
                 mixedCaptureTestMessage = message
                 latestOutputNotice = message
-                FlowLogger.audio.notice(
+                NativeDictateLogger.audio.notice(
                     "Mixed capture test completed for session \(completed.id, privacy: .public) with status \(completed.status.rawValue, privacy: .public)"
                 )
             } catch is CancellationError {
@@ -1643,7 +1643,7 @@ final class DictationCoordinator: ObservableObject {
                 setupMessage = message
                 mixedCaptureTestMessage = message
                 if latestOutputURL != nil { latestOutputNotice = message }
-                FlowLogger.audio.error(
+                NativeDictateLogger.audio.error(
                     "Mixed capture test failed: \(error.localizedDescription, privacy: .public)"
                 )
             }
@@ -1706,7 +1706,7 @@ final class DictationCoordinator: ObservableObject {
         }
         guard isNew else { return }
         overlay.updateMeetingWarnings(mixedCaptureWarningState.warnings)
-        FlowLogger.audio.warning(
+        NativeDictateLogger.audio.warning(
             "Mixed capture warning: \(warning.message, privacy: .public)"
         )
     }
@@ -1797,7 +1797,7 @@ final class DictationCoordinator: ObservableObject {
                     setupMessage = message
                     coreAudioTapProbeMessage = message
                 }
-                FlowLogger.audio.notice(
+                NativeDictateLogger.audio.notice(
                     "Core Audio tap probe completed: requested=\(report.requestedDuration, privacy: .public)s wall=\(report.wallDuration, privacy: .public)s audio=\(report.capturedDuration, privacy: .public)s stopDelay=\(report.stopDelay, privacy: .public)s callbacks=\(report.callbackCount, privacy: .public) signalCallbacks=\(report.nonSilentCallbackCount, privacy: .public) signalVerified=\(report.hasCapturedSignal, privacy: .public) sampleRate=\(report.sampleRate, privacy: .public) channels=\(report.channelCount, privacy: .public) hostRegressions=\(report.hostTimeRegressionCount, privacy: .public) sampleRegressions=\(report.sampleTimeRegressionCount, privacy: .public) discontinuities=\(report.sampleDiscontinuityCount, privacy: .public) largestGapFrames=\(report.largestPositiveSampleGapFrames, privacy: .public) cleanup=\(report.cleanup.succeeded, privacy: .public)"
                 )
             } catch is CancellationError {
@@ -1808,7 +1808,7 @@ final class DictationCoordinator: ObservableObject {
                 let message = "Audio-only capture probe failed: \(error.localizedDescription)"
                 setupMessage = message
                 coreAudioTapProbeMessage = message
-                FlowLogger.audio.error(
+                NativeDictateLogger.audio.error(
                     "Core Audio tap probe failed: \(error.localizedDescription, privacy: .public)"
                 )
             }
@@ -1859,7 +1859,7 @@ final class DictationCoordinator: ObservableObject {
                     setupMessage = message
                     coreAudioTapProbeMessage = message
                 }
-                FlowLogger.audio.notice(
+                NativeDictateLogger.audio.notice(
                     "Core Audio tap cycle probe completed: cycles=\(report.completedCycleCount, privacy: .public) callbacks=\(report.totalCallbackCount, privacy: .public) signalCallbacks=\(report.totalNonSilentCallbackCount, privacy: .public) hostRegressions=\(report.hostTimeRegressionCount, privacy: .public) sampleRegressions=\(report.sampleTimeRegressionCount, privacy: .public) discontinuities=\(report.sampleDiscontinuityCount, privacy: .public) largestGapFrames=\(report.largestPositiveSampleGapFrames, privacy: .public) cleanup=\(report.allCleanupSucceeded, privacy: .public) healthy=\(healthy, privacy: .public)"
                 )
             } catch is CancellationError {
@@ -1870,7 +1870,7 @@ final class DictationCoordinator: ObservableObject {
                 let message = "Audio-only cycle probe failed: \(error.localizedDescription)"
                 setupMessage = message
                 coreAudioTapProbeMessage = message
-                FlowLogger.audio.error(
+                NativeDictateLogger.audio.error(
                     "Core Audio tap cycle probe failed: \(error.localizedDescription, privacy: .public)"
                 )
             }
@@ -1972,7 +1972,7 @@ final class DictationCoordinator: ObservableObject {
                     )
                     setupMessage = message
                     systemAudioTestMessage = message
-                    FlowLogger.audio.notice(
+                    NativeDictateLogger.audio.notice(
                         "ScreenCaptureKit timeline probe completed: requested=\(duration.rawValue, privacy: .public)s wall=\(result.duration, privacy: .public)s audio=\(report.capturedDuration, privacy: .public)s callbacks=\(report.callbackCount, privacy: .public) missingPTS=\(report.missingPresentationTimeCount, privacy: .public) regressions=\(report.presentationTimeRegressionCount, privacy: .public) discontinuities=\(report.discontinuityCount, privacy: .public) largestGapFrames=\(report.largestPositiveGapFrames, privacy: .public) sampleRateChanges=\(report.sampleRateChangeCount, privacy: .public) temporaryFileBytes=\(fileSize, privacy: .public)"
                     )
                 } else {
@@ -2039,7 +2039,7 @@ final class DictationCoordinator: ObservableObject {
 
     func refreshHistory() async {
         do { historyRecords = try await historyStore.all() }
-        catch { FlowLogger.app.error("History load failed: \(error.localizedDescription, privacy: .public)") }
+        catch { NativeDictateLogger.app.error("History load failed: \(error.localizedDescription, privacy: .public)") }
     }
 
     func refreshSmartDictationData() async {
@@ -2050,7 +2050,7 @@ final class DictationCoordinator: ObservableObject {
                 settings.writingStyleID = BuiltInWritingStyles.originalID
             }
         } catch {
-            FlowLogger.app.error("Smart Dictation data load failed: \(error.localizedDescription, privacy: .public)")
+            NativeDictateLogger.app.error("Smart Dictation data load failed: \(error.localizedDescription, privacy: .public)")
             setupMessage = error.localizedDescription
         }
     }
@@ -2378,12 +2378,12 @@ final class DictationCoordinator: ObservableObject {
                     maximumAgeDays: settings.historyRetentionDays,
                     maximumRecordCount: settings.historyMaximumRecordCount
                 )
-                FlowLogger.app.info(
+                NativeDictateLogger.app.info(
                     "Manual retention removed \(result.removedCount, privacy: .public) and archived \(result.archivedCount, privacy: .public) records"
                 )
                 setupMessage = "Retention settings applied."
             } catch {
-                FlowLogger.app.error("Manual retention failed: \(error.localizedDescription, privacy: .public)")
+                NativeDictateLogger.app.error("Manual retention failed: \(error.localizedDescription, privacy: .public)")
                 setupMessage = error.localizedDescription
             }
             await refreshHistory()
@@ -2415,12 +2415,12 @@ final class DictationCoordinator: ObservableObject {
                 maximumRecordCount: settings.historyMaximumRecordCount
             )
             if historyResult.removedCount > 0 || historyResult.archivedCount > 0 {
-                FlowLogger.app.info(
+                NativeDictateLogger.app.info(
                     "History retention removed \(historyResult.removedCount, privacy: .public) and archived \(historyResult.archivedCount, privacy: .public) records"
                 )
             }
         }
-        catch { FlowLogger.app.error("Recovery failed: \(error.localizedDescription, privacy: .public)") }
+        catch { NativeDictateLogger.app.error("Recovery failed: \(error.localizedDescription, privacy: .public)") }
         await refreshHistory()
     }
 
@@ -2589,11 +2589,11 @@ final class DictationCoordinator: ObservableObject {
         latestOutputURL = nil
         let isMixedRequest = settings.recordingAudioSource == .mixed
         let startSignpost = isMixedRequest
-            ? FlowLogger.meetingSignposter.beginInterval("Meeting Start Request")
+            ? NativeDictateLogger.meetingSignposter.beginInterval("Meeting Start Request")
             : nil
         defer {
             if let startSignpost {
-                FlowLogger.meetingSignposter.endInterval(
+                NativeDictateLogger.meetingSignposter.endInterval(
                     "Meeting Start Request", startSignpost
                 )
             }
@@ -2604,7 +2604,7 @@ final class DictationCoordinator: ObservableObject {
         }
         if settings.recordingAudioSource == .mixed {
             guard hasCurrentMeetingRecordingConsent else {
-                FlowLogger.meetingSignposter.emitEvent("Meeting Consent Required")
+                NativeDictateLogger.meetingSignposter.emitEvent("Meeting Consent Required")
                 presentMeetingRecordingConsent()
                 return
             }
@@ -2675,7 +2675,7 @@ final class DictationCoordinator: ObservableObject {
             queueSnapshot = try await processingQueue.reserveRecordingSlot()
             hasQueueReservation = true
             if isMixedRequest {
-                FlowLogger.meetingSignposter.emitEvent("Meeting Queue Slot Reserved")
+                NativeDictateLogger.meetingSignposter.emitEvent("Meeting Queue Slot Reserved")
             }
         } catch {
             fail(error, retainedAudioURL: nil)
@@ -2686,12 +2686,12 @@ final class DictationCoordinator: ObservableObject {
                 || settings.recordingAudioSource == .mixed {
                 try await permissionManager.ensureMicrophoneAccess()
                 if isMixedRequest {
-                    FlowLogger.meetingSignposter.emitEvent("Meeting Microphone Permission Ready")
+                    NativeDictateLogger.meetingSignposter.emitEvent("Meeting Microphone Permission Ready")
                 }
             }
             try permissionManager.ensureEventPostingAccess()
             if isMixedRequest {
-                FlowLogger.meetingSignposter.emitEvent("Meeting Input Permission Ready")
+                NativeDictateLogger.meetingSignposter.emitEvent("Meeting Input Permission Ready")
             }
             sessionConfiguration = configuration
             refreshPermissionStatus()
@@ -2702,12 +2702,12 @@ final class DictationCoordinator: ObservableObject {
                 refreshLivePreviewAvailability()
             }
             if settings.recordingAudioSource == .mixed {
-                FlowLogger.meetingSignposter.emitEvent("Meeting Preflight Passed")
+                NativeDictateLogger.meetingSignposter.emitEvent("Meeting Preflight Passed")
                 try await startMixedRecording(
                     target: target,
                     configuration: configuration
                 )
-                FlowLogger.meetingSignposter.emitEvent("Meeting Recording Visible")
+                NativeDictateLogger.meetingSignposter.emitEvent("Meeting Recording Visible")
                 return
             }
             sessionRecorder = settings.recordingAudioSource == .systemAudio
@@ -3059,11 +3059,11 @@ final class DictationCoordinator: ObservableObject {
             do {
                 try await syncLatestMeetingSessionIfAvailable(sessionID: sessionID)
                 await refreshHistory()
-                FlowLogger.app.info(
+                NativeDictateLogger.app.info(
                     "Meeting insertion History refresh completed in \(String(describing: started.duration(to: .now)), privacy: .public)"
                 )
             } catch {
-                FlowLogger.app.error(
+                NativeDictateLogger.app.error(
                     "Meeting insertion completed, but the deferred History refresh failed: \(error.localizedDescription, privacy: .public)"
                 )
             }
@@ -3078,7 +3078,7 @@ final class DictationCoordinator: ObservableObject {
         let stopStarted = ContinuousClock.now
         do {
             recording = try await recorder.stop()
-            FlowLogger.audio.info(
+            NativeDictateLogger.audio.info(
                 "Recording stop/finalization completed in \(String(describing: stopStarted.duration(to: .now)), privacy: .public)"
             )
         }
@@ -3111,17 +3111,17 @@ final class DictationCoordinator: ObservableObject {
             return
         }
 
-        FlowLogger.transcription.info(
+        NativeDictateLogger.transcription.info(
             "Post-stop History persistence completed in \(String(describing: stopStarted.duration(to: .now)), privacy: .public)"
         )
 
         do {
             let job = try await makeJob(record: record)
-            FlowLogger.transcription.info(
+            NativeDictateLogger.transcription.info(
                 "Post-stop job creation completed in \(String(describing: stopStarted.duration(to: .now)), privacy: .public)"
             )
             queueSnapshot = try await processingQueue.commit(job)
-            FlowLogger.transcription.info(
+            NativeDictateLogger.transcription.info(
                 "Post-stop queue commit completed in \(String(describing: stopStarted.duration(to: .now)), privacy: .public)"
             )
             hasQueueReservation = false
@@ -3135,7 +3135,7 @@ final class DictationCoordinator: ObservableObject {
                 // JSON History a second time before transcription begins.
                 try await historyStore.stage(record)
             } catch {
-                FlowLogger.app.error(
+                NativeDictateLogger.app.error(
                     "Queued job summary could not be written to History: \(error.localizedDescription, privacy: .public)"
                 )
             }
@@ -3176,7 +3176,7 @@ final class DictationCoordinator: ObservableObject {
             try await historyStore.upsert(record)
             await refreshHistory()
         } catch {
-            FlowLogger.app.error(
+            NativeDictateLogger.app.error(
                 "Too-short recording history entry could not be written: \(error.localizedDescription, privacy: .public)"
             )
         }
@@ -3239,7 +3239,7 @@ final class DictationCoordinator: ObservableObject {
             queueSnapshot = try await processingQueue.snapshot()
             startJobProcessingIfNeeded()
         } catch {
-            FlowLogger.app.error(
+            NativeDictateLogger.app.error(
                 "Job queue recovery failed: \(error.localizedDescription, privacy: .public)"
             )
             setupMessage = "Some queued dictations need review in History."
@@ -3251,7 +3251,7 @@ final class DictationCoordinator: ObservableObject {
         do {
             queueSnapshot = try await processingQueue.releaseRecordingSlot()
         } catch {
-            FlowLogger.app.error(
+            NativeDictateLogger.app.error(
                 "Queue reservation release failed: \(error.localizedDescription, privacy: .public)"
             )
         }
@@ -3272,7 +3272,7 @@ final class DictationCoordinator: ObservableObject {
                     self.startJobProcessingIfNeeded()
                 }
             } catch {
-                FlowLogger.app.error(
+                NativeDictateLogger.app.error(
                     "Could not refresh dictation queue after processing: \(error.localizedDescription, privacy: .public)"
                 )
             }
@@ -3301,13 +3301,13 @@ final class DictationCoordinator: ObservableObject {
                 for jobID in jobIDs {
                     try await jobStore.delete(id: jobID)
                 }
-                FlowLogger.transcription.info(
+                NativeDictateLogger.transcription.info(
                     "Background completion persistence flushed \(jobIDs.count, privacy: .public) job(s) in \(Self.elapsedSeconds(since: startedAt), privacy: .public)s"
                 )
             } catch {
                 // Keeping an undeleted manifest is intentional: on restart the
                 // recording can be recovered conservatively.
-                FlowLogger.app.error(
+                NativeDictateLogger.app.error(
                     "Background completion persistence failed; recovery manifest retained: \(error.localizedDescription, privacy: .public)"
                 )
             }
@@ -3322,11 +3322,11 @@ final class DictationCoordinator: ObservableObject {
                 guard let next = try await processingQueue.next() else { break }
                 job = next
                 queueSnapshot = try await processingQueue.snapshot()
-                FlowLogger.transcription.info(
+                NativeDictateLogger.transcription.info(
                     "Queue next/snapshot completed in \(String(describing: queueReadStarted.duration(to: .now)), privacy: .public)"
                 )
             } catch {
-                FlowLogger.app.error(
+                NativeDictateLogger.app.error(
                     "Could not read next dictation job: \(error.localizedDescription, privacy: .public)"
                 )
                 break
@@ -3343,7 +3343,7 @@ final class DictationCoordinator: ObservableObject {
                     queueSnapshot.processingCount = 0
                     allowsRecordingDuringCompletionPersistence = false
                     persistCompletedHistoryAndRemoveManifest(jobID: completed.id)
-                    FlowLogger.transcription.info(
+                    NativeDictateLogger.transcription.info(
                         "Job \(job.id, privacy: .public) handed off for background completion persistence"
                     )
                 } else {
@@ -3352,19 +3352,19 @@ final class DictationCoordinator: ObservableObject {
                     if queueSnapshot.totalActiveCount == 0 {
                         allowsRecordingDuringCompletionPersistence = false
                     }
-                    FlowLogger.transcription.info(
+                    NativeDictateLogger.transcription.info(
                         "Job \(job.id, privacy: .public) queue finalization completed in \(Self.elapsedSeconds(since: queueFinishStartedAt), privacy: .public)s"
                     )
                 }
                 if completed.status == .cancelled {
                     let manifestDeletionStartedAt = Date()
                     try await jobStore.delete(id: completed.id)
-                    FlowLogger.transcription.info(
+                    NativeDictateLogger.transcription.info(
                         "Job \(job.id, privacy: .public) manifest deletion completed in \(Self.elapsedSeconds(since: manifestDeletionStartedAt), privacy: .public)s"
                     )
                 }
             } catch {
-                FlowLogger.app.error(
+                NativeDictateLogger.app.error(
                     "Could not finish dictation job \(job.id, privacy: .public): \(error.localizedDescription, privacy: .public)"
                 )
                 break
@@ -3372,7 +3372,7 @@ final class DictationCoordinator: ObservableObject {
             inMemoryJobTargets[job.id] = nil
             let historyRefreshStartedAt = Date()
             await refreshHistory()
-            FlowLogger.transcription.info(
+            NativeDictateLogger.transcription.info(
                 "Job \(job.id, privacy: .public) History refresh completed in \(Self.elapsedSeconds(since: historyRefreshStartedAt), privacy: .public)s"
             )
         }
@@ -3382,7 +3382,7 @@ final class DictationCoordinator: ObservableObject {
         var job = input
         var record: DictationRecord?
         let jobStartedAt = Date()
-        FlowLogger.transcription.info(
+        NativeDictateLogger.transcription.info(
             "Job \(job.id, privacy: .public) started after waiting \(Self.elapsedSeconds(since: job.createdAt), privacy: .public)s in the queue"
         )
         do {
@@ -3392,7 +3392,7 @@ final class DictationCoordinator: ObservableObject {
             }
             record = currentRecord
             let audioURL = try audioURL(for: currentRecord)
-            FlowLogger.transcription.info(
+            NativeDictateLogger.transcription.info(
                 "Job \(job.id, privacy: .public) record lookup and audio resolution completed in \(Self.elapsedSeconds(since: recordLookupStartedAt), privacy: .public)s"
             )
 
@@ -3401,14 +3401,14 @@ final class DictationCoordinator: ObservableObject {
             job.updatedAt = Date()
             let jobUpdateStartedAt = Date()
             try await jobStore.update(job)
-            FlowLogger.transcription.info(
+            NativeDictateLogger.transcription.info(
                 "Job \(job.id, privacy: .public) transcribing manifest update completed in \(Self.elapsedSeconds(since: jobUpdateStartedAt), privacy: .public)s"
             )
             if !isRecording {
                 let overlayStateStartedAt = Date()
                 state = .transcribing
                 overlay.show(status: .processing)
-                FlowLogger.transcription.info(
+                NativeDictateLogger.transcription.info(
                     "Job \(job.id, privacy: .public) transcribing overlay update completed in \(Self.elapsedSeconds(since: overlayStateStartedAt), privacy: .public)s"
                 )
             }
@@ -3418,10 +3418,10 @@ final class DictationCoordinator: ObservableObject {
             currentRecord.updatedAt = Date()
             let historyStageStartedAt = Date()
             try await historyStore.stage(currentRecord)
-            FlowLogger.transcription.info(
+            NativeDictateLogger.transcription.info(
                 "Job \(job.id, privacy: .public) pre-transcription History stage completed in \(Self.elapsedSeconds(since: historyStageStartedAt), privacy: .public)s"
             )
-            FlowLogger.transcription.info(
+            NativeDictateLogger.transcription.info(
                 "Job \(job.id, privacy: .public) pre-transcription state persistence completed in \(Self.elapsedSeconds(since: statePersistenceStartedAt), privacy: .public)s"
             )
             if !isRecording {
@@ -3438,7 +3438,7 @@ final class DictationCoordinator: ObservableObject {
                     cloudEnhancementEnabled: job.effectiveConfiguration.cloudEnhancementEnabled
                 )
             )
-            FlowLogger.transcription.info(
+            NativeDictateLogger.transcription.info(
                 "Job \(job.id, privacy: .public) provider resolution completed in \(Self.elapsedSeconds(since: providerResolutionStartedAt), privacy: .public)s"
             )
             let transcriptionStartedAt = Date()
@@ -3454,7 +3454,7 @@ final class DictationCoordinator: ObservableObject {
                     self.overlay.show(status: .longForm(progress.statusText))
                 }
             )
-            FlowLogger.transcription.info(
+            NativeDictateLogger.transcription.info(
                 "Job \(job.id, privacy: .public) transcription stage completed in \(Self.elapsedSeconds(since: transcriptionStartedAt), privacy: .public)s using \(job.providerID, privacy: .public)/\(job.modelID, privacy: .public)"
             )
             record = currentRecord
@@ -3476,7 +3476,7 @@ final class DictationCoordinator: ObservableObject {
             job.correctionSummary = correctionResult.summary
             try await historyStore.stage(currentRecord)
             try await jobStore.update(job)
-            FlowLogger.transcription.info(
+            NativeDictateLogger.transcription.info(
                 "Job \(job.id, privacy: .public) local correction stage completed in \(Self.elapsedSeconds(since: correctionStartedAt), privacy: .public)s"
             )
             record = currentRecord
@@ -3511,7 +3511,7 @@ final class DictationCoordinator: ObservableObject {
                 enhancementAllowed: enhancementAllowed,
                 deferSuccessfulPersistence: true
             )
-            FlowLogger.transcription.info(
+            NativeDictateLogger.transcription.info(
                 "Job \(job.id, privacy: .public) writing-style stage completed in \(Self.elapsedSeconds(since: formattingStartedAt), privacy: .public)s; style=\(style.name, privacy: .public), AI=\(style.usesAI, privacy: .public)"
             )
             record = currentRecord
@@ -3555,7 +3555,7 @@ final class DictationCoordinator: ObservableObject {
             try await makeInserter(
                 preference: job.effectiveConfiguration.insertionPreference
             ).insert(outputText, into: target)
-            FlowLogger.insertion.info(
+            NativeDictateLogger.insertion.info(
                 "Job \(job.id, privacy: .public) insertion stage completed in \(Self.elapsedSeconds(since: insertionStartedAt), privacy: .public)s"
             )
 
@@ -3590,7 +3590,7 @@ final class DictationCoordinator: ObservableObject {
             // the hotkey transition or the success overlay.
             try await historyStore.stage(currentRecord)
             stagedCompletionJobIDs.insert(job.id)
-            FlowLogger.transcription.info(
+            NativeDictateLogger.transcription.info(
                 "Job \(job.id, privacy: .public) interaction completed in \(Self.elapsedSeconds(since: jobStartedAt), privacy: .public)s"
             )
             return job
@@ -3669,7 +3669,7 @@ final class DictationCoordinator: ObservableObject {
                 try await historyStore.upsert(updated)
             } catch {
                 setupMessage = "Text was inserted, but the completed History status could not be saved."
-                FlowLogger.app.error(
+                NativeDictateLogger.app.error(
                     "Post-insertion History update failed: \(error.localizedDescription, privacy: .public)"
                 )
             }
@@ -3713,7 +3713,7 @@ final class DictationCoordinator: ObservableObject {
         do {
             try await historyStore.upsert(record)
         } catch {
-            FlowLogger.app.error(
+            NativeDictateLogger.app.error(
                 "Could not persist \(context, privacy: .public): \(error.localizedDescription, privacy: .public)"
             )
         }
@@ -3750,34 +3750,34 @@ final class DictationCoordinator: ObservableObject {
     private func startLivePreviewIfAvailable(size: OverlaySize) {
         if settings.recordingAudioSource == .systemAudio {
             overlay.updatePreview(.unavailable(RecordingAudioSource.systemAudioPreviewGuidance))
-            FlowLogger.audio.info("Live Preview skipped for System Audio")
+            NativeDictateLogger.audio.info("Live Preview skipped for System Audio")
             return
         }
-        FlowLogger.audio.info(
+        NativeDictateLogger.audio.info(
             "Preparing Live Preview: enabled=\(self.settings.livePreviewEnabled, privacy: .public), speechPermission=\(self.speechPermissionState.rawValue, privacy: .public)"
         )
         guard size.showsLivePreviewText else {
             overlay.updatePreview(.disabled)
-            FlowLogger.audio.info("Live Preview skipped for Compact overlay")
+            NativeDictateLogger.audio.info("Live Preview skipped for Compact overlay")
             return
         }
         guard settings.livePreviewEnabled else {
             overlay.updatePreview(.disabled)
-            FlowLogger.audio.info("Live Preview is disabled in Settings")
+            NativeDictateLogger.audio.info("Live Preview is disabled in Settings")
             return
         }
         let availability = livePreviewAvailability
-        FlowLogger.audio.info(
+        NativeDictateLogger.audio.info(
             "Live Preview availability: \(availability.statusText, privacy: .public)"
         )
         guard case let .available(localeIdentifier) = availability else {
             overlay.updatePreview(.unavailable(availability.statusText))
-            FlowLogger.audio.notice(
+            NativeDictateLogger.audio.notice(
                 "Live Preview was not started: \(availability.statusText, privacy: .public)"
             )
             return
         }
-        FlowLogger.audio.info(
+        NativeDictateLogger.audio.info(
             "Starting local Live Preview with locale \(localeIdentifier, privacy: .public)"
         )
         do {
@@ -3789,7 +3789,7 @@ final class DictationCoordinator: ObservableObject {
             )
         } catch {
             recorder.previewBufferHandler = nil
-            FlowLogger.audio.notice(
+            NativeDictateLogger.audio.notice(
                 "Live Preview could not start: \(error.localizedDescription, privacy: .public)"
             )
         }
@@ -4002,7 +4002,7 @@ final class DictationCoordinator: ObservableObject {
         endCriticalInteractionActivityIfNeeded()
         overlay.show(status: .error(message))
         scheduleOverlayDismiss(after: .seconds(3), transitionToIdle: false)
-        FlowLogger.app.error("Dictation failed: \(message, privacy: .public)")
+        NativeDictateLogger.app.error("Dictation failed: \(message, privacy: .public)")
     }
     private func scheduleOverlayDismiss(after duration: Duration, transitionToIdle: Bool) {
         overlayDismissTask?.cancel()
@@ -4024,7 +4024,7 @@ final class DictationCoordinator: ObservableObject {
         // queue slot; it cannot begin processing until this job leaves the drain.
         allowsRecordingDuringCompletionPersistence = true
         scheduleOverlayDismiss(after: .milliseconds(350), transitionToIdle: true)
-        FlowLogger.app.notice("Inserted interaction released; overlay dismissal scheduled independently")
+        NativeDictateLogger.app.notice("Inserted interaction released; overlay dismissal scheduled independently")
     }
 
     private func signalJobInteractionCompleted(_ jobID: UUID) {

@@ -68,7 +68,7 @@ final class SmartDictationPipeline {
         let stageLocally = deferSuccessfulPersistence
         let initialStageStartedAt = Date()
         try await store(updated, persistToDisk: !stageLocally)
-        FlowLogger.transcription.info(
+        NativeDictateLogger.transcription.info(
             "Smart Dictation initial History stage completed in \(Self.elapsedSeconds(since: initialStageStartedAt), privacy: .public)s"
         )
 
@@ -95,10 +95,10 @@ final class SmartDictationPipeline {
                 dictionaryDuration: Date().timeIntervalSince(dictionaryStartedAt)
             )
         }.value
-        FlowLogger.transcription.info(
+        NativeDictateLogger.transcription.info(
             "Spoken formatting completed in \(Self.formattedSeconds(localResult.formattingDuration), privacy: .public)s"
         )
-        FlowLogger.transcription.info(
+        NativeDictateLogger.transcription.info(
             "Personal dictionary completed in \(Self.formattedSeconds(localResult.dictionaryDuration), privacy: .public)s"
         )
         updated.formattedTranscript = localResult.formattedText
@@ -109,7 +109,7 @@ final class SmartDictationPipeline {
         updated.updatedAt = Date()
         let formattedStageStartedAt = Date()
         try await store(updated, persistToDisk: !stageLocally)
-        FlowLogger.transcription.info(
+        NativeDictateLogger.transcription.info(
             "Smart Dictation formatted History stage completed in \(Self.elapsedSeconds(since: formattedStageStartedAt), privacy: .public)s"
         )
 
@@ -120,7 +120,7 @@ final class SmartDictationPipeline {
             updated.updatedAt = Date()
             let completedStageStartedAt = Date()
             try await store(updated, persistToDisk: !stageLocally)
-            FlowLogger.transcription.info(
+            NativeDictateLogger.transcription.info(
                 "Smart Dictation completed History stage completed in \(Self.elapsedSeconds(since: completedStageStartedAt), privacy: .public)s"
             )
             return updated
@@ -135,10 +135,10 @@ final class SmartDictationPipeline {
             updated.updatedAt = Date()
             let completedStageStartedAt = Date()
             try await store(updated, persistToDisk: !stageLocally)
-            FlowLogger.transcription.notice(
+            NativeDictateLogger.transcription.notice(
                 "AI writing style skipped because cloud enhancement is not permitted; using locally processed text"
             )
-            FlowLogger.transcription.info(
+            NativeDictateLogger.transcription.info(
                 "Smart Dictation skipped-enhancement History stage completed in \(Self.elapsedSeconds(since: completedStageStartedAt), privacy: .public)s"
             )
             return updated

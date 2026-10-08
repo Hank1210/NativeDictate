@@ -81,11 +81,11 @@ nonisolated final class DerivedTrackRenderer: @unchecked Sendable {
         sessionDirectory: URL
     ) async throws -> DerivedTrackRenderResult {
         let validated = try session.validated()
-        let signpost = FlowLogger.meetingSignposter.beginInterval(
+        let signpost = NativeDictateLogger.meetingSignposter.beginInterval(
             "Meeting Derived Render", id: .exclusive,
             "session: \(validated.id.uuidString, privacy: .public)"
         )
-        defer { FlowLogger.meetingSignposter.endInterval("Meeting Derived Render", signpost) }
+        defer { NativeDictateLogger.meetingSignposter.endInterval("Meeting Derived Render", signpost) }
         guard let synchronization = validated.synchronization else {
             throw DerivedTrackRendererError.synchronizationUnavailable
         }
@@ -120,7 +120,7 @@ nonisolated final class DerivedTrackRenderer: @unchecked Sendable {
             return DerivedTrackRenderResult(tracks: artifacts)
         }.value
         for track in result.tracks {
-            FlowLogger.meetingSignposter.emitEvent(
+            NativeDictateLogger.meetingSignposter.emitEvent(
                 "Meeting Derived Track", id: .exclusive,
                 "role: \(track.role.rawValue, privacy: .public), frames: \(track.frameCount), bytes: \(track.byteCount)"
             )

@@ -130,7 +130,7 @@ final class GlobalHotKeyRegistrar: HotKeyRegistering {
         }
 
         installFallbackMonitors()
-        FlowLogger.hotkey.info("Registered hotkey: \(configuration.displayName, privacy: .public)")
+        NativeDictateLogger.hotkey.info("Registered hotkey: \(configuration.displayName, privacy: .public)")
     }
 
     func unregister() {
@@ -153,13 +153,13 @@ final class GlobalHotKeyRegistrar: HotKeyRegistering {
         let now = Date()
         let lastDelivery = released ? lastReleaseDelivery : lastPressDelivery
         guard now.timeIntervalSince(lastDelivery) >= 0.08 else {
-            FlowLogger.hotkey.debug(
+            NativeDictateLogger.hotkey.debug(
                 "Deduplicated \(released ? "release" : "press", privacy: .public) from \(source, privacy: .public)"
             )
             return
         }
         if released { lastReleaseDelivery = now } else { lastPressDelivery = now }
-        FlowLogger.hotkey.debug(
+        NativeDictateLogger.hotkey.debug(
             "Delivered \(released ? "release" : "press", privacy: .public) from \(source, privacy: .public)"
         )
         if released { releaseHandler?() } else { handler?() }

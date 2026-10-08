@@ -104,7 +104,7 @@ final class OpenAITranscriptEnhancer: TranscriptEnhancing, @unchecked Sendable {
         urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
         urlRequest.httpBody = try JSONEncoder().encode(body)
 
-        FlowLogger.transcription.info("Sending transcript for optional Smart Dictation enhancement")
+        NativeDictateLogger.transcription.info("Sending transcript for optional Smart Dictation enhancement")
         let (data, response) = try await session.data(for: urlRequest)
         guard let http = response as? HTTPURLResponse else {
             throw TranscriptEnhancementError.invalidResponse
@@ -122,7 +122,7 @@ final class OpenAITranscriptEnhancer: TranscriptEnhancing, @unchecked Sendable {
             input: input,
             protectedTerms: request.protectedTerms
         )
-        FlowLogger.transcription.info("Smart Dictation enhancement completed")
+        NativeDictateLogger.transcription.info("Smart Dictation enhancement completed")
         return TranscriptEnhancementResult(text: validated, provider: "OpenAI", model: request.model)
     }
 }

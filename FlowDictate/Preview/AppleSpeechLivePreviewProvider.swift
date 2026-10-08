@@ -56,7 +56,7 @@ final class AppleSpeechLivePreviewProvider: LivePreviewProviding {
                 guard !Task.isCancelled else { break }
                 if !didLogFirstBuffer {
                     didLogFirstBuffer = true
-                    FlowLogger.audio.info(
+                    NativeDictateLogger.audio.info(
                         "Live Preview received audio: \(buffer.sampleRate, privacy: .public) Hz, \(buffer.channelCount, privacy: .public) channel(s)"
                     )
                 }

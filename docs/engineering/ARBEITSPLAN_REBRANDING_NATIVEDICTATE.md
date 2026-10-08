@@ -278,7 +278,7 @@ Die Umbenennung interner Symbole darf nicht den eigentlichen Produktwechsel bloc
 - Neue vorgeschlagene Nutzerexporte heißen `NativeDictate-<ID>.txt`, `NativeDictate-Diagnostics.json`, `NativeDictate-Dictionary.json` und `NativeDictate-Writing-Styles.json`.
 - Die im Core-Audio-System sichtbaren Tap- und Aggregate-Device-Namen verwenden `NativeDictate`. Interne Aggregate-UIDs, Queue-Labels, temporäre Uploaddateien und Logger-Fallbacks bleiben als technische Legacy-Namen erhalten.
 - Das vorhandene App-Icon zeigt Mikrofon, Wellenform und Aufnahmepunkt ohne alten Namen oder alte Initialen. Es wurde deshalb entsprechend dem Pflichtumfang nicht verändert. Eine eigene About- oder Copyright-Oberfläche existiert im aktuellen Quellstand nicht.
-- Der neue Regressionstest `visibleProductBrandingUsesNativeDictate()` scannt die 24 benutzersichtbaren Produktionsquellen, die Quell-Info-Plist, die TCC-Buildsettings und die neuen Exportnamen. Das ausdrücklich erlaubte Queue-Label `FlowDictate.SystemAudioCapture` ist eng begrenzt ausgenommen. Der korrigierte Test bestand zunächst gezielt 1/1.
+- Der neue Regressionstest `visibleProductBrandingUsesNativeDictate()` scannt die 24 benutzersichtbaren Produktionsquellen, die Quell-Info-Plist, die TCC-Buildsettings und die neuen Exportnamen. Das zu diesem Zeitpunkt noch erlaubte Queue-Label `FlowDictate.SystemAudioCapture` war eng begrenzt ausgenommen; R8.4 hat diese Ausnahme später entfernt. Der korrigierte Test bestand zunächst gezielt 1/1.
 - Anschließend bestand die vollständige serielle macOS-Suite auf dem endgültigen R2-Stand mit 227/227 Tests, 0 Fehlern und 0 Skips. Der Lauf schließt alle 226 bestehenden Regressionstests und den neuen Brand-Test ein.
 - Der kontrollierte Restscan findet in App-Code, Info-Plist und Xcode-Projekt noch 104 Zeilen beziehungsweise 34 String-Literale mit `FlowDictate`. Sie gehören ausschließlich zu den in R2.2 erlaubten internen Typ-, Datei-, Projekt-, Target- und Produktnamen, den in R1 geschützten Bundle-/Speicher-/Queue-Verträgen, temporären internen Dateinamen, Kommentaren oder der bis R6 absichtlich aktiven alten GitHub-API-Adresse. `REBRANDING_LEGACY_ALLOWLIST.tsv` dokumentiert die zusätzlichen R2-Ausnahmen.
 - `plutil -lint` für die Quell-Info-Plist und `git diff --check` sind grün. Die bekannten, bereits in R0/R1 dokumentierten Xcode-27-Compilerwarnungen blieben unverändert.
@@ -633,6 +633,14 @@ Jede interne Bereinigung wird mechanisch getrennt, mit kleinen Commits und volls
 - Der kontrollierte Restscan findet die beiden alten Dateinamen weder in aktivem Code noch in Tests, Allowlist oder Xcode-Projekt. `git diff --check` ist leer.
 - Die vollständige serielle macOS-Suite bestand erneut mit 228/228 Tests und `TEST SUCCEEDED`; die bekannte Actor-Isolation-Compilerwarnung im Testhelfer bleibt bestehen.
 - Xcode-Projekt, Scheme, Targets, Swift-Modul und Quellwurzel behalten in diesem Schritt ausdrücklich ihre bestehenden internen FlowDictate-Namen. Technische Identitäten und persistente Daten wurden nicht verändert.
+
+### 14.4 Logger-, Queue- und temporäre Audio-Identifier
+
+- Der interne Typ `FlowLogger` und seine Quelldatei wurden zu `NativeDictateLogger` beziehungsweise `NativeDictateLogger.swift` umbenannt. Der Fallback für Prozesse ohne Bundle-Identifier lautet nun ebenfalls `NativeDictate`; im normalen App-Prozess bleibt das Logger-Subsystem weiterhin die tatsächliche, absichtlich unveränderte Bundle-ID.
+- Nicht persistierte Dispatch-Queue-, Timer- und serielle Datei-I/O-Labels verwenden nun `NativeDictate`. Dasselbe gilt für die nur während einer Aufnahme beziehungsweise Diagnose erzeugten temporären Core-Audio-Aggregate-UIDs. Bundle-Identifier, Keychain-Service, Application-Support-Wurzel, UserDefaults-Schlüssel und gespeicherte Daten wurden nicht geändert.
+- Die zehn dadurch überflüssigen Ausnahmen wurden aus `REBRANDING_LEGACY_ALLOWLIST.tsv` entfernt. Der Branding-Regressionstest benötigt keine Sonderbehandlung für `FlowDictate.SystemAudioCapture` mehr; der kontrollierte Restscan findet die bereinigten alten Identifier nur noch im historischen R0-Inventar und in der dokumentierten früheren R2-Ausnahme.
+- Die vollständige serielle macOS-Suite bestand mit 228/228 Tests und `TEST SUCCEEDED`. Der erfolgreiche Lauf verwendete den vorhandenen SwiftPM-Cache und DerivedData unter `/private/tmp`; die bekannte Actor-Isolation-Compilerwarnung im Testhelfer bleibt bestehen.
+- Xcode-Projekt, Scheme, Targets, Swift-Modul, Quell- und Testwurzel sowie persistente Legacy-Verträge behalten in diesem Schritt ausdrücklich ihre bestehenden Namen.
 
 ## 15. Rollback-Strategie
 

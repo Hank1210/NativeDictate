@@ -97,7 +97,7 @@ nonisolated final class OpenAITranscriptionProvider: TranscriptionProvider, @unc
         )
         urlRequest.setValue(String(upload.multipart.byteCount), forHTTPHeaderField: "Content-Length")
 
-        FlowLogger.transcription.info(
+        NativeDictateLogger.transcription.info(
             "Sending \(upload.audioByteCount, privacy: .public) audio bytes for transcription"
         )
         let (data, response) = try await session.upload(for: urlRequest, fromFile: upload.multipart.url)
@@ -118,7 +118,7 @@ nonisolated final class OpenAITranscriptionProvider: TranscriptionProvider, @unc
         let text = payload.text.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !text.isEmpty else { throw TranscriptionProviderError.emptyTranscript }
 
-        FlowLogger.transcription.info("Transcription completed")
+        NativeDictateLogger.transcription.info("Transcription completed")
         return TranscriptionResult(text: text, provider: "OpenAI", model: model)
     }
 }
@@ -135,7 +135,7 @@ nonisolated enum OpenAIUploadCleanup {
         Task.detached(priority: .utility) {
             upload.multipart.cleanup(fileManager: fileManager.value)
             upload.audio.cleanup(fileManager: fileManager.value)
-            FlowLogger.transcription.debug("Temporary OpenAI upload files cleaned")
+            NativeDictateLogger.transcription.debug("Temporary OpenAI upload files cleaned")
         }
     }
 }

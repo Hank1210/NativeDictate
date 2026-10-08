@@ -4,16 +4,6 @@ FlowDictate/Utilities/ProductIdentity.swift	exact	de.mcc.FlowDictate.TestHost	Ge
 FlowDictate/Utilities/ProductIdentity.swift	exact	FlowDictate	Persistente Application-Support-Wurzel der bestehenden Installation.
 FlowDictate.xcodeproj/project.pbxproj	exact	PRODUCT_BUNDLE_IDENTIFIER = de.mcc.FlowDictate;	Produktions-Bundle-ID in Debug und Release.
 FlowDictate.xcodeproj/project.pbxproj	exact	PRODUCT_BUNDLE_IDENTIFIER = de.mcc.FlowDictate.TestHost;	Dedizierte Testhost-Bundle-ID.
-FlowDictate/History/DictationHistoryStore.swift	exact	de.mcc.FlowDictate.history-file-io	Bestehendes internes Queue-Label.
-FlowDictate/Jobs/DictationJobStore.swift	exact	de.mcc.FlowDictate.job-file-io	Bestehendes internes Queue-Label.
-FlowDictate/Overlay/RecordingOverlayController.swift	exact	de.mcc.FlowDictate.success-overlay-hide	Bestehendes internes Timer-Label.
-FlowDictate/Meetings/MeetingSessionStore.swift	exact	de.mcc.FlowDictate.meeting-session-file-io	Bestehendes internes Queue-Label.
-FlowDictate/Meetings/ScreenCaptureKitSystemTrackRecorder.swift	exact	de.mcc.FlowDictate.mixed-screen-capture-audio	Bestehendes internes Queue-Label.
-FlowDictate/Meetings/SystemAudioTrackRecorder.swift	prefix	de.mcc.FlowDictate.mixed-system-audio	Bestehende Aggregate-UID und internes Queue-Label.
-FlowDictate/Meetings/CoreAudioTapCaptureProbe.swift	prefix	de.mcc.FlowDictate.core-audio-tap	Bestehende Diagnose- und Timer-Labels.
-FlowDictate/Meetings/CoreAudioTapCaptureProbe.swift	prefix	de.mcc.FlowDictate.capture-probe	Bestehende Diagnose-UID.
-FlowDictate/Audio/SystemAudioRecorder.swift	exact	FlowDictate.SystemAudioCapture	Bestehendes internes Capture-Queue-Label.
-FlowDictate/Utilities/FlowLogger.swift	exact	FlowDictate	Interner Logger-Fallback für Prozesse ohne Bundle-Identifier.
 FlowDictate.xcodeproj/project.pbxproj	prefix	FlowDictate|de.mcc.FlowDictate	Interne Xcode-Target-, Test-, Projekt-, Quell-, Plist- und Modulnamen sowie Legacy-Bundle-IDs bleiben gemäß R2.2 bestehen; Produkt- und BuildableName sind durch R3-Regressionen separat als NativeDictate geschützt.
 FlowDictate.xcodeproj/xcshareddata/xcschemes/FlowDictate.xcscheme	prefix	BlueprintName = "FlowDictate"|container:FlowDictate.xcodeproj|FlowDictateTests|FlowDictateUITests	Interne Scheme-, Projekt-, Target- und Testnamen bleiben bestehen; BuildableName ist NativeDictate.app.
 FlowDictate/Audio/CaptureProbeArtifactStore.swift	prefix	FlowDictateCaptureProbes	Nur internes temporäres Diagnoseverzeichnis; kein neuer Nutzerexport und kein Persistenzvertrag.

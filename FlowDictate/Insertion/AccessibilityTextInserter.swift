@@ -84,7 +84,7 @@ final class AccessibilityTextInserter: TextInserting {
             text as CFString
         ) == .success else { throw DirectInsertionError.writeFailed }
 
-        FlowLogger.insertion.info("Transcript inserted through Accessibility")
+        NativeDictateLogger.insertion.info("Transcript inserted through Accessibility")
     }
 }
 
@@ -109,7 +109,7 @@ final class FallbackTextInserter: TextInserting {
     func insert(_ text: String, into target: FocusTarget) async throws {
         if let bundleIdentifier = target.bundleIdentifier,
            Self.clipboardPreferredBundleIdentifiers.contains(bundleIdentifier) {
-            FlowLogger.insertion.info(
+            NativeDictateLogger.insertion.info(
                 "Using clipboard insertion for \(bundleIdentifier, privacy: .public)"
             )
             try await clipboard.insert(text, into: target)
@@ -122,7 +122,7 @@ final class FallbackTextInserter: TextInserting {
         } catch DirectInsertionError.protectedField {
             throw DirectInsertionError.protectedField
         } catch {
-            FlowLogger.insertion.notice(
+            NativeDictateLogger.insertion.notice(
                 "Direct insertion unavailable after \(String(describing: directStarted.duration(to: .now)), privacy: .public); using clipboard fallback"
             )
             try await clipboard.insert(text, into: target)
