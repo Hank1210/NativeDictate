@@ -29,7 +29,7 @@ FlowDictate/MenuBar/FlowDictateMenu.swift	8	sichtbar	Menüs, Settings und Hilfet
 FlowDictate/Onboarding/OnboardingView.swift	8	sichtbar	Onboarding-, Fenster-, Start- und Login-Texte vollständig in R2 umstellen.
 FlowDictate/Overlay/RecordingOverlayController.swift	1	legacy	Internes Bundle-basiertes Timer-Label de.mcc.FlowDictate.success-overlay-hide unverändert bewahren.
 FlowDictate/Permissions/PermissionManager.swift	2	sichtbar	Mikrofon- und Accessibility-Hinweise in R2 umstellen.
-FlowDictate/Productivity/ProductivityServices.swift	2	sichtbar	Fehlermeldung in R2 umstellen; GitHub-Release-API erst bei R6 auf das umbenannte Repository schalten.
+FlowDictate/Productivity/ProductivityServices.swift	2	sichtbar	Fehlermeldung in R2 umstellen; GitHub-Release-API bei der R6-Umschaltung auf das umbenannte Repository schalten.
 FlowDictate/Productivity/ProductivitySettingsView.swift	2	sichtbar	Versions- und Updatehinweise in R2 umstellen; FlowDictateVersion als internen Typ beibehalten.
 FlowDictate/Profiles/AppDictationProfile.swift	1	legacy	Persistenten Profile-Pfad Application Support/FlowDictate unverändert bewahren.
 FlowDictate/Profiles/AppProfilesSettingsView.swift	2	sichtbar	Benutzersichtbare Clipboard- und Accessibility-Erklärungen in R2 umstellen.

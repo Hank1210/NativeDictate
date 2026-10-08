@@ -18,7 +18,6 @@ FlowDictate.xcodeproj/project.pbxproj	prefix	FlowDictate|de.mcc.FlowDictate	Inte
 FlowDictate.xcodeproj/xcshareddata/xcschemes/FlowDictate.xcscheme	prefix	BlueprintName = "FlowDictate"|container:FlowDictate.xcodeproj|FlowDictateTests|FlowDictateUITests	Interne Scheme-, Projekt-, Target- und Testnamen bleiben bestehen; BuildableName ist NativeDictate.app.
 FlowDictate/FlowDictateApp.swift	prefix	FlowDictateApp|FlowDictateMenu|FlowDictateSettingsView	Interne Swift-Typnamen werden in R2 nicht mechanisch umbenannt.
 FlowDictate/Utilities/FlowDictateVersion.swift	prefix	FlowDictateVersion	Interner Versions-Typ bleibt gemäß R2.2 bestehen.
-FlowDictate/Productivity/ProductivityServices.swift	exact	https://api.github.com/repos/Hank1210/FlowDictate/releases/latest	Bestehende Repository-Adresse bleibt bis zur GitHub-Umschaltung in R6 aktiv.
 FlowDictate/Audio/CaptureProbeArtifactStore.swift	prefix	FlowDictateCaptureProbes	Nur internes temporäres Diagnoseverzeichnis; kein neuer Nutzerexport und kein Persistenzvertrag.
 FlowDictate/Audio/AudioUploadPreparer.swift	prefix	FlowDictate-Upload-|FlowDictate-Multipart-	Interne temporäre Uploadartefakte bleiben kompatibel mit der bestehenden Bereinigung.
 FlowDictate/Transcription/MultipartUploadFileBuilder.swift	prefix	FlowDictate-Multipart-	Interne temporäre Multipart-Datei; nicht benutzersichtbar.

@@ -93,7 +93,7 @@ nonisolated struct GitHubReleaseChecker: Sendable {
     }
 
     func latestStableRelease(session: URLSession = .shared) async throws -> GitHubReleaseInfo? {
-        let url = URL(string: "https://api.github.com/repos/Hank1210/FlowDictate/releases/latest")!
+        let url = URL(string: "https://api.github.com/repos/Hank1210/NativeDictate/releases/latest")!
         var request = URLRequest(url: url)
         request.timeoutInterval = 15
         request.setValue("application/vnd.github+json", forHTTPHeaderField: "Accept")
