@@ -572,7 +572,8 @@ Zu prüfen:
 - Die Datenformatprüfung gegen `v4.1.0` zeigt keine Änderung der History-, Record-, Job-, Profil-, Smart-Dictation-, Long-Form- oder Meeting-Schemaversionen. Änderungen an den Stores zentralisieren lediglich dieselben `Application Support/FlowDictate`-Pfade; 4.2 schreibt kein neues Format, das 4.1 grundsätzlich nicht lesen kann. Ein Rollback muss NativeDictate vollständig beenden, darf niemals beide Bundles parallel starten und kann anschließend FlowDictate 4.1.0 gegen den unveränderten gemeinsamen Datenbestand verwenden. Vor einem Rollback bleibt eine Sicherung der gemeinsamen Nutzerdaten sinnvoll; eine automatische Datenrückmigration oder Löschung ist weder nötig noch vorgesehen.
 - Der zuvor installierte R5-Build wurde nach vollständigem Beenden wiederherstellbar in den Papierkorb verschoben. Die nach `/Applications` kopierte App war bei `diff -rq` bytegleich mit der aus dem R7-ZIP extrahierten App; ihre strikte Signatur und der Executable-Hash wurden nach der Installation erneut geprüft. Beim ersten Start blieben Einstellungen, History, lokales Modell, OpenAI-Key-Status und Aufnahmeordner vorhanden. Die macOS-Berechtigungen mussten für die neue Ad-hoc-Signatur erwartungsgemäß erneuert werden.
 - Mit genau dieser installierten R7-App bestätigte der Nutzer sechs erfolgreiche Realtests: Mikrofon, Systemaudio und Mikrofon plus Systemaudio, jeweils mit lokalem Modell und OpenAI. Transkription und vorgesehenes Einfügen funktionierten in allen sechs Fällen. History, Wiedergabe, Export und Neustartwiederherstellung wurden anschließend ebenfalls erfolgreich geprüft.
-- Noch offen ist die separate Neuinstallation genau dieses R7-Checksums in einem frischen beziehungsweise bereinigten macOS-Konto. Der erfolgreiche R5-Clean-Install wird nicht fälschlich als Test des neuen Checksums ausgegeben; seitdem änderte sich im App-Code zwar ausschließlich die Release-API-URL, das streng formulierte Exakt-ZIP-Gate bleibt bis zum neuen Nachweis oder einer ausdrücklich akzeptierten Abweichung offen. Ebenfalls offen bleiben Tag, GitHub Release, Asset-Upload, Sichtprüfung des veröffentlichten Upgradehinweises und die ausdrückliche Veröffentlichungsentscheidung.
+- Für die separate Neuinstallation wurde dasselbe ZIP samt Prüfsummendatei nach `/Users/Shared/NativeDictate-R7-Test/` kopiert und dort erneut mit derselben SHA-256 geprüft. Der Nutzer installierte daraus `NativeDictate.app` in einem frischen macOS-Testkonto. Installation und Start waren erfolgreich; Onboarding, Aufnahmeordner, Berechtigungen, lokales Modell, OpenAI-Einrichtung, Mikrofon, Systemaudio, gemischte Aufnahme, Transkription, vorgesehenes Einfügen, History, Wiedergabe, Export und Neustartwiederherstellung wurden als positiv bestätigt. Damit bestehen Upgrade- und Clean-Install-Nachweis nun mit exakt demselben R7-Checksum.
+- Offen bleiben Tag, GitHub Release, Asset-Upload, Sichtprüfung des veröffentlichten Upgradehinweises und die ausdrückliche Veröffentlichungsentscheidung.
 
 ### 13.4 Exit
 
@@ -641,9 +642,9 @@ Das Rebranding ist abgeschlossen, wenn:
 
 ## 17. Unmittelbar nächster Schritt
 
-R0 bis R6 sind abgeschlossen; R7 ist statisch geprüft, aber noch nicht freigegeben oder veröffentlicht. Als Nächstes:
+R0 bis R6 sind abgeschlossen; R7 ist statisch und praktisch mit dem exakten Kandidaten geprüft, aber noch nicht freigegeben oder veröffentlicht. Als Nächstes:
 
-1. den neu gebauten R7-Kandidaten mit SHA-256 `58fe298a41f9fd24c31d38f185bc8679a967f354e047c37ef0473f8a218666e2` noch als Neuinstallation in einem frischen beziehungsweise bereinigten macOS-Konto prüfen,
-2. den vorbereiteten GitHub-Release-Text einschließlich Upgradehinweis final gegenlesen,
-3. erst danach eine ausdrückliche Veröffentlichungsentscheidung treffen und gegebenenfalls Tag, Release und Assets erzeugen,
-4. das von GitHub heruntergeladene ZIP erneut mit der lokalen SHA-256 vergleichen und erst nach dieser Prüfung stabil schalten.
+1. den vorbereiteten GitHub-Release-Text einschließlich Upgradehinweis final gegenlesen,
+2. eine ausdrückliche Veröffentlichungsentscheidung treffen und erst danach gegebenenfalls Tag, vorläufigen Release und Assets erzeugen,
+3. das von GitHub heruntergeladene ZIP erneut mit der lokalen SHA-256 vergleichen,
+4. erst nach dieser Prüfung den Release als neueste stabile Version veröffentlichen und den sichtbaren Upgradehinweis kontrollieren.
