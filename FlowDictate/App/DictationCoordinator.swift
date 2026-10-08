@@ -223,7 +223,8 @@ final class DictationCoordinator: ObservableObject {
 
     convenience init() {
         let environment = ProcessInfo.processInfo.environment
-        let isUITesting = environment["FLOWDICTATE_UI_TESTING"] == "1"
+        let isUITesting = environment["NATIVEDICTATE_UI_TESTING"] == "1"
+            || environment["FLOWDICTATE_UI_TESTING"] == "1"
             || environment["XCTestConfigurationFilePath"] != nil
             || NSClassFromString("XCTestCase") != nil
         let credentialStore: any CredentialStoring = isUITesting
@@ -3863,8 +3864,13 @@ final class DictationCoordinator: ObservableObject {
         }
         let configured = (preferredModel ?? settings.transcriptionModel)
             .trimmingCharacters(in: .whitespacesAndNewlines)
-        let model = environment["FLOWDICTATE_TRANSCRIPTION_MODEL"]?.isEmpty == false
-            ? environment["FLOWDICTATE_TRANSCRIPTION_MODEL"]! : (configured.isEmpty ? "gpt-4o-mini-transcribe" : configured)
+        let environmentModel = [
+            environment["NATIVEDICTATE_TRANSCRIPTION_MODEL"],
+            environment["FLOWDICTATE_TRANSCRIPTION_MODEL"]
+        ]
+        .compactMap { $0 }
+        .first { !$0.isEmpty }
+        let model = environmentModel ?? (configured.isEmpty ? "gpt-4o-mini-transcribe" : configured)
         if let cachedOpenAIProvider, cachedOpenAIProviderModel == model {
             return cachedOpenAIProvider
         }

@@ -650,6 +650,14 @@ Jede interne Bereinigung wird mechanisch getrennt, mit kleinen Commits und volls
 - Die vollständige serielle macOS-Suite bestand mit 228/228 Tests und `TEST SUCCEEDED`; der Build verarbeitete dabei nachweislich `config/NativeDictateInfo.plist`. Die bekannte Actor-Isolation-Compilerwarnung im Testhelfer bleibt bestehen.
 - Bundle-Identifier, Entitlements-Inhalte, App-Produktname, Xcode-Projekt, Scheme, Targets, Swift-Modul und persistente Datenverträge wurden nicht geändert.
 
+### 14.6 Build- und Entwicklungsvariablen
+
+- Neue lokale Konfigurationen verwenden `NATIVEDICTATE_TRANSCRIPTION_MODEL` und `NATIVEDICTATE_UI_TESTING`. `.env.example`, README und UI-Test wurden auf diese Primärnamen umgestellt; der App-Code wertet die NativeDictate-Namen jeweils zuerst aus.
+- Die bisherigen Laufzeit-Aliase `FLOWDICTATE_TRANSCRIPTION_MODEL` und `FLOWDICTATE_UI_TESTING` bleiben für vorhandene lokale Automatisierung kompatibel. Ebenso behalten beide Release-Skripte ihre bereits eingeführte Reihenfolge `NATIVEDICTATE_*` vor `FLOWDICTATE_*`. Diese Legacy-Fallbacks bleiben ausdrücklich während der gesamten 4.x-Releaselinie bestehen und können frühestens mit einer bewusst brechenden Hauptversion entfernt werden.
+- Der Packaging-Regressionstest schützt die neuen Primärnamen, die definierten Fallbacks und die ausschließlich neue Benennung in `.env.example` sowie im UI-Test. Die überflüssige `.env.example`-Ausnahme wurde aus `REBRANDING_LEGACY_ALLOWLIST.tsv` entfernt; die README-Allowlist benennt den dokumentierten 4.x-Fallback nun ausdrücklich.
+- Beide Release-Skripte bestehen `zsh -n`; `git diff --check` ist leer. Die vollständige serielle macOS-Suite bestand mit 228/228 Tests und `TEST SUCCEEDED`.
+- Der Lauf meldete die bekannte Actor-Isolation-Compilerwarnung im Testhelfer sowie eine bereits im unveränderten Retry-Code vorhandene Capture-Warnung. Bundle-Identifier, Keychain-Service, Persistenzpfade, Xcode-Projekt, Scheme, Targets und Swift-Modul wurden nicht geändert.
+
 ## 15. Rollback-Strategie
 
 ### 15.1 Vor der GitHub-Umschaltung

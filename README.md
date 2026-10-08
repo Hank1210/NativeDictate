@@ -62,7 +62,7 @@ NativeDictate 4.2 retains the internal `FlowDictate.xcodeproj` project, `FlowDic
 
 Option + Shift + Space cancels a recording without sending it for transcription. The recording remains local so cancellation never destroys captured audio.
 
-During development only, `OPENAI_API_KEY` and `FLOWDICTATE_TRANSCRIPTION_MODEL` may be supplied through a local, unshared Xcode scheme. Never put credentials in **Arguments Passed On Launch**, source code, `.env.example`, or a shared scheme.
+During development only, `OPENAI_API_KEY` and `NATIVEDICTATE_TRANSCRIPTION_MODEL` may be supplied through a local, unshared Xcode scheme. The legacy `FLOWDICTATE_TRANSCRIPTION_MODEL` alias remains accepted throughout the 4.x release line for existing local automation. Never put credentials in **Arguments Passed On Launch**, source code, `.env.example`, or a shared scheme.
 
 ## Settings
 

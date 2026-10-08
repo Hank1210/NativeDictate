@@ -114,6 +114,36 @@ struct FlowDictateTests {
         #expect(communityScript.contains("PACKAGE_NAME=NativeDictate-${VERSION}-Community"))
         #expect(communityScript.contains("PACKAGED_APP=${STAGING_DIRECTORY}/NativeDictate.app"))
         #expect(communityScript.contains("VERSION=${NATIVEDICTATE_VERSION:-${FLOWDICTATE_VERSION:-4.2.0}}"))
+
+        let releaseScript = try String(
+            contentsOf: repositoryRoot.appendingPathComponent("scripts/build-release.sh"),
+            encoding: .utf8
+        )
+        #expect(releaseScript.contains("NATIVEDICTATE_DERIVED_DATA:-${FLOWDICTATE_DERIVED_DATA"))
+        #expect(releaseScript.contains("NATIVEDICTATE_NOTARY_PROFILE:-${FLOWDICTATE_NOTARY_PROFILE"))
+
+        let environmentExample = try String(
+            contentsOf: repositoryRoot.appendingPathComponent(".env.example"),
+            encoding: .utf8
+        )
+        #expect(environmentExample.contains("NATIVEDICTATE_TRANSCRIPTION_MODEL="))
+        #expect(environmentExample.contains("FLOWDICTATE_TRANSCRIPTION_MODEL=") == false)
+
+        let coordinatorSource = try String(
+            contentsOf: repositoryRoot.appendingPathComponent("FlowDictate/App/DictationCoordinator.swift"),
+            encoding: .utf8
+        )
+        #expect(coordinatorSource.contains("environment[\"NATIVEDICTATE_UI_TESTING\"]"))
+        #expect(coordinatorSource.contains("environment[\"FLOWDICTATE_UI_TESTING\"]"))
+        #expect(coordinatorSource.contains("environment[\"NATIVEDICTATE_TRANSCRIPTION_MODEL\"]"))
+        #expect(coordinatorSource.contains("environment[\"FLOWDICTATE_TRANSCRIPTION_MODEL\"]"))
+
+        let uiTestSource = try String(
+            contentsOf: repositoryRoot.appendingPathComponent("FlowDictateUITests/FlowDictateUITests.swift"),
+            encoding: .utf8
+        )
+        #expect(uiTestSource.contains("NATIVEDICTATE_UI_TESTING"))
+        #expect(uiTestSource.contains("FLOWDICTATE_UI_TESTING") == false)
     }
 
     @Test func recordingFolderBookmarkKeepsLegacyUserDefaultsKeys() {
