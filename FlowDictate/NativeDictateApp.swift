@@ -1,6 +1,6 @@
 //
-//  FlowDictateApp.swift
-//  FlowDictate
+//  NativeDictateApp.swift
+//  NativeDictate
 //
 //  Created by Frank Euler on 16.08.26.
 //

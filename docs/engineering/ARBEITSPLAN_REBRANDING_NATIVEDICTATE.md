@@ -626,6 +626,14 @@ Jede interne Bereinigung wird mechanisch getrennt, mit kleinen Commits und volls
 - Die vollständige serielle macOS-Suite bestand erneut mit 228/228 Tests und `TEST SUCCEEDED`. Der Lauf verwendete dasselbe DerivedData-Verzeichnis unter `/private/tmp` und meldete weiterhin nur die bekannte Actor-Isolation-Compilerwarnung im Testhelfer.
 - Bundle-Identifier, Persistenzpfade, Keychain-Service, Schemata und sichtbares App-Verhalten wurden nicht geändert.
 
+### 14.3 SwiftUI-Einstiegsdateien
+
+- `FlowDictateApp.swift` und `FlowDictateMenu.swift` wurden getrennt vom Typ-Commit zu `NativeDictateApp.swift` und `NativeDictateMenu.swift` umbenannt. Der Dateikopf der App-Einstiegsdatei verwendet nun ebenfalls NativeDictate.
+- Der Branding-Regressionstest prüft die neuen Pfade; die letzte nur für den alten App-Dateikopf benötigte Allowlist-Ausnahme wurde entfernt. Xcodes dateisystemsynchronisierte Gruppen nahmen die neuen Pfade ohne Änderung an `project.pbxproj` auf.
+- Der kontrollierte Restscan findet die beiden alten Dateinamen weder in aktivem Code noch in Tests, Allowlist oder Xcode-Projekt. `git diff --check` ist leer.
+- Die vollständige serielle macOS-Suite bestand erneut mit 228/228 Tests und `TEST SUCCEEDED`; die bekannte Actor-Isolation-Compilerwarnung im Testhelfer bleibt bestehen.
+- Xcode-Projekt, Scheme, Targets, Swift-Modul und Quellwurzel behalten in diesem Schritt ausdrücklich ihre bestehenden internen FlowDictate-Namen. Technische Identitäten und persistente Daten wurden nicht verändert.
+
 ## 15. Rollback-Strategie
 
 ### 15.1 Vor der GitHub-Umschaltung

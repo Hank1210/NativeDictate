@@ -163,7 +163,7 @@ struct FlowDictateTests {
         let visibleSourcePaths = [
             "FlowDictate/App/DictationCoordinator.swift",
             "FlowDictate/Audio/SystemAudioRecorder.swift",
-            "FlowDictate/FlowDictateApp.swift",
+            "FlowDictate/NativeDictateApp.swift",
             "FlowDictate/History/DictationHistoryStore.swift",
             "FlowDictate/History/HistoryView.swift",
             "FlowDictate/Insertion/AccessibilityTextInserter.swift",
@@ -173,7 +173,7 @@ struct FlowDictateTests {
             "FlowDictate/Meetings/MixedRecordingSession.swift",
             "FlowDictate/Meetings/SystemAudioPermissionStatus.swift",
             "FlowDictate/Meetings/SystemAudioTrackRecorder.swift",
-            "FlowDictate/MenuBar/FlowDictateMenu.swift",
+            "FlowDictate/MenuBar/NativeDictateMenu.swift",
             "FlowDictate/Onboarding/OnboardingView.swift",
             "FlowDictate/Permissions/PermissionManager.swift",
             "FlowDictate/Productivity/ProductivityServices.swift",

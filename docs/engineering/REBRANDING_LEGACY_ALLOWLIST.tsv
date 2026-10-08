@@ -21,7 +21,6 @@ FlowDictate/Audio/AudioUploadPreparer.swift	prefix	FlowDictate-Upload-|FlowDicta
 FlowDictate/Transcription/MultipartUploadFileBuilder.swift	prefix	FlowDictate-Multipart-	Interne temporäre Multipart-Datei; nicht benutzersichtbar.
 FlowDictate/Transcription/OpenAITranscriptionProvider.swift	prefix	FlowDictate-	Interne Multipart-Boundary; nicht benutzersichtbar.
 .gitignore	exact	FlowDictate-Feature-Briefing_4.1.md	Explizit ignorierter privater historischer Dateiname; die Datei selbst darf nicht versioniert werden.
-FlowDictate/FlowDictateApp.swift	exact	//  FlowDictate	Von Xcode erzeugter interner Quelldateikopf; nicht benutzersichtbar.
 FlowDictate/Meetings/LongFormTrackTranscriptionExecutor.swift	exact	FlowDictate's existing single-file	Interner Architekturkommentar; kein Nutzertext.
 FlowDictate/Meetings/MeetingTranscriptInsertionGate.swift	exact	FlowDictate stops after that boundary	Interner Architekturkommentar; kein Nutzertext.
 FlowDictate/Transcription/Local/LocalModelManager.swift	exact	Application Support/FlowDictate	Kommentar zum absichtlich bewahrten Legacy-Modellpfad.
