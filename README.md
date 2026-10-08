@@ -23,7 +23,7 @@ The full [feature and settings reference](docs/FEATURES.md) describes behavior a
 
 
 
-https://github.com/user-attachments/assets/e3a96d0b-2b04-46cb-8bbf-cce8e257a373
+https://github.com/user-attachments/assets/f6cbce22-e801-4797-b914-113c6a27fef4
 
 
 
@@ -33,7 +33,11 @@ Long or oversized recordings are prepared as local M4A segments and transcribed 
 
 ## Install Community App
 
-https://github.com/user-attachments/assets/b81e4dbd-4fce-4563-8d0f-58665f705e03
+
+
+https://github.com/user-attachments/assets/041e2a7d-ba4e-4ab4-9b7f-bc823a764e26
+
+
 
 
 ## Requirements
