@@ -1,7 +1,7 @@
 import AppKit
 import SwiftUI
 
-struct FlowDictateMenu: View {
+struct NativeDictateMenu: View {
     @ObservedObject var coordinator: DictationCoordinator
 
     var body: some View {
@@ -153,7 +153,7 @@ struct FlowDictateMenu: View {
     }
 }
 
-struct FlowDictateSettingsView: View {
+struct NativeDictateSettingsView: View {
     @ObservedObject var coordinator: DictationCoordinator
     @ObservedObject private var settings: AppSettings
     @ObservedObject private var launchAtLogin: LaunchAtLoginManager

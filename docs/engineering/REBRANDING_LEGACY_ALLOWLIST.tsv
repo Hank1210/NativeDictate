@@ -16,7 +16,6 @@ FlowDictate/Audio/SystemAudioRecorder.swift	exact	FlowDictate.SystemAudioCapture
 FlowDictate/Utilities/FlowLogger.swift	exact	FlowDictate	Interner Logger-Fallback für Prozesse ohne Bundle-Identifier.
 FlowDictate.xcodeproj/project.pbxproj	prefix	FlowDictate|de.mcc.FlowDictate	Interne Xcode-Target-, Test-, Projekt-, Quell-, Plist- und Modulnamen sowie Legacy-Bundle-IDs bleiben gemäß R2.2 bestehen; Produkt- und BuildableName sind durch R3-Regressionen separat als NativeDictate geschützt.
 FlowDictate.xcodeproj/xcshareddata/xcschemes/FlowDictate.xcscheme	prefix	BlueprintName = "FlowDictate"|container:FlowDictate.xcodeproj|FlowDictateTests|FlowDictateUITests	Interne Scheme-, Projekt-, Target- und Testnamen bleiben bestehen; BuildableName ist NativeDictate.app.
-FlowDictate/FlowDictateApp.swift	prefix	FlowDictateApp|FlowDictateMenu|FlowDictateSettingsView	Interne Swift-Typnamen werden in R2 nicht mechanisch umbenannt.
 FlowDictate/Audio/CaptureProbeArtifactStore.swift	prefix	FlowDictateCaptureProbes	Nur internes temporäres Diagnoseverzeichnis; kein neuer Nutzerexport und kein Persistenzvertrag.
 FlowDictate/Audio/AudioUploadPreparer.swift	prefix	FlowDictate-Upload-|FlowDictate-Multipart-	Interne temporäre Uploadartefakte bleiben kompatibel mit der bestehenden Bereinigung.
 FlowDictate/Transcription/MultipartUploadFileBuilder.swift	prefix	FlowDictate-Multipart-	Interne temporäre Multipart-Datei; nicht benutzersichtbar.
@@ -25,7 +24,6 @@ FlowDictate/Transcription/OpenAITranscriptionProvider.swift	prefix	FlowDictate-	
 FlowDictate/FlowDictateApp.swift	exact	//  FlowDictate	Von Xcode erzeugter interner Quelldateikopf; nicht benutzersichtbar.
 FlowDictate/Meetings/LongFormTrackTranscriptionExecutor.swift	exact	FlowDictate's existing single-file	Interner Architekturkommentar; kein Nutzertext.
 FlowDictate/Meetings/MeetingTranscriptInsertionGate.swift	exact	FlowDictate stops after that boundary	Interner Architekturkommentar; kein Nutzertext.
-FlowDictate/MenuBar/FlowDictateMenu.swift	prefix	FlowDictateMenu|FlowDictateSettingsView	Interne Swift-Typnamen; sichtbare Menü- und Fenstertitel sind NativeDictate.
 FlowDictate/Transcription/Local/LocalModelManager.swift	exact	Application Support/FlowDictate	Kommentar zum absichtlich bewahrten Legacy-Modellpfad.
 .env.example	prefix	internal FlowDictate Xcode scheme|FLOWDICTATE_TRANSCRIPTION_MODEL	Bestehender interner Scheme- und Entwicklungsvariablenname; kein öffentlicher Produkt- oder Artefaktname.
 scripts/build-community-release.sh	prefix	FLOWDICTATE_|FlowDictateCommunity.entitlements|FlowDictate.xcodeproj|-scheme FlowDictate	Legacy-Umgebungsvariablen bleiben als Fallbacks kompatibel; Projekt, Scheme und Entitlements-Datei sind interne Namen.

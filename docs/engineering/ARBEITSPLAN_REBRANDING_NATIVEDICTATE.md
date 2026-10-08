@@ -619,6 +619,13 @@ Jede interne Bereinigung wird mechanisch getrennt, mit kleinen Commits und volls
 - Zwei erste Teststarts im projektlokalen DerivedData-Verzeichnis erreichten wegen automatisch gesetzter Finder-/File-Provider-Attribute am generierten XCTest-Bundle nicht die Testausführung; Codesign lehnte diese Build-Metadaten ab. Mit unverändertem Quellstand und DerivedData unter `/private/tmp` bestand die vollständige serielle macOS-Suite anschließend mit 228/228 Tests und `TEST SUCCEEDED`.
 - Der erfolgreiche Lauf meldete weiterhin die bekannte Actor-Isolation-Compilerwarnung am Defaultwert `MockCredentialStore()` des Testhelfers. Der Schritt wird deshalb nicht als warnungsfrei bezeichnet.
 
+### 14.2 SwiftUI-Einstiegstypen
+
+- Die internen Typen `FlowDictateApp`, `FlowDictateMenu` und `FlowDictateSettingsView` wurden mechanisch zu `NativeDictateApp`, `NativeDictateMenu` und `NativeDictateSettingsView` umbenannt. Die zugehörigen Swift-Dateinamen bleiben zunächst unverändert und werden nicht mit diesem Typ-Commit vermischt.
+- Die beiden dadurch überflüssigen Typ-Ausnahmen wurden aus `REBRANDING_LEGACY_ALLOWLIST.tsv` entfernt. Verbleibende Treffer für `FlowDictateApp.swift` und `FlowDictateMenu.swift` sind ausschließlich die noch bestehenden Dateipfade, Dateiköpfe und die Pfadliste des Branding-Regressionstests.
+- Die vollständige serielle macOS-Suite bestand erneut mit 228/228 Tests und `TEST SUCCEEDED`. Der Lauf verwendete dasselbe DerivedData-Verzeichnis unter `/private/tmp` und meldete weiterhin nur die bekannte Actor-Isolation-Compilerwarnung im Testhelfer.
+- Bundle-Identifier, Persistenzpfade, Keychain-Service, Schemata und sichtbares App-Verhalten wurden nicht geändert.
+
 ## 15. Rollback-Strategie
 
 ### 15.1 Vor der GitHub-Umschaltung

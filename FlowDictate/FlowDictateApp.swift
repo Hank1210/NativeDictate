@@ -9,7 +9,7 @@ import AppKit
 import SwiftUI
 
 @main
-struct FlowDictateApp: App {
+struct NativeDictateApp: App {
     @StateObject private var coordinator: DictationCoordinator
     #if DEBUG
     @State private var didRunCoreAudioTapLaunchProbe = false
@@ -29,7 +29,7 @@ struct FlowDictateApp: App {
 
     var body: some Scene {
         MenuBarExtra {
-            FlowDictateMenu(coordinator: coordinator)
+            NativeDictateMenu(coordinator: coordinator)
         } label: {
             Image(systemName: coordinator.state.symbolName)
                 #if DEBUG
@@ -50,7 +50,7 @@ struct FlowDictateApp: App {
         .menuBarExtraStyle(.menu)
 
         Settings {
-            FlowDictateSettingsView(coordinator: coordinator)
+            NativeDictateSettingsView(coordinator: coordinator)
         }
     }
 }
@@ -71,7 +71,7 @@ private final class DebugSettingsWindowPresenter {
             return
         }
 
-        let content = FlowDictateSettingsView(coordinator: coordinator)
+        let content = NativeDictateSettingsView(coordinator: coordinator)
         let window = NSWindow(contentViewController: NSHostingController(rootView: content))
         window.title = "NativeDictate Settings — Test Build"
         window.styleMask = [.titled, .closable, .miniaturizable, .resizable]
