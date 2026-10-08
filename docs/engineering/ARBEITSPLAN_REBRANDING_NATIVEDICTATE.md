@@ -1,7 +1,7 @@
 # FlowDictate → NativeDictate – Rebranding-Arbeitsplan
 
 **Vorhaben:** Umbenennung des Open-Source-Projekts und der sichtbaren macOS-App von FlowDictate zu NativeDictate
-**Status:** `IN ARBEIT` – R0 bis R6 abgeschlossen, R7 in Arbeit
+**Status:** `ERLEDIGT` – R0 bis R7 abgeschlossen; R8 bleibt optional
 **Stand:** 8. Oktober 2026
 **Ausgangsbasis:** FlowDictate 4.1.0, Build 33, Tag `v4.1.0`, Commit `afa02eb`
 **Zielversion:** NativeDictate 4.2.0
@@ -141,7 +141,7 @@ Optionale interne Namensbereinigung in späteren Versionen
 | R4 aktuelle Dokumentation und Historiengrenze | `ERLEDIGT` | R2 | konsistente Projektkommunikation |
 | R5 automatisierte und manuelle Migrationstests | `ERLEDIGT` | R3, R4 | Freigabe für GitHub-Umschaltung |
 | R6 GitHub-Umschaltung | `ERLEDIGT` | R5 | kanonische neue Projektadresse |
-| R7 Release-Gate NativeDictate 4.2.0 | `IN ARBEIT` | R6 | Veröffentlichungsentscheidung |
+| R7 Release-Gate NativeDictate 4.2.0 | `ERLEDIGT` | R6 | Veröffentlichungsentscheidung |
 | R8 optionale interne Bereinigung | `OFFEN` | stabiler 4.2-Nachweis | langfristige Codekonsistenz |
 
 ## 6. R0 – Vertrags- und Baseline-Gate
@@ -537,7 +537,7 @@ Zu prüfen:
 
 ## 13. R7 – Release-Gate NativeDictate 4.2.0
 
-**Status:** `IN ARBEIT`
+**Status:** `ERLEDIGT`
 
 ### 13.1 Releaseinhalt
 
@@ -557,9 +557,9 @@ Zu prüfen:
 - [x] extrahiertes ZIP erneut unabhängig geprüft,
 - [x] Appname, Version, Build und Bundle-ID stimmen,
 - [x] keine private Datei oder Zugangsinformation enthalten,
-- [ ] Upgradehinweis ist im GitHub Release sichtbar,
+- [x] Upgradehinweis ist im GitHub Release sichtbar,
 - [x] Rollback auf 4.1.0 wurde hinsichtlich Datenformaten bewertet,
-- [ ] Veröffentlichung ausdrücklich autorisiert.
+- [x] Veröffentlichung ausdrücklich autorisiert.
 
 ### 13.3 Statischer Kandidatennachweis vom 8. Oktober 2026
 
@@ -573,9 +573,17 @@ Zu prüfen:
 - Der zuvor installierte R5-Build wurde nach vollständigem Beenden wiederherstellbar in den Papierkorb verschoben. Die nach `/Applications` kopierte App war bei `diff -rq` bytegleich mit der aus dem R7-ZIP extrahierten App; ihre strikte Signatur und der Executable-Hash wurden nach der Installation erneut geprüft. Beim ersten Start blieben Einstellungen, History, lokales Modell, OpenAI-Key-Status und Aufnahmeordner vorhanden. Die macOS-Berechtigungen mussten für die neue Ad-hoc-Signatur erwartungsgemäß erneuert werden.
 - Mit genau dieser installierten R7-App bestätigte der Nutzer sechs erfolgreiche Realtests: Mikrofon, Systemaudio und Mikrofon plus Systemaudio, jeweils mit lokalem Modell und OpenAI. Transkription und vorgesehenes Einfügen funktionierten in allen sechs Fällen. History, Wiedergabe, Export und Neustartwiederherstellung wurden anschließend ebenfalls erfolgreich geprüft.
 - Für die separate Neuinstallation wurde dasselbe ZIP samt Prüfsummendatei nach `/Users/Shared/NativeDictate-R7-Test/` kopiert und dort erneut mit derselben SHA-256 geprüft. Der Nutzer installierte daraus `NativeDictate.app` in einem frischen macOS-Testkonto. Installation und Start waren erfolgreich; Onboarding, Aufnahmeordner, Berechtigungen, lokales Modell, OpenAI-Einrichtung, Mikrofon, Systemaudio, gemischte Aufnahme, Transkription, vorgesehenes Einfügen, History, Wiedergabe, Export und Neustartwiederherstellung wurden als positiv bestätigt. Damit bestehen Upgrade- und Clean-Install-Nachweis nun mit exakt demselben R7-Checksum.
-- Offen bleiben Tag, GitHub Release, Asset-Upload, Sichtprüfung des veröffentlichten Upgradehinweises und die ausdrückliche Veröffentlichungsentscheidung.
+- Die Veröffentlichung wurde am 8. Oktober 2026 ausdrücklich autorisiert. Tag, GitHub Release, Asset-Upload, Sichtprüfung des veröffentlichten Upgradehinweises und die abschließende Downloadprüfung sind im folgenden Abschnitt dokumentiert.
 
-### 13.4 Exit
+### 13.4 Veröffentlichung vom 8. Oktober 2026
+
+- Der annotierte Tag `v4.2.0` wurde exakt auf dem Artefakt-Quellcommit `59032a1c33ed2a8d95d26a9af0f8d977bc266eb1` erstellt und zu `Hank1210/NativeDictate` gepusht. Die serverseitige Auflösung von `refs/tags/v4.2.0^{}` bestätigt denselben Commit.
+- Der GitHub Release [NativeDictate 4.2.0 Community](https://github.com/Hank1210/NativeDictate/releases/tag/v4.2.0) wurde zunächst als Vorabversion erzeugt. Er enthält ausschließlich `NativeDictate-4.2.0-Community-macOS.zip` und die zugehörige `.sha256`-Datei; GitHubs zusätzliche Quellarchive werden automatisch bereitgestellt.
+- Beide hochgeladenen Assets wurden aus dem Vorab-Release in ein neues temporäres Verzeichnis heruntergeladen und mit den lokal getesteten Dateien verglichen. ZIP und Prüfsummendatei waren byteidentisch; die heruntergeladene Prüfsummendatei bestand erneut, und GitHub meldet für das ZIP den Digest `sha256:58fe298a41f9fd24c31d38f185bc8679a967f354e047c37ef0473f8a218666e2`.
+- Erst nach diesem Vergleich wurde die Vorab-Markierung entfernt und der Release ausdrücklich als `Latest` gesetzt. GitHubs `releases/latest`-Endpunkt liefert `v4.2.0` mit `draft: false` und `prerelease: false`.
+- Der sichtbare Release-Text enthält den vollständigen Wechselpfad von `FlowDictate.app` zu `NativeDictate.app`, die unveränderte technische Identität, erneuerbare macOS-Berechtigungen, den Ad-hoc-/Nicht-notarisiert-Hinweis und die ausdrücklich fortbestehende 4.1-System-Audio-Abweichung.
+
+### 13.5 Exit
 
 NativeDictate 4.2.0 ist erst veröffentlichungsbereit, wenn sowohl eine Neuinstallation als auch der reale Wechsel von FlowDictate 4.1.0 ohne Verlust des dokumentierten Nutzerzustands nachgewiesen sind.
 
@@ -628,23 +636,18 @@ Jede interne Bereinigung wird mechanisch getrennt, mit kleinen Commits und volls
 
 Das Rebranding ist abgeschlossen, wenn:
 
-- [ ] das Projekt auf GitHub unter `Hank1210/NativeDictate` erreichbar ist,
-- [ ] alte GitHub-Links weiterhin weitergeleitet werden,
-- [ ] die gebaute und verteilte App `NativeDictate.app` heißt,
-- [ ] alle aktuellen Benutzertexte NativeDictate verwenden,
-- [ ] aktuelle Dokumentation, Paketnamen und Releaseprüfung auf NativeDictate zeigen,
-- [ ] der Bundle-Identifier weiterhin `de.mcc.FlowDictate` lautet,
-- [ ] bestehende 4.1-Nutzerdaten in 4.2 sichtbar und funktionsfähig sind,
-- [ ] keine parallele alte und neue App-Instanz erforderlich oder empfohlen ist,
-- [ ] verbleibende FlowDictate-Vorkommen ausschließlich Legacy-, Migrations- oder historische Bedeutung besitzen,
-- [ ] vollständige Testsuite, Upgrade-Test, Clean-Install-Test und Paketprüfung bestanden sind,
-- [ ] NativeDictate 4.2.0 mit unveränderlicher SHA-256 und dokumentiertem Release-Commit veröffentlicht ist.
+- [x] das Projekt auf GitHub unter `Hank1210/NativeDictate` erreichbar ist,
+- [x] alte GitHub-Links weiterhin weitergeleitet werden,
+- [x] die gebaute und verteilte App `NativeDictate.app` heißt,
+- [x] alle aktuellen Benutzertexte NativeDictate verwenden,
+- [x] aktuelle Dokumentation, Paketnamen und Releaseprüfung auf NativeDictate zeigen,
+- [x] der Bundle-Identifier weiterhin `de.mcc.FlowDictate` lautet,
+- [x] bestehende 4.1-Nutzerdaten in 4.2 sichtbar und funktionsfähig sind,
+- [x] keine parallele alte und neue App-Instanz erforderlich oder empfohlen ist,
+- [x] verbleibende FlowDictate-Vorkommen ausschließlich Legacy-, Migrations- oder historische Bedeutung besitzen,
+- [x] vollständige Testsuite, Upgrade-Test, Clean-Install-Test und Paketprüfung bestanden sind,
+- [x] NativeDictate 4.2.0 mit unveränderlicher SHA-256 und dokumentiertem Release-Commit veröffentlicht ist.
 
 ## 17. Unmittelbar nächster Schritt
 
-R0 bis R6 sind abgeschlossen; R7 ist statisch und praktisch mit dem exakten Kandidaten geprüft, aber noch nicht freigegeben oder veröffentlicht. Als Nächstes:
-
-1. den vorbereiteten GitHub-Release-Text einschließlich Upgradehinweis final gegenlesen,
-2. eine ausdrückliche Veröffentlichungsentscheidung treffen und erst danach gegebenenfalls Tag, vorläufigen Release und Assets erzeugen,
-3. das von GitHub heruntergeladene ZIP erneut mit der lokalen SHA-256 vergleichen,
-4. erst nach dieser Prüfung den Release als neueste stabile Version veröffentlichen und den sichtbaren Upgradehinweis kontrollieren.
+R0 bis R7 und damit das verbindliche Rebranding sind abgeschlossen. NativeDictate 4.2.0 ist als neueste stabile Version veröffentlicht, und die von GitHub erneut heruntergeladenen Assets sind byteidentisch mit dem getesteten Kandidaten. Es gibt keinen verpflichtenden Folgeschritt. R8 bleibt eine optionale, separat zu planende interne Namensbereinigung und ist kein Nachlauf-Gate für 4.2.0.
