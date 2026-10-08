@@ -205,7 +205,7 @@ struct FlowDictateTests {
             )
         }
 
-        let infoPlistURL = repositoryRoot.appendingPathComponent("config/FlowDictateInfo.plist")
+        let infoPlistURL = repositoryRoot.appendingPathComponent("config/NativeDictateInfo.plist")
         let infoPlistData = try Data(contentsOf: infoPlistURL)
         let infoPlist = try #require(
             PropertyListSerialization.propertyList(from: infoPlistData, format: nil)
