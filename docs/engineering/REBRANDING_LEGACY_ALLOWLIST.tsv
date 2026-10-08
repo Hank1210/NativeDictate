@@ -17,20 +17,15 @@ FlowDictate/Utilities/FlowLogger.swift	exact	FlowDictate	Interner Logger-Fallbac
 FlowDictate.xcodeproj/project.pbxproj	prefix	FlowDictate|de.mcc.FlowDictate	Interne Xcode-Target-, Test-, Projekt-, Quell-, Plist- und Modulnamen sowie Legacy-Bundle-IDs bleiben gemäß R2.2 bestehen; Produkt- und BuildableName sind durch R3-Regressionen separat als NativeDictate geschützt.
 FlowDictate.xcodeproj/xcshareddata/xcschemes/FlowDictate.xcscheme	prefix	BlueprintName = "FlowDictate"|container:FlowDictate.xcodeproj|FlowDictateTests|FlowDictateUITests	Interne Scheme-, Projekt-, Target- und Testnamen bleiben bestehen; BuildableName ist NativeDictate.app.
 FlowDictate/FlowDictateApp.swift	prefix	FlowDictateApp|FlowDictateMenu|FlowDictateSettingsView	Interne Swift-Typnamen werden in R2 nicht mechanisch umbenannt.
-FlowDictate/Utilities/FlowDictateVersion.swift	prefix	FlowDictateVersion	Interner Versions-Typ bleibt gemäß R2.2 bestehen.
 FlowDictate/Audio/CaptureProbeArtifactStore.swift	prefix	FlowDictateCaptureProbes	Nur internes temporäres Diagnoseverzeichnis; kein neuer Nutzerexport und kein Persistenzvertrag.
 FlowDictate/Audio/AudioUploadPreparer.swift	prefix	FlowDictate-Upload-|FlowDictate-Multipart-	Interne temporäre Uploadartefakte bleiben kompatibel mit der bestehenden Bereinigung.
 FlowDictate/Transcription/MultipartUploadFileBuilder.swift	prefix	FlowDictate-Multipart-	Interne temporäre Multipart-Datei; nicht benutzersichtbar.
 FlowDictate/Transcription/OpenAITranscriptionProvider.swift	prefix	FlowDictate-	Interne Multipart-Boundary; nicht benutzersichtbar.
 .gitignore	exact	FlowDictate-Feature-Briefing_4.1.md	Explizit ignorierter privater historischer Dateiname; die Datei selbst darf nicht versioniert werden.
-FlowDictate/App/DictationCoordinator.swift	exact	FlowDictateVersion	Interner Versions-Typ in Startlog und Onboarding-Schema; sichtbarer Produktname im selben Text ist NativeDictate.
 FlowDictate/FlowDictateApp.swift	exact	//  FlowDictate	Von Xcode erzeugter interner Quelldateikopf; nicht benutzersichtbar.
-FlowDictate/History/DictationHistoryStore.swift	exact	FlowDictateVersion	Interner Versions-Typ für bestehende History-Schemata.
-FlowDictate/History/DictationRecord.swift	exact	FlowDictateVersion	Interner Versions-Typ für bestehende Record-Schemata.
 FlowDictate/Meetings/LongFormTrackTranscriptionExecutor.swift	exact	FlowDictate's existing single-file	Interner Architekturkommentar; kein Nutzertext.
 FlowDictate/Meetings/MeetingTranscriptInsertionGate.swift	exact	FlowDictate stops after that boundary	Interner Architekturkommentar; kein Nutzertext.
 FlowDictate/MenuBar/FlowDictateMenu.swift	prefix	FlowDictateMenu|FlowDictateSettingsView	Interne Swift-Typnamen; sichtbare Menü- und Fenstertitel sind NativeDictate.
-FlowDictate/Productivity/ProductivitySettingsView.swift	exact	FlowDictateVersion	Interner Versions-Typ; der sichtbare Wert beginnt mit NativeDictate.
 FlowDictate/Transcription/Local/LocalModelManager.swift	exact	Application Support/FlowDictate	Kommentar zum absichtlich bewahrten Legacy-Modellpfad.
 .env.example	prefix	internal FlowDictate Xcode scheme|FLOWDICTATE_TRANSCRIPTION_MODEL	Bestehender interner Scheme- und Entwicklungsvariablenname; kein öffentlicher Produkt- oder Artefaktname.
 scripts/build-community-release.sh	prefix	FLOWDICTATE_|FlowDictateCommunity.entitlements|FlowDictate.xcodeproj|-scheme FlowDictate	Legacy-Umgebungsvariablen bleiben als Fallbacks kompatibel; Projekt, Scheme und Entitlements-Datei sind interne Namen.

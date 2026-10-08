@@ -1,7 +1,7 @@
 # FlowDictate → NativeDictate – Rebranding-Arbeitsplan
 
 **Vorhaben:** Umbenennung des Open-Source-Projekts und der sichtbaren macOS-App von FlowDictate zu NativeDictate
-**Status:** `ERLEDIGT` – R0 bis R7 abgeschlossen; R8 bleibt optional
+**Status:** `ERLEDIGT` – R0 bis R7 abgeschlossen; optionales R8 in Arbeit
 **Stand:** 8. Oktober 2026
 **Ausgangsbasis:** FlowDictate 4.1.0, Build 33, Tag `v4.1.0`, Commit `afa02eb`
 **Zielversion:** NativeDictate 4.2.0
@@ -142,7 +142,7 @@ Optionale interne Namensbereinigung in späteren Versionen
 | R5 automatisierte und manuelle Migrationstests | `ERLEDIGT` | R3, R4 | Freigabe für GitHub-Umschaltung |
 | R6 GitHub-Umschaltung | `ERLEDIGT` | R5 | kanonische neue Projektadresse |
 | R7 Release-Gate NativeDictate 4.2.0 | `ERLEDIGT` | R6 | Veröffentlichungsentscheidung |
-| R8 optionale interne Bereinigung | `OFFEN` | stabiler 4.2-Nachweis | langfristige Codekonsistenz |
+| R8 optionale interne Bereinigung | `IN ARBEIT` | stabiler 4.2-Nachweis | langfristige Codekonsistenz |
 
 ## 6. R0 – Vertrags- und Baseline-Gate
 
@@ -589,7 +589,7 @@ NativeDictate 4.2.0 ist erst veröffentlichungsbereit, wenn sowohl eine Neuinsta
 
 ## 14. R8 – Optionale interne Namensbereinigung
 
-**Status:** `OFFEN`
+**Status:** `IN ARBEIT`
 
 Dieser Schritt ist kein Gate für 4.2. Er darf erst beginnen, nachdem NativeDictate 4.2 stabil ist.
 
@@ -610,6 +610,14 @@ Nicht Bestandteil dieser Bereinigung:
 - historische Dokumente umschreiben.
 
 Jede interne Bereinigung wird mechanisch getrennt, mit kleinen Commits und vollständiger Testsuite durchgeführt.
+
+### 14.1 Interner Versions-Typ
+
+- Der rein interne Typ `FlowDictateVersion` und seine Quelldatei wurden zu `NativeDictateVersion` beziehungsweise `NativeDictateVersion.swift` umbenannt. Alle Verwendungen in App, History, Productivity-Ansicht und Tests wurden mechanisch angepasst.
+- Die Schemawerte bleiben unverändert: Onboarding 2, History 7 und Dictation Record 7. Bundle-Identifier, Keychain-Service, Application-Support-Wurzel und sämtliche anderen Persistenzverträge wurden nicht geändert.
+- Die fünf dadurch überflüssigen Ausnahmen wurden aus `REBRANDING_LEGACY_ALLOWLIST.tsv` entfernt; der kontrollierte Restscan findet im aktiven Code keinen Verweis auf `FlowDictateVersion` mehr. `git diff --check` ist leer.
+- Zwei erste Teststarts im projektlokalen DerivedData-Verzeichnis erreichten wegen automatisch gesetzter Finder-/File-Provider-Attribute am generierten XCTest-Bundle nicht die Testausführung; Codesign lehnte diese Build-Metadaten ab. Mit unverändertem Quellstand und DerivedData unter `/private/tmp` bestand die vollständige serielle macOS-Suite anschließend mit 228/228 Tests und `TEST SUCCEEDED`.
+- Der erfolgreiche Lauf meldete weiterhin die bekannte Actor-Isolation-Compilerwarnung am Defaultwert `MockCredentialStore()` des Testhelfers. Der Schritt wird deshalb nicht als warnungsfrei bezeichnet.
 
 ## 15. Rollback-Strategie
 

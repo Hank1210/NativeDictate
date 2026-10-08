@@ -6522,7 +6522,7 @@ struct FlowDictateTests {
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601
         try encoder.encode(TestHistoryEnvelope(
-            schemaVersion: FlowDictateVersion.historySchema,
+            schemaVersion: NativeDictateVersion.historySchema,
             records: records
         )).write(to: fileURL, options: .atomic)
 
@@ -6809,7 +6809,7 @@ struct FlowDictateTests {
         #expect(migrated.transcriptionSegmentCount == nil)
         #expect(migrated.completedTranscriptionSegmentCount == 0)
         #expect(!migrated.hasPartialTranscript)
-        #expect(migrated.schemaVersion == FlowDictateVersion.dictationRecordSchema)
+        #expect(migrated.schemaVersion == NativeDictateVersion.dictationRecordSchema)
     }
 
     @Test func sessionStorePersistsAndNormalizesInterruptedWork() async throws {

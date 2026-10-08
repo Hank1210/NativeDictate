@@ -234,7 +234,7 @@ nonisolated struct DictationRecord: Identifiable, Codable, Equatable, Sendable {
             errorMessage: nil,
             cancelled: status == .cancelled,
             updatedAt: endedAt,
-            schemaVersion: FlowDictateVersion.dictationRecordSchema,
+            schemaVersion: NativeDictateVersion.dictationRecordSchema,
             archivedAt: nil
         )
     }
@@ -359,7 +359,7 @@ extension DictationRecord {
         queueSequence = try values.decodeIfPresent(Int64.self, forKey: .queueSequence)
         cancelled = try values.decode(Bool.self, forKey: .cancelled)
         updatedAt = try values.decode(Date.self, forKey: .updatedAt)
-        schemaVersion = FlowDictateVersion.dictationRecordSchema
+        schemaVersion = NativeDictateVersion.dictationRecordSchema
         archivedAt = try values.decodeIfPresent(Date.self, forKey: .archivedAt)
     }
 }

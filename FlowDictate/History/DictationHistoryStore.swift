@@ -266,14 +266,14 @@ actor DictationHistoryStore {
             loaded = true
             return
         }
-        guard snapshot.envelope.schemaVersion <= FlowDictateVersion.historySchema else {
+        guard snapshot.envelope.schemaVersion <= NativeDictateVersion.historySchema else {
             throw DictationHistoryError.unsupportedSchema(snapshot.envelope.schemaVersion)
         }
         loaded = true
         recordsByID = Dictionary(
             uniqueKeysWithValues: snapshot.envelope.records.map { ($0.id, $0) }
         )
-        if snapshot.envelope.schemaVersion < FlowDictateVersion.historySchema {
+        if snapshot.envelope.schemaVersion < NativeDictateVersion.historySchema {
             var backupNames: [String] = []
             if snapshot.envelope.schemaVersion < 4 {
                 backupNames += ["dictations-pre-3.2.json", "dictations-pre-3.4.json"]
@@ -308,7 +308,7 @@ actor DictationHistoryStore {
         let fileManager = SerialFileManagerReference(fileManager)
         let directory = fileURL.deletingLastPathComponent()
         let envelope = Envelope(
-            schemaVersion: FlowDictateVersion.historySchema,
+            schemaVersion: NativeDictateVersion.historySchema,
             records: Array(recordsByID.values)
         )
         try await fileIO.perform {

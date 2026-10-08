@@ -1,6 +1,6 @@
 import Foundation
 
-enum FlowDictateVersion {
+enum NativeDictateVersion {
     nonisolated static let onboardingSchema = 2
     nonisolated static let historySchema = 7
     nonisolated static let dictationRecordSchema = 7

@@ -58,7 +58,7 @@ private struct TestHostCredentialStore: CredentialStoring {
 
 @MainActor
 final class DictationCoordinator: ObservableObject {
-    static let currentOnboardingVersion = FlowDictateVersion.onboardingSchema
+    static let currentOnboardingVersion = NativeDictateVersion.onboardingSchema
     private static let minimumTranscribableRecordingDuration: TimeInterval = 0.300
 
     @Published private(set) var state: DictationState = .idle
@@ -432,7 +432,7 @@ final class DictationCoordinator: ObservableObject {
             try? await Task.sleep(for: .milliseconds(400))
             self.showOnboarding()
         }
-        FlowLogger.app.info("NativeDictate \(FlowDictateVersion.displayString, privacy: .public) started")
+        FlowLogger.app.info("NativeDictate \(NativeDictateVersion.displayString, privacy: .public) started")
     }
 
     deinit {
