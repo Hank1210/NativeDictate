@@ -1,8 +1,8 @@
 # FlowDictate → NativeDictate – Rebranding-Arbeitsplan
 
 **Vorhaben:** Umbenennung des Open-Source-Projekts und der sichtbaren macOS-App von FlowDictate zu NativeDictate
-**Status:** `IN ARBEIT` – R0 bis R4 abgeschlossen, R5 in Arbeit
-**Stand:** 4. Oktober 2026
+**Status:** `IN ARBEIT` – R0 bis R5 abgeschlossen, R6 offen
+**Stand:** 6. Oktober 2026
 **Ausgangsbasis:** FlowDictate 4.1.0, Build 33, Tag `v4.1.0`, Commit `afa02eb`
 **Zielversion:** NativeDictate 4.2.0
 **Geplanter Arbeitsbranch:** `codex/rebrand-native-dictate`
@@ -139,7 +139,7 @@ Optionale interne Namensbereinigung in späteren Versionen
 | R2 sichtbare Produktumbenennung | `ERLEDIGT` | R1 | NativeDictate-Appoberfläche |
 | R3 Packaging und Installationsmigration | `ERLEDIGT` | R2 | testbares 4.2-Paket |
 | R4 aktuelle Dokumentation und Historiengrenze | `ERLEDIGT` | R2 | konsistente Projektkommunikation |
-| R5 automatisierte und manuelle Migrationstests | `IN ARBEIT` | R3, R4 | Freigabe für GitHub-Umschaltung |
+| R5 automatisierte und manuelle Migrationstests | `ERLEDIGT` | R3, R4 | Freigabe für GitHub-Umschaltung |
 | R6 GitHub-Umschaltung | `OFFEN` | R5 | kanonische neue Projektadresse |
 | R7 Release-Gate NativeDictate 4.2.0 | `OFFEN` | R6 | Veröffentlichungsentscheidung |
 | R8 optionale interne Bereinigung | `OFFEN` | stabiler 4.2-Nachweis | langfristige Codekonsistenz |
@@ -397,7 +397,7 @@ Der Hinweis behauptet keine Verbindung zum anderen Produkt und verlinkt nicht we
 
 ## 11. R5 – Automatisierte und manuelle Migrationstests
 
-**Status:** `IN ARBEIT`
+**Status:** `ERLEDIGT`
 
 ### 11.1 Automatisierte Gates
 
@@ -470,12 +470,18 @@ Zu prüfen:
 - Der reale Mixed-Test bestand mit getrennten Originalspuren und gelabeltem Transkript. Mikrofon und Systemaudio wurden als 48-kHz-Mono-CAF mit 1.099.776 beziehungsweise 1.112.064 Byte gespeichert; beide Spuren enthielten echten Pegel, wurden transkribiert und auf einer 29 Einträge umfassenden Timeline zusammengeführt. Der Session-Status ist `completed`, Synchronisationsqualität `good`, mit 0 Lücken, 0 verworfenen Puffern und 0 Clipping-Frames.
 - NativeDictate erkannte den geerbten Keychain-Eintrag als `API key — Configured`. Nach ausdrücklicher Freigabe wurde eine 5,643 Sekunden lange, nicht sensible Mikrofon-Testphrase mit `gpt-4o-mini-transcribe` an OpenAI übertragen, im ersten Versuch korrekt transkribiert, als `completed` archiviert und per Accessibility in TextEdit eingefügt. Der geheime API-Key-Wert wurde dabei weder gelesen noch ausgegeben. Danach wurden `Fully offline`, der lokale Anbieter und die Mikrofonquelle wiederhergestellt; ein kontrollierter Neustart aktivierte diese Werte. Es lief anschließend genau eine NativeDictate-Instanz, der gemeinsame Verlauf enthielt 125 valide Einträge.
 - Nach ausdrücklicher Bestätigung wurde die nicht laufende `/Applications/FlowDictate.app` als `FlowDictate 4.1.0 Build 33.app` wiederherstellbar in den Papierkorb verschoben; eine dort bereits vorhandene 3.3.0-App blieb unangetastet. Danach fehlte nur das alte Bundle unter `/Applications`, während genau eine NativeDictate-Instanz weiterlief. Der gemeinsame Container enthielt unverändert 125 valide History-Einträge, `Fully offline`, den lokalen Anbieter, die Mikrofonquelle sowie 23 nicht leere Modelldateien mit insgesamt 483.257.242 Byte. Die Bundle-Entfernung löschte damit keine Nutzerdaten.
-- Ein Writing Style und App-Profil waren im vorgefundenen Ausgangskonto nicht vorhanden und konnten deshalb nicht als Bestandsmigration geprüft werden; diese Abweichung ist ausdrücklich dokumentiert und gefährdet keine vorhandenen Nutzerdaten. Der Upgrade-Test ist für den tatsächlich vorgefundenen Zustand abgeschlossen. Offen bleibt der unabhängige Clean-Install-Test; R5 bleibt deshalb `IN ARBEIT`.
+- Ein Writing Style und App-Profil waren im vorgefundenen Ausgangskonto nicht vorhanden und konnten deshalb nicht als Bestandsmigration geprüft werden; diese Abweichung ist ausdrücklich dokumentiert und gefährdet keine vorhandenen Nutzerdaten. Der Upgrade-Test ist für den tatsächlich vorgefundenen Zustand abgeschlossen.
 
-### 11.6 Exit
+### 11.6 Manueller Clean-Install-Nachweis vom 6. Oktober 2026
+
+- Der Nutzer legte ein neues macOS-Testkonto ohne vorhandenen FlowDictate-Container an und installierte NativeDictate dort neu. Installation und Ersteinrichtung funktionierten.
+- Die sechs realen Aufnahmevarianten bestanden: Mikrofon, Systemaudio und Mikrofon plus Systemaudio jeweils mit vollständig lokaler Transkription sowie mit OpenAI.
+- History, Wiedergabe, Export und Wiederherstellung nach einem Neustart funktionierten im frischen Konto ebenfalls. Der Nutzer gab den Clean-Install-Test daraufhin ausdrücklich als abgeschlossen frei.
+
+### 11.7 Exit
 
 - [x] Upgrade-Test bewahrt den dokumentierten Zustand oder jede notwendige Neufreigabe ist ausdrücklich dokumentiert.
-- [ ] Clean Install besteht den Kernablauf.
+- [x] Clean Install besteht den Kernablauf.
 - [x] Keine zweite vollständige Neueinrichtung wird durch eine versehentliche Bundle-ID-Änderung ausgelöst.
 - [x] Keine offene Abweichung gefährdet Nutzerdaten oder parallelen App-Betrieb.
 
@@ -614,9 +620,8 @@ Das Rebranding ist abgeschlossen, wenn:
 
 ## 17. Unmittelbar nächster Schritt
 
-R0 bis R4 sowie die automatisierten R5-Gates sind abgeschlossen. Als Nächstes wird R5 manuell fortgesetzt:
+R0 bis R5 sind abgeschlossen. R6 ist freigegeben. Als Nächstes wird die GitHub-Umschaltung aus Abschnitt 12 kontrolliert durchgeführt:
 
-1. den separaten Clean-Install-Test in einem frischen macOS-Benutzerkonto oder einer gleichwertig isolierten Umgebung durchführen,
-2. danach R5 abschließen und R6 freigeben.
-
-R6 bleibt bis zum vollständigen R5-Exit gesperrt.
+1. Rebranding-Branch final reviewen und in `main` integrieren,
+2. das bestehende Repository von `Hank1210/FlowDictate` zu `Hank1210/NativeDictate` umbenennen,
+3. lokalen Remote, Push/Fetch, neue Adresse und Weiterleitung der alten Adresse prüfen.
