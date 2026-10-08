@@ -1,7 +1,7 @@
 # FlowDictate → NativeDictate – Rebranding-Arbeitsplan
 
 **Vorhaben:** Umbenennung des Open-Source-Projekts und der sichtbaren macOS-App von FlowDictate zu NativeDictate
-**Status:** `IN ARBEIT` – R0 bis R6 abgeschlossen, R7 offen
+**Status:** `IN ARBEIT` – R0 bis R6 abgeschlossen, R7 in Arbeit
 **Stand:** 8. Oktober 2026
 **Ausgangsbasis:** FlowDictate 4.1.0, Build 33, Tag `v4.1.0`, Commit `afa02eb`
 **Zielversion:** NativeDictate 4.2.0
@@ -141,7 +141,7 @@ Optionale interne Namensbereinigung in späteren Versionen
 | R4 aktuelle Dokumentation und Historiengrenze | `ERLEDIGT` | R2 | konsistente Projektkommunikation |
 | R5 automatisierte und manuelle Migrationstests | `ERLEDIGT` | R3, R4 | Freigabe für GitHub-Umschaltung |
 | R6 GitHub-Umschaltung | `ERLEDIGT` | R5 | kanonische neue Projektadresse |
-| R7 Release-Gate NativeDictate 4.2.0 | `OFFEN` | R6 | Veröffentlichungsentscheidung |
+| R7 Release-Gate NativeDictate 4.2.0 | `IN ARBEIT` | R6 | Veröffentlichungsentscheidung |
 | R8 optionale interne Bereinigung | `OFFEN` | stabiler 4.2-Nachweis | langfristige Codekonsistenz |
 
 ## 6. R0 – Vertrags- und Baseline-Gate
@@ -537,7 +537,7 @@ Zu prüfen:
 
 ## 13. R7 – Release-Gate NativeDictate 4.2.0
 
-**Status:** `OFFEN`
+**Status:** `IN ARBEIT`
 
 ### 13.1 Releaseinhalt
 
@@ -552,16 +552,27 @@ Zu prüfen:
 
 - [x] alle R5-Tests und manuellen Matrizen bestanden,
 - [x] Repository-Umschaltung R6 bestanden,
-- [ ] exakter Release-Commit dokumentiert,
-- [ ] exakte SHA-256 dokumentiert,
-- [ ] extrahiertes ZIP erneut unabhängig geprüft,
-- [ ] Appname, Version, Build und Bundle-ID stimmen,
-- [ ] keine private Datei oder Zugangsinformation enthalten,
+- [x] exakter Release-Commit dokumentiert,
+- [x] exakte SHA-256 dokumentiert,
+- [x] extrahiertes ZIP erneut unabhängig geprüft,
+- [x] Appname, Version, Build und Bundle-ID stimmen,
+- [x] keine private Datei oder Zugangsinformation enthalten,
 - [ ] Upgradehinweis ist im GitHub Release sichtbar,
-- [ ] Rollback auf 4.1.0 wurde hinsichtlich Datenformaten bewertet,
+- [x] Rollback auf 4.1.0 wurde hinsichtlich Datenformaten bewertet,
 - [ ] Veröffentlichung ausdrücklich autorisiert.
 
-### 13.3 Exit
+### 13.3 Statischer Kandidatennachweis vom 8. Oktober 2026
+
+- Der exakte Artefakt-Quellstand ist `59032a1c33ed2a8d95d26a9af0f8d977bc266eb1` auf `main`. Seit dem vollständig real getesteten R5-Kandidaten `7795e0f` änderte sich im App-Code ausschließlich der Release-API-Endpunkt von der alten, weitergeleiteten Repository-Adresse auf `https://api.github.com/repos/Hank1210/NativeDictate/releases/latest`; die übrigen Änderungen dokumentieren R6 und bereinigen die zugehörige Allowlist.
+- Aus diesem Stand wurde `dist/NativeDictate-4.2.0-Community-macOS.zip` neu erzeugt. Seine SHA-256 lautet `58fe298a41f9fd24c31d38f185bc8679a967f354e047c37ef0473f8a218666e2`; die daneben erzeugte Prüfsummendatei besteht `shasum -a 256 -c`.
+- Der frühere R5-Kandidat bleibt lokal unter `dist/previous-candidates/r5-pre-github/` mit SHA-256 `0d8e603341fab35c446037b14339799030626fffbb872f1367f1127a03f21b92` erhalten und ist ausdrücklich nicht der R7-Veröffentlichungskandidat.
+- Das R7-ZIP wurde in ein neues temporäres Verzeichnis extrahiert. Es enthält genau eine `NativeDictate.app`; deren Info.plist meldet Anzeigename, Bundle-Name und Executable `NativeDictate`, Version 4.2.0, Build 34 und die unveränderte Bundle-ID `de.mcc.FlowDictate`. Das Mach-O enthält `arm64` und `x86_64`; `codesign --verify --deep --strict` besteht. Die ausgelesenen Sandbox-, Audioeingabe-, benutzerausgewählten Datei- und Netzwerk-Entitlements entsprechen `config/FlowDictateCommunity.entitlements`.
+- Deutsche und englische Installationsanleitung, Changelog, Privacy-Hinweis, MIT-Lizenz, Third-Party Notices und FluidAudio-Lizenz sind byteidentisch mit den geprüften Repository-Dateien. Archivpfade und Dokumentinhalte enthalten keine private `TESTING_4_1.md`, `.env`, Zugangsdaten, Aufnahmen, Transkripte oder Modelldateien. `git diff --check` ist leer; der Arbeitsbaum war beim Build sauber.
+- Der Build endete mit `BUILD SUCCEEDED`. Xcode meldete dabei die bereits bekannte Swift-Capture-Warnung in `DictationCoordinator.swift`; der Kandidat wird daher nicht als warnungsfrei bezeichnet. Die vollständige serielle Suite auf demselben Quellstand hatte unmittelbar vor dem Kandidatenbau 228/228 Tests und `TEST SUCCEEDED` erreicht; die bekannte Actor-Isolation-Warnung im Testhelfer bleibt ebenfalls dokumentiert.
+- Die Datenformatprüfung gegen `v4.1.0` zeigt keine Änderung der History-, Record-, Job-, Profil-, Smart-Dictation-, Long-Form- oder Meeting-Schemaversionen. Änderungen an den Stores zentralisieren lediglich dieselben `Application Support/FlowDictate`-Pfade; 4.2 schreibt kein neues Format, das 4.1 grundsätzlich nicht lesen kann. Ein Rollback muss NativeDictate vollständig beenden, darf niemals beide Bundles parallel starten und kann anschließend FlowDictate 4.1.0 gegen den unveränderten gemeinsamen Datenbestand verwenden. Vor einem Rollback bleibt eine Sicherung der gemeinsamen Nutzerdaten sinnvoll; eine automatische Datenrückmigration oder Löschung ist weder nötig noch vorgesehen.
+- Noch offen ist der manuelle Lauf mit genau diesem neu gebauten R7-ZIP. Die erfolgreichen R5-Upgrade- und Clean-Install-Matrizen werden nicht fälschlich als Test dieses neuen Checksums ausgegeben. Ebenfalls offen bleiben Tag, GitHub Release, Asset-Upload, Sichtprüfung des veröffentlichten Upgradehinweises und die ausdrückliche Veröffentlichungsentscheidung.
+
+### 13.4 Exit
 
 NativeDictate 4.2.0 ist erst veröffentlichungsbereit, wenn sowohl eine Neuinstallation als auch der reale Wechsel von FlowDictate 4.1.0 ohne Verlust des dokumentierten Nutzerzustands nachgewiesen sind.
 
@@ -628,9 +639,9 @@ Das Rebranding ist abgeschlossen, wenn:
 
 ## 17. Unmittelbar nächster Schritt
 
-R0 bis R6 sind abgeschlossen. Als Nächstes beginnt das R7-Release-Gate, noch ohne Tag oder Veröffentlichung:
+R0 bis R6 sind abgeschlossen; R7 ist statisch geprüft, aber noch nicht freigegeben oder veröffentlicht. Als Nächstes:
 
-1. exakten Releasekandidaten aus dem aktuellen `main` bauen und Commit sowie SHA-256 festhalten,
-2. ZIP unabhängig extrahieren und App-Identität, Architekturen, Signatur, Entitlements, Paketinhalt und Notices erneut prüfen,
-3. Rollback-Bewertung und GitHub-Release-Text finalisieren,
-4. erst danach eine ausdrückliche Veröffentlichungsentscheidung treffen.
+1. den neu gebauten R7-Kandidaten mit SHA-256 `58fe298a41f9fd24c31d38f185bc8679a967f354e047c37ef0473f8a218666e2` manuell als exaktes ZIP prüfen,
+2. den vorbereiteten GitHub-Release-Text einschließlich Upgradehinweis final gegenlesen,
+3. erst danach eine ausdrückliche Veröffentlichungsentscheidung treffen und gegebenenfalls Tag, Release und Assets erzeugen,
+4. das von GitHub heruntergeladene ZIP erneut mit der lokalen SHA-256 vergleichen und erst nach dieser Prüfung stabil schalten.
