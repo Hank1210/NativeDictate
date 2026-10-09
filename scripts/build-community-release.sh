@@ -54,7 +54,7 @@ fi
 DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer \
     xcodebuild clean build \
     -project "${PROJECT_DIRECTORY}/FlowDictate.xcodeproj" \
-    -scheme FlowDictate \
+    -scheme NativeDictate \
     -configuration Release \
     -destination 'generic/platform=macOS' \
     -derivedDataPath "${DERIVED_DATA_DIRECTORY}" \

@@ -709,6 +709,15 @@ Jede interne Bereinigung wird mechanisch getrennt, mit kleinen Commits und volls
 - Die vollständige serielle macOS-Suite wurde aus einer unveränderten temporären Kopie ausgeführt und bestand mit 228/228 Tests sowie `TEST SUCCEEDED`.
 - Die bereits bekannten Compilerwarnungen im unveränderten Testhelfer und Retry-Code bleiben bestehen; der Schritt wird deshalb nicht als warnungsfrei bezeichnet.
 
+### 14.13 Xcode-Scheme
+
+- Das geteilte Scheme wurde von `FlowDictate` zu `NativeDictate` umbenannt. README, beide Release-Buildskripte und die aktuellen Regressionserwartungen verwenden nun ausschließlich `-scheme NativeDictate` beziehungsweise `NativeDictate.xcscheme`.
+- Die Xcode-Projektdatei bleibt in diesem mechanisch getrennten Schritt `FlowDictate.xcodeproj`; die Containerverweise innerhalb des Schemes zeigen deshalb weiterhin bewusst auf diesen Namen. Targets, Produkte und Swift-Modul tragen bereits die NativeDictate-Namen.
+- Bundle-Identifier, Keychain-Service, Persistenzpfade, UserDefaults-Schlüssel und gespeicherte Datenverträge bleiben unverändert. Veröffentlichte 4.2-Dokumente und das historische R0-Namensinventar werden nicht rückwirkend umgeschrieben.
+- Regressionserwartungen schützen den neuen Scheme-Pfad sowie die aktualisierten Buildskripte und schließen deren alten Scheme-Parameter aus. Die Legacy-Allowlist wurde auf den verbleibenden Projektverweis reduziert; beide Release-Skripte bestehen `zsh -n`, und `git diff --check` ist leer.
+- `xcodebuild -list` weist `NativeDictate` als gemeinsames Scheme aus. Die vollständige serielle macOS-Suite wurde aus einer unveränderten temporären Kopie mit diesem Scheme ausgeführt und bestand mit 228/228 Tests sowie `TEST SUCCEEDED`.
+- Die bereits bekannten Compilerwarnungen im unveränderten Testhelfer und Retry-Code bleiben bestehen; der Schritt wird deshalb nicht als warnungsfrei bezeichnet.
+
 ## 15. Rollback-Strategie
 
 ### 15.1 Vor der GitHub-Umschaltung

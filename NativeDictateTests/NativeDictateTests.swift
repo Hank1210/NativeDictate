@@ -102,7 +102,7 @@ struct NativeDictateTests {
         )
 
         let schemeURL = repositoryRoot.appendingPathComponent(
-            "FlowDictate.xcodeproj/xcshareddata/xcschemes/FlowDictate.xcscheme"
+            "FlowDictate.xcodeproj/xcshareddata/xcschemes/NativeDictate.xcscheme"
         )
         let schemeContents = try String(contentsOf: schemeURL, encoding: .utf8)
         #expect(schemeContents.components(separatedBy: "BuildableName = \"NativeDictate.app\"").count - 1 == 3)
@@ -140,6 +140,8 @@ struct NativeDictateTests {
         #expect(communityScript.contains("PACKAGE_NAME=NativeDictate-${VERSION}-Community"))
         #expect(communityScript.contains("PACKAGED_APP=${STAGING_DIRECTORY}/NativeDictate.app"))
         #expect(communityScript.contains("VERSION=${NATIVEDICTATE_VERSION:-${FLOWDICTATE_VERSION:-4.2.0}}"))
+        #expect(communityScript.contains("-scheme NativeDictate"))
+        #expect(communityScript.contains("-scheme FlowDictate") == false)
 
         let releaseScript = try String(
             contentsOf: repositoryRoot.appendingPathComponent("scripts/build-release.sh"),
@@ -147,6 +149,8 @@ struct NativeDictateTests {
         )
         #expect(releaseScript.contains("NATIVEDICTATE_DERIVED_DATA:-${FLOWDICTATE_DERIVED_DATA"))
         #expect(releaseScript.contains("NATIVEDICTATE_NOTARY_PROFILE:-${FLOWDICTATE_NOTARY_PROFILE"))
+        #expect(releaseScript.contains("-scheme NativeDictate"))
+        #expect(releaseScript.contains("-scheme FlowDictate") == false)
 
         let environmentExample = try String(
             contentsOf: repositoryRoot.appendingPathComponent(".env.example"),
