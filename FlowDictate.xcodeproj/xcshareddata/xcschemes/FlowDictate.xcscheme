@@ -17,7 +17,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "37F749793032108300FFCE37"
                BuildableName = "NativeDictate.app"
-               BlueprintName = "FlowDictate"
+               BlueprintName = "NativeDictate"
                ReferencedContainer = "container:FlowDictate.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -70,7 +70,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "37F749793032108300FFCE37"
             BuildableName = "NativeDictate.app"
-            BlueprintName = "FlowDictate"
+            BlueprintName = "NativeDictate"
             ReferencedContainer = "container:FlowDictate.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -87,7 +87,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "37F749793032108300FFCE37"
             BuildableName = "NativeDictate.app"
-            BlueprintName = "FlowDictate"
+            BlueprintName = "NativeDictate"
             ReferencedContainer = "container:FlowDictate.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

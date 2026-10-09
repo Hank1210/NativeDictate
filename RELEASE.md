@@ -46,7 +46,7 @@ The following sections describe the optional paid Developer ID workflow.
 ## Prerequisites
 
 - Xcode with the macOS SDK
-- the Apple Developer team configured for the internally named FlowDictate target that builds `NativeDictate.app`
+- the Apple Developer team configured for the `NativeDictate` target that builds `NativeDictate.app`
 - a Developer ID Application certificate for distribution outside the Mac App Store
 - an optional `notarytool` Keychain profile for notarization
 

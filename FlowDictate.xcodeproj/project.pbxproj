@@ -16,14 +16,14 @@
 			containerPortal = 37F749723032108300FFCE37 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 37F749793032108300FFCE37;
-			remoteInfo = FlowDictate;
+			remoteInfo = NativeDictate;
 		};
 		37F749923032108500FFCE37 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 37F749723032108300FFCE37 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 37F749793032108300FFCE37;
-			remoteInfo = FlowDictate;
+			remoteInfo = NativeDictate;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -100,9 +100,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		37F749793032108300FFCE37 /* FlowDictate */ = {
+		37F749793032108300FFCE37 /* NativeDictate */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 37F7499B3032108500FFCE37 /* Build configuration list for PBXNativeTarget "FlowDictate" */;
+			buildConfigurationList = 37F7499B3032108500FFCE37 /* Build configuration list for PBXNativeTarget "NativeDictate" */;
 			buildPhases = (
 				37F749763032108300FFCE37 /* Sources */,
 				37F749773032108300FFCE37 /* Frameworks */,
@@ -115,7 +115,7 @@
 			fileSystemSynchronizedGroups = (
 				37F7497C3032108300FFCE37 /* NativeDictate */,
 			);
-			name = FlowDictate;
+			name = NativeDictate;
 			packageProductDependencies = (
 				FD4000000000000000000003 /* FluidAudio */,
 			);
@@ -209,7 +209,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				37F749793032108300FFCE37 /* FlowDictate */,
+				37F749793032108300FFCE37 /* NativeDictate */,
 				37F749863032108500FFCE37 /* NativeDictateTests */,
 				37F749903032108500FFCE37 /* NativeDictateUITests */,
 			);
@@ -267,12 +267,12 @@
 /* Begin PBXTargetDependency section */
 		37F749893032108500FFCE37 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 37F749793032108300FFCE37 /* FlowDictate */;
+			target = 37F749793032108300FFCE37 /* NativeDictate */;
 			targetProxy = 37F749883032108500FFCE37 /* PBXContainerItemProxy */;
 		};
 		37F749933032108500FFCE37 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 37F749793032108300FFCE37 /* FlowDictate */;
+			target = 37F749793032108300FFCE37 /* NativeDictate */;
 			targetProxy = 37F749923032108500FFCE37 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -524,7 +524,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TEST_TARGET_NAME = FlowDictate;
+				TEST_TARGET_NAME = NativeDictate;
 			};
 			name = Debug;
 		};
@@ -542,7 +542,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TEST_TARGET_NAME = FlowDictate;
+				TEST_TARGET_NAME = NativeDictate;
 			};
 			name = Release;
 		};
@@ -678,7 +678,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TEST_TARGET_NAME = FlowDictate;
+				TEST_TARGET_NAME = NativeDictate;
 			};
 			name = DebugTests;
 		};
@@ -695,7 +695,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		37F7499B3032108500FFCE37 /* Build configuration list for PBXNativeTarget "FlowDictate" */ = {
+		37F7499B3032108500FFCE37 /* Build configuration list for PBXNativeTarget "NativeDictate" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				37F7499C3032108500FFCE37 /* Debug */,

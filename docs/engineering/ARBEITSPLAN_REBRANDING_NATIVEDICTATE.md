@@ -691,6 +691,15 @@ Jede interne Bereinigung wird mechanisch getrennt, mit kleinen Commits und volls
 - Der erste vollständige Lauf erreichte 227 erfolgreiche Tests, bevor der Allowlist-Selbsttest den nun veralteten UI-Testdatei-Eintrag korrekt beanstandete. Nach dessen Entfernung bestand die erneut vollständig ausgeführte serielle macOS-Suite mit 228/228 Tests und `TEST SUCCEEDED`.
 - Die bereits bekannten Compilerwarnungen im unveränderten Testhelfer und Retry-Code bleiben bestehen. Bundle-Identifier, Keychain-Service, Persistenzpfade und gespeicherte Datenverträge wurden nicht geändert.
 
+### 14.11 Xcode-App-Target
+
+- Das interne App-Target wurde von `FlowDictate` zu `NativeDictate` umbenannt. Targetname, Build-Konfigurationsreferenzen, Testabhängigkeiten, Container-Proxys, UI-Test-Hostziel und die App-Blueprints des gemeinsamen Schemes verwenden nun NativeDictate.
+- `xcodebuild -list` weist im weiterhin `FlowDictate` genannten Projekt die drei Targets `NativeDictate`, `NativeDictateTests` und `NativeDictateUITests` aus. Projektdatei und Scheme bleiben in diesem getrennten Schritt `FlowDictate.xcodeproj` beziehungsweise `FlowDictate`.
+- Das Swift-Modul bleibt durch `PRODUCT_MODULE_NAME = FlowDictate` ausdrücklich kompatibel; `@testable import FlowDictate` funktioniert unverändert. Ebenso bleiben die Bundle-Identifier, der Produktname `NativeDictate.app`, Keychain-Service, Persistenzpfade und gespeicherten Datenverträge unverändert.
+- Regressionserwartungen schützen den neuen App-Target- und Blueprintnamen sowie die beiden aktualisierten Testabhängigkeiten. Der aktuelle Release-Leitfaden benennt das NativeDictate-Target; die zugehörigen überflüssigen Legacy-Ausnahmen wurden bereinigt. `git diff --check` ist leer.
+- Die vollständige serielle macOS-Suite wurde aus einer unveränderten temporären Kopie ausgeführt und bestand mit 228/228 Tests sowie `TEST SUCCEEDED`. Der Buildgraph bestätigte, dass beide NativeDictate-Testtargets vom App-Target `NativeDictate` abhängen.
+- Die bereits bekannten Compilerwarnungen im unveränderten Testhelfer und Retry-Code bleiben bestehen; der Schritt wird deshalb nicht als warnungsfrei bezeichnet.
+
 ## 15. Rollback-Strategie
 
 ### 15.1 Vor der GitHub-Umschaltung

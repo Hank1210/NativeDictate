@@ -105,7 +105,9 @@ struct NativeDictateTests {
         )
         let schemeContents = try String(contentsOf: schemeURL, encoding: .utf8)
         #expect(schemeContents.components(separatedBy: "BuildableName = \"NativeDictate.app\"").count - 1 == 3)
+        #expect(schemeContents.components(separatedBy: "BlueprintName = \"NativeDictate\"").count - 1 == 3)
         #expect(schemeContents.contains("BuildableName = \"FlowDictate.app\"") == false)
+        #expect(schemeContents.contains("BlueprintName = \"FlowDictate\"") == false)
         #expect(schemeContents.contains("BuildableName = \"NativeDictateTests.xctest\""))
         #expect(schemeContents.contains("BlueprintName = \"NativeDictateTests\""))
         #expect(schemeContents.contains("BuildableName = \"NativeDictateUITests.xctest\""))
@@ -125,6 +127,10 @@ struct NativeDictateTests {
         #expect(projectContents.contains("name = FlowDictateUITests;") == false)
         #expect(projectContents.contains("productName = FlowDictateUITests;") == false)
         #expect(projectContents.contains("path = FlowDictateUITests.xctest;") == false)
+        #expect(projectContents.contains("name = NativeDictate;"))
+        #expect(projectContents.contains("name = FlowDictate;") == false)
+        #expect(projectContents.components(separatedBy: "remoteInfo = NativeDictate;").count - 1 == 2)
+        #expect(projectContents.components(separatedBy: "TEST_TARGET_NAME = NativeDictate;").count - 1 == 3)
 
         let communityScript = try String(
             contentsOf: repositoryRoot.appendingPathComponent("scripts/build-community-release.sh"),
