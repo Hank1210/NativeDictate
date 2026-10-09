@@ -5,13 +5,9 @@ NativeDictate/Utilities/ProductIdentity.swift	exact	FlowDictate	Persistente Appl
 NativeDictate.xcodeproj/project.pbxproj	exact	PRODUCT_BUNDLE_IDENTIFIER = de.mcc.FlowDictate;	Produktions-Bundle-ID in Debug und Release.
 NativeDictate.xcodeproj/project.pbxproj	exact	PRODUCT_BUNDLE_IDENTIFIER = de.mcc.FlowDictate.TestHost;	Dedizierte Testhost-Bundle-ID.
 NativeDictate.xcodeproj/project.pbxproj	prefix	de.mcc.FlowDictate	Produktions-, Testhost- und Test-Bundle-IDs bleiben als technische Legacy-Identitäten bestehen.
-NativeDictate/Audio/CaptureProbeArtifactStore.swift	prefix	FlowDictateCaptureProbes	Nur internes temporäres Diagnoseverzeichnis; kein neuer Nutzerexport und kein Persistenzvertrag.
-NativeDictate/Audio/AudioUploadPreparer.swift	prefix	FlowDictate-Upload-|FlowDictate-Multipart-	Interne temporäre Uploadartefakte bleiben kompatibel mit der bestehenden Bereinigung.
-NativeDictate/Transcription/MultipartUploadFileBuilder.swift	prefix	FlowDictate-Multipart-	Interne temporäre Multipart-Datei; nicht benutzersichtbar.
-NativeDictate/Transcription/OpenAITranscriptionProvider.swift	prefix	FlowDictate-	Interne Multipart-Boundary; nicht benutzersichtbar.
+NativeDictate/Audio/AudioUploadPreparer.swift	prefix	FlowDictate-Upload-|FlowDictate-Multipart-	Nur die Bereinigung verwaister temporärer Dateien früherer App-Versionen behält diese Präfixe bei; neue Dateien verwenden NativeDictate.
+NativeDictate/App/DictationCoordinator.swift	prefix	FLOWDICTATE_UI_TESTING|FLOWDICTATE_TRANSCRIPTION_MODEL	Laufzeit-Fallbacks bleiben während der 4.x-Releaselinie mit bestehenden Automationen kompatibel.
 .gitignore	exact	FlowDictate-Feature-Briefing_4.1.md	Explizit ignorierter privater historischer Dateiname; die Datei selbst darf nicht versioniert werden.
-NativeDictate/Meetings/LongFormTrackTranscriptionExecutor.swift	exact	FlowDictate's existing single-file	Interner Architekturkommentar; kein Nutzertext.
-NativeDictate/Meetings/MeetingTranscriptInsertionGate.swift	exact	FlowDictate stops after that boundary	Interner Architekturkommentar; kein Nutzertext.
 NativeDictate/Transcription/Local/LocalModelManager.swift	exact	Application Support/FlowDictate	Kommentar zum absichtlich bewahrten Legacy-Modellpfad.
 scripts/build-community-release.sh	prefix	FLOWDICTATE_	Legacy-Umgebungsvariablen bleiben während der 4.x-Releaselinie als Fallbacks kompatibel.
 scripts/build-release.sh	prefix	FLOWDICTATE_	Legacy-Umgebungsvariablen bleiben während der 4.x-Releaselinie als Fallbacks kompatibel.

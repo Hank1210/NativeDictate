@@ -105,7 +105,12 @@ nonisolated final class AudioUploadPreparer: AudioUploadPreparing, @unchecked Se
             includingPropertiesForKeys: [.contentModificationDateKey],
             options: [.skipsHiddenFiles]
         ) else { return }
-        let prefixes = ["FlowDictate-Upload-", "FlowDictate-Multipart-"]
+        let prefixes = [
+            "NativeDictate-Upload-",
+            "NativeDictate-Multipart-",
+            "FlowDictate-Upload-",
+            "FlowDictate-Multipart-"
+        ]
         let cutoff = now.addingTimeInterval(-24 * 60 * 60)
         for file in files where prefixes.contains(where: file.lastPathComponent.hasPrefix) {
             let modified = try? file.resourceValues(forKeys: [.contentModificationDateKey])
@@ -118,7 +123,7 @@ nonisolated final class AudioUploadPreparer: AudioUploadPreparing, @unchecked Se
 
     private func convertToM4A(_ sourceURL: URL) throws -> URL {
         let destination = fileManager.temporaryDirectory
-            .appendingPathComponent("FlowDictate-Upload-\(UUID().uuidString).m4a")
+            .appendingPathComponent("NativeDictate-Upload-\(UUID().uuidString).m4a")
         do {
             let sourceFile = try AVAudioFile(forReading: sourceURL)
             let sourceFormat = sourceFile.processingFormat

@@ -1,8 +1,8 @@
 # FlowDictate → NativeDictate – Rebranding-Arbeitsplan
 
 **Vorhaben:** Umbenennung des Open-Source-Projekts und der sichtbaren macOS-App von FlowDictate zu NativeDictate
-**Status:** `ERLEDIGT` – R0 bis R7 abgeschlossen; optionales R8 in Arbeit
-**Stand:** 8. Oktober 2026
+**Status:** `ERLEDIGT` – R0 bis R8 abgeschlossen
+**Stand:** 9. Oktober 2026
 **Ausgangsbasis:** FlowDictate 4.1.0, Build 33, Tag `v4.1.0`, Commit `afa02eb`
 **Zielversion:** NativeDictate 4.2.0
 **Geplanter Arbeitsbranch:** `codex/rebrand-native-dictate`
@@ -589,7 +589,7 @@ NativeDictate 4.2.0 ist erst veröffentlichungsbereit, wenn sowohl eine Neuinsta
 
 ## 14. R8 – Optionale interne Namensbereinigung
 
-**Status:** `IN ARBEIT`
+**Status:** `ERLEDIGT`
 
 Dieser Schritt ist kein Gate für 4.2. Er darf erst beginnen, nachdem NativeDictate 4.2 stabil ist.
 
@@ -727,6 +727,15 @@ Jede interne Bereinigung wird mechanisch getrennt, mit kleinen Commits und volls
 - `xcodebuild -list` weist das Projekt `NativeDictate`, das Scheme `NativeDictate` sowie die drei NativeDictate-Targets aus. Die vollständige serielle macOS-Suite wurde aus einer unveränderten temporären Kopie über `NativeDictate.xcodeproj` ausgeführt und bestand mit 228/228 Tests sowie `TEST SUCCEEDED`.
 - Die bereits bekannten Compilerwarnungen im unveränderten Testhelfer und Retry-Code bleiben bestehen; der Schritt wird deshalb nicht als warnungsfrei bezeichnet.
 
+### 14.15 Restbereinigung und Abschlussprüfung
+
+- Der abschließende kontrollierte Scan fand noch rein interne alte Namen in temporären Probe-, Upload- und Multipart-Artefakten, der OpenAI-Multipart-Boundary, zwei Architekturkommentaren und dem nicht persistenten Layoutschutz-Marker von Smart Dictation. Neue Artefakte und Marker verwenden nun durchgängig NativeDictate; passende Regressionserwartungen schützen die neuen temporären Präfixe und den Marker.
+- `AudioUploadPreparer` erkennt die alten Präfixe `FlowDictate-Upload-` und `FlowDictate-Multipart-` weiterhin ausschließlich beim Entfernen verwaister temporärer Dateien. Die beiden Laufzeit-Aliase `FLOWDICTATE_UI_TESTING` und `FLOWDICTATE_TRANSCRIPTION_MODEL` wurden als befristete 4.x-Kompatibilitätsverträge ausdrücklich in die Legacy-Allowlist aufgenommen.
+- Ein vollständiger Vergleich aller versionierten Dateien mit Treffern für `FlowDictate` oder `FLOWDICTATE` gegen `REBRANDING_LEGACY_ALLOWLIST.tsv` liefert keine nicht klassifizierte Datei mehr. Der Allowlist-Selbsttest bestätigt umgekehrt, dass jeder Eintrag weiterhin auf einen real vorhandenen technischen Legacy-, Migrations- oder Historientreffer zeigt.
+- Bundle-Identifier, Testhost-Identität, Keychain-Service, `Application Support/FlowDictate`, UserDefaults-Schlüssel, Schemata und gespeicherte Nutzerdaten wurden nicht geändert. Veröffentlichte Release Notes, historische Arbeitspläne und PRDs bleiben unverändert.
+- Beide Release-Skripte bestehen `zsh -n`, und `git diff --check` ist leer. Die vollständige serielle macOS-Suite wurde aus einer unveränderten temporären Kopie über `NativeDictate.xcodeproj` und das Scheme `NativeDictate` ausgeführt und bestand mit 228/228 Tests sowie `TEST SUCCEEDED`.
+- Der Lauf meldete weiterhin die bereits bekannten Compilerwarnungen zur Actor-Isolation im Testhelfer und zur Capture-Semantik im Retry-Code. R8 ist damit abgeschlossen; verbleibende alte Namen sind ausschließlich bewusst dokumentierte technische Verträge, Migrationstexte oder unveränderliche historische Nachweise.
+
 ## 15. Rollback-Strategie
 
 ### 15.1 Vor der GitHub-Umschaltung
@@ -766,4 +775,4 @@ Das Rebranding ist abgeschlossen, wenn:
 
 ## 17. Unmittelbar nächster Schritt
 
-R0 bis R7 und damit das verbindliche Rebranding sind abgeschlossen. NativeDictate 4.2.0 ist als neueste stabile Version veröffentlicht, und die von GitHub erneut heruntergeladenen Assets sind byteidentisch mit dem getesteten Kandidaten. Es gibt keinen verpflichtenden Folgeschritt. R8 bleibt eine optionale, separat zu planende interne Namensbereinigung und ist kein Nachlauf-Gate für 4.2.0.
+R0 bis R8 und damit sowohl das verbindliche Rebranding als auch die optionale interne Namensbereinigung sind abgeschlossen. NativeDictate 4.2.0 bleibt als neueste stabile Version unverändert veröffentlicht; die nachgelagerte R8-Bereinigung ändert keine veröffentlichten Artefakte, Tags oder persistenten Nutzerverträge. Es gibt keinen verpflichtenden weiteren Rebranding-Schritt. Neue Produkt- oder Entwicklungsarbeiten beginnen mit einem eigenen freigegebenen Plan.

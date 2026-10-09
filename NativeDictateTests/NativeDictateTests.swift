@@ -449,6 +449,7 @@ struct NativeDictateTests {
         )
         defer { upload.cleanup() }
 
+        #expect(upload.url.lastPathComponent.hasPrefix("NativeDictate-Multipart-"))
         let text = String(decoding: try Data(contentsOf: upload.url), as: UTF8.self)
         #expect(text.contains("name=\"model\""))
         #expect(text.contains("test-model"))
@@ -597,6 +598,7 @@ struct NativeDictateTests {
         }
 
         let prepared = try await AudioUploadPreparer().prepareCompactUpload(source)
+        #expect(prepared.fileURL.lastPathComponent.hasPrefix("NativeDictate-Upload-"))
         #expect(prepared.fileURL.pathExtension == "m4a")
         #expect(prepared.temporaryFileURL != nil)
         #expect(FileManager.default.fileExists(atPath: prepared.fileURL.path))
@@ -988,6 +990,10 @@ struct NativeDictateTests {
     }
 
     @Test func captureProbeArtifactsRemoveOnlyFilesFromStoppedProcesses() throws {
+        #expect(
+            CaptureProbeArtifactStore().directoryURL.lastPathComponent
+                == "NativeDictateCaptureProbes"
+        )
         let directory = FileManager.default.temporaryDirectory
             .appendingPathComponent("FlowDictateCaptureProbeArtifacts-\(UUID())", isDirectory: true)
         defer { try? FileManager.default.removeItem(at: directory) }
@@ -4945,7 +4951,7 @@ struct NativeDictateTests {
             enhancer: enhancer
         )
 
-        #expect(enhancer.receivedTexts.first?.contains("[[FLOWDICTATE_LAYOUT_BREAK_") == true)
+        #expect(enhancer.receivedTexts.first?.contains("[[NATIVEDICTATE_LAYOUT_BREAK_") == true)
         #expect(result.formattedTranscript == "Erster Teil\nzweiter Teil")
         #expect(result.finalText == "Bereinigter Anfang\nbereinigtes Ende")
         #expect(result.processingStatus == .completed)
@@ -9055,7 +9061,7 @@ private nonisolated final class CapturingMultipartFileManager: FileManager, @unc
     }
 
     override func removeItem(at URL: URL) throws {
-        if URL.lastPathComponent.hasPrefix("FlowDictate-Multipart-") {
+        if URL.lastPathComponent.hasPrefix("NativeDictate-Multipart-") {
             let body = try Data(contentsOf: URL)
             lock.lock()
             storedBodies.append(body)
@@ -9132,7 +9138,7 @@ private final class EchoingLayoutMarkerEnhancer: TranscriptEnhancing, @unchecked
 
     func enhance(_ request: TranscriptEnhancementRequest) async throws -> TranscriptEnhancementResult {
         receivedTexts.append(request.text)
-        let markerPattern = #"\[\[FLOWDICTATE_LAYOUT_BREAK_\d+\]\]"#
+        let markerPattern = #"\[\[NATIVEDICTATE_LAYOUT_BREAK_\d+\]\]"#
         let expression = try NSRegularExpression(pattern: markerPattern)
         let match = expression.firstMatch(
             in: request.text,

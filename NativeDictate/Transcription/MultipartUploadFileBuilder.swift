@@ -32,7 +32,7 @@ nonisolated struct MultipartUploadFileBuilder {
         sourceURL: URL
     ) throws -> MultipartUploadFile {
         let outputURL = fileManager.temporaryDirectory
-            .appendingPathComponent("FlowDictate-Multipart-\(UUID().uuidString).body")
+            .appendingPathComponent("NativeDictate-Multipart-\(UUID().uuidString).body")
         guard fileManager.createFile(atPath: outputURL.path, contents: nil) else {
             throw CocoaError(.fileWriteUnknown)
         }

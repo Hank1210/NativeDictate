@@ -40,7 +40,7 @@ nonisolated final class OpenAITranscriptionProvider: TranscriptionProvider, @unc
             throw TranscriptionProviderError.missingAPIKey
         }
 
-        let boundary = "FlowDictate-\(UUID().uuidString)"
+        let boundary = "NativeDictate-\(UUID().uuidString)"
         let upload = try await Task.detached(priority: .userInitiated) {
             [uploadPreparer, fileManager, model] in
             let prepared = try await uploadPreparer.prepare(request.audioURL)

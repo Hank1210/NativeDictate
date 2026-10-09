@@ -1,6 +1,6 @@
 import Foundation
 
-/// Adapts a meeting track to FlowDictate's existing single-file and long-form
+/// Adapts a meeting track to NativeDictate's existing single-file and long-form
 /// transcription pipeline without adding synthetic rows to the user's History.
 @MainActor
 final class LongFormTrackTranscriptionExecutor: TrackTranscriptionExecuting {

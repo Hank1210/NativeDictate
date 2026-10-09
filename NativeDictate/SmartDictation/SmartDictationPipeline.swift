@@ -374,7 +374,7 @@ final class SmartDictationPipeline {
         let matches = expression.matches(in: input, range: NSRange(input.startIndex..., in: input)).reversed()
         for (index, match) in matches.enumerated() {
             guard let range = Range(match.range, in: text) else { continue }
-            let marker = "[[FLOWDICTATE_LAYOUT_BREAK_\(index + 1)]]"
+            let marker = "[[NATIVEDICTATE_LAYOUT_BREAK_\(index + 1)]]"
             markers[marker] = String(text[range])
             text.replaceSubrange(range, with: " \(marker) ")
         }
@@ -382,7 +382,7 @@ final class SmartDictationPipeline {
         let instruction = """
         \(styleInstruction)
 
-        Preserve every token that looks like [[FLOWDICTATE_LAYOUT_BREAK_N]] exactly as written. These tokens mark user-requested line or paragraph breaks and must remain in their original order. Do not remove, rename, translate or add them.
+        Preserve every token that looks like [[NATIVEDICTATE_LAYOUT_BREAK_N]] exactly as written. These tokens mark user-requested line or paragraph breaks and must remain in their original order. Do not remove, rename, translate or add them.
         """
 
         return EnhancementLayoutProtection(

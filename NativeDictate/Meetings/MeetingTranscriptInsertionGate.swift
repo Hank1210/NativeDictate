@@ -34,7 +34,7 @@ nonisolated protocol MeetingTranscriptInsertionGating: Sendable {
 }
 
 /// Persists the insertion boundary before external UI automation begins. If
-/// FlowDictate stops after that boundary, a restart reports `requiresReview`
+/// NativeDictate stops after that boundary, a restart reports `requiresReview`
 /// instead of risking a duplicate paste.
 actor MeetingTranscriptInsertionGate {
     private let store: any MeetingTranscriptMergeSessionStoring

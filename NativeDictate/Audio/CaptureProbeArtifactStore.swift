@@ -11,7 +11,7 @@ nonisolated struct CaptureProbeArtifactStore {
 
     init(
         directoryURL: URL = FileManager.default.temporaryDirectory
-            .appendingPathComponent("FlowDictateCaptureProbes", isDirectory: true),
+            .appendingPathComponent("NativeDictateCaptureProbes", isDirectory: true),
         fileManager: FileManager = .default
     ) {
         self.directoryURL = directoryURL
