@@ -1,5 +1,5 @@
 //
-//  FlowDictateUITests.swift
+//  NativeDictateUITests.swift
 //  FlowDictateUITests
 //
 //  Created by Frank Euler on 16.08.26.
@@ -7,7 +7,7 @@
 
 import XCTest
 
-final class FlowDictateUITests: XCTestCase {
+final class NativeDictateUITests: XCTestCase {
     override func setUpWithError() throws {
         continueAfterFailure = false
     }

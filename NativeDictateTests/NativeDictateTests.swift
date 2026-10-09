@@ -1,5 +1,5 @@
 //
-//  FlowDictateTests.swift
+//  NativeDictateTests.swift
 //  FlowDictateTests
 //
 //  Created by Frank Euler on 16.08.26.
@@ -16,7 +16,7 @@ import ServiceManagement
 import Testing
 @testable import FlowDictate
 
-struct FlowDictateTests {
+struct NativeDictateTests {
     @Test func rebrandingKeepsLegacyIdentityAndStorageContracts() throws {
         #expect(ProductIdentity.displayName == "NativeDictate")
         #expect(ProductIdentity.Legacy.bundleIdentifier == "de.mcc.FlowDictate")
@@ -139,7 +139,7 @@ struct FlowDictateTests {
         #expect(coordinatorSource.contains("environment[\"FLOWDICTATE_TRANSCRIPTION_MODEL\"]"))
 
         let uiTestSource = try String(
-            contentsOf: repositoryRoot.appendingPathComponent("NativeDictateUITests/FlowDictateUITests.swift"),
+            contentsOf: repositoryRoot.appendingPathComponent("NativeDictateUITests/NativeDictateUITests.swift"),
             encoding: .utf8
         )
         #expect(uiTestSource.contains("NATIVEDICTATE_UI_TESTING"))

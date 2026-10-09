@@ -216,7 +216,7 @@ Vor sichtbaren Umbenennungen werden die Werte geschützt, die bestehende Install
 - `NativeDictate/Transcription/Local/LocalModelManager.swift`
 - `NativeDictate/Transcription/LongForm/TranscriptionSessionStore.swift`
 - `NativeDictate/Audio/AudioStore.swift`
-- `NativeDictateTests/FlowDictateTests.swift`
+- `NativeDictateTests/NativeDictateTests.swift`
 
 ### 7.4 Nachweis vom 3. Oktober 2026
 
@@ -673,6 +673,14 @@ Jede interne Bereinigung wird mechanisch getrennt, mit kleinen Commits und volls
 - Der kontrollierte Restscan findet die alten Testordnerpfade nur noch im historischen R0-Namensinventar und im abgeschlossenen Phase-4.1-Arbeitsplan. Git erkennt beide verschobenen Dateien als inhaltsgleiche Umbenennungen; `git diff --check` ist leer.
 - Die vollständige serielle macOS-Suite wurde aus einer unveränderten temporären Kopie ausgeführt und bestand mit 228/228 Tests sowie `TEST SUCCEEDED`. Der Build bezog die Testquellen nachweislich aus `NativeDictateTests/` und `NativeDictateUITests/`.
 - Die bekannte Actor-Isolation-Compilerwarnung am Defaultwert `MockCredentialStore()` des Testhelfers bleibt von dieser reinen Pfadänderung unberührt. Bundle-Identifier, Keychain-Service, Persistenzpfade und gespeicherte Datenverträge wurden nicht geändert.
+
+### 14.9 Testdateien und Swift-Testtypen
+
+- `FlowDictateTests.swift` und `FlowDictateUITests.swift` wurden zu `NativeDictateTests.swift` beziehungsweise `NativeDictateUITests.swift` umbenannt. Die Dateiköpfe, der interne UI-Test-Quellpfad, aktuelle Plandokumentation und die Legacy-Allowlist verwenden die neuen Dateinamen.
+- Die Swift-Testtypen heißen nun `NativeDictateTests` und `NativeDictateUITests`. Xcode-Testtargets, Testprodukte, Bundle-Identifier, Projekt, Scheme und das per `@testable import` geladene App-Modul behalten in diesem Schritt ausdrücklich ihre bestehenden FlowDictate-Namen.
+- Der kontrollierte Restscan findet die alten Testdatei- und Swift-Typnamen im aktiven Projekt nicht mehr; ihre verbleibenden Pfade liegen ausschließlich in historischen Inventaren und dem abgeschlossenen Phase-4.1-Arbeitsplan. `git diff --check` ist leer.
+- Die vollständige serielle macOS-Suite wurde aus einer unveränderten temporären Kopie ausgeführt und bestand mit 228/228 Tests sowie `TEST SUCCEEDED`. Swift Testing weist die Suite im Ergebnis nun als `NativeDictateTests` aus.
+- Die bekannte Actor-Isolation-Compilerwarnung am Defaultwert `MockCredentialStore()` bleibt von der mechanischen Typumbenennung unberührt. Technische App-Identität, Persistenzpfade und gespeicherte Datenverträge wurden nicht geändert.
 
 ## 15. Rollback-Strategie
 
