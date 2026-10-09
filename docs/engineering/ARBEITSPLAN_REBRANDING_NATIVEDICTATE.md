@@ -216,7 +216,7 @@ Vor sichtbaren Umbenennungen werden die Werte geschützt, die bestehende Install
 - `NativeDictate/Transcription/Local/LocalModelManager.swift`
 - `NativeDictate/Transcription/LongForm/TranscriptionSessionStore.swift`
 - `NativeDictate/Audio/AudioStore.swift`
-- `FlowDictateTests/FlowDictateTests.swift`
+- `NativeDictateTests/FlowDictateTests.swift`
 
 ### 7.4 Nachweis vom 3. Oktober 2026
 
@@ -665,6 +665,14 @@ Jede interne Bereinigung wird mechanisch getrennt, mit kleinen Commits und volls
 - Der kontrollierte Restscan findet außerhalb historischer Nachweise keinen alten App-Quellpfad mehr. Der verbleibende aktive String `Library/Application Support/FlowDictate/Models` ist der ausdrücklich geschützte persistente Legacy-Pfad und keine Quellordnerreferenz. `git diff --check` ist leer.
 - Ein erster Testlauf im dokumentbasierten Arbeitsverzeichnis kompilierte die App bereits vollständig aus `NativeDictate/`, blieb anschließend jedoch beim Öffnen von `project.pbxproj` durch einen Regressionstest im macOS-Dateisystem hängen und wurde abgebrochen. Derselbe unveränderte Quellstand wurde deshalb in eine temporäre lokale Kopie unter `/private/tmp` übertragen.
 - Aus dieser Kopie bestand die vollständige serielle macOS-Suite mit 228/228 Tests und `TEST SUCCEEDED`. Der erfolgreiche Lauf meldete weiterhin die bekannte Actor-Isolation-Compilerwarnung am Defaultwert `MockCredentialStore()` des Testhelfers; der Schritt wird daher nicht als warnungsfrei bezeichnet.
+
+### 14.8 Test-Quellwurzeln
+
+- Die dateisystemsynchronisierten Ordner `FlowDictateTests/` und `FlowDictateUITests/` wurden zu `NativeDictateTests/` beziehungsweise `NativeDictateUITests/` umbenannt. Die beiden Root Groups in `project.pbxproj`, der interne UI-Test-Quellpfad, die Legacy-Allowlist und aktuelle Pfadangaben in diesem Plan verwenden die neuen Verzeichnisse.
+- Die enthaltenen Dateien, Swift-Testtypen, Xcode-Testtargets, Testprodukte, Bundle-Identifier und Scheme-Einträge behalten in diesem mechanisch getrennten Schritt ihre bisherigen `FlowDictateTests`- beziehungsweise `FlowDictateUITests`-Namen. Ihre optionale Umbenennung wird nicht mit der Ordneränderung vermischt.
+- Der kontrollierte Restscan findet die alten Testordnerpfade nur noch im historischen R0-Namensinventar und im abgeschlossenen Phase-4.1-Arbeitsplan. Git erkennt beide verschobenen Dateien als inhaltsgleiche Umbenennungen; `git diff --check` ist leer.
+- Die vollständige serielle macOS-Suite wurde aus einer unveränderten temporären Kopie ausgeführt und bestand mit 228/228 Tests sowie `TEST SUCCEEDED`. Der Build bezog die Testquellen nachweislich aus `NativeDictateTests/` und `NativeDictateUITests/`.
+- Die bekannte Actor-Isolation-Compilerwarnung am Defaultwert `MockCredentialStore()` des Testhelfers bleibt von dieser reinen Pfadänderung unberührt. Bundle-Identifier, Keychain-Service, Persistenzpfade und gespeicherte Datenverträge wurden nicht geändert.
 
 ## 15. Rollback-Strategie
 

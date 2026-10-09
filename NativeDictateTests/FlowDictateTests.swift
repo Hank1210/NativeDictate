@@ -139,7 +139,7 @@ struct FlowDictateTests {
         #expect(coordinatorSource.contains("environment[\"FLOWDICTATE_TRANSCRIPTION_MODEL\"]"))
 
         let uiTestSource = try String(
-            contentsOf: repositoryRoot.appendingPathComponent("FlowDictateUITests/FlowDictateUITests.swift"),
+            contentsOf: repositoryRoot.appendingPathComponent("NativeDictateUITests/FlowDictateUITests.swift"),
             encoding: .utf8
         )
         #expect(uiTestSource.contains("NATIVEDICTATE_UI_TESTING"))

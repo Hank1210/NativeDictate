@@ -27,8 +27,8 @@ docs/MANUAL_VERIFICATION.md	prefix	FlowDictate.app|FlowDictate is fully stopped	
 docs/requirements/README.md	prefix	FlowDictate name|FlowDictate_PRD_	Aktueller Index erklärt die historische Benennung und bewahrt verlinkte PRD-Dateinamen.
 docs/releases/README.md	prefix	FlowDictate name	Release-Index kennzeichnet 4.1.0 als letzte Veröffentlichung unter dem alten Namen.
 docs/releases/RELEASE_NOTES_4.2.0.md	prefix	FlowDictate 4.1.0|FlowDictate.app|de.mcc.FlowDictate|Application Support/FlowDictate|FlowDictate is now NativeDictate|internal FlowDictate names|Quit FlowDictate|Never run FlowDictate|real FlowDictate-4.1.0	4.2-Release Notes erklären Umbenennung, Upgrade und unveränderte technische Identität.
-FlowDictateTests/FlowDictateTests.swift	file	FlowDictate|de.mcc.FlowDictate	Interne Modul-, Test-, Fixture- und Legacy-Vertragsnamen; Benutzerbranding wird durch separate Regressionstests geschützt.
-FlowDictateUITests/FlowDictateUITests.swift	file	FlowDictate	Interne UI-Testtarget- und Testklassennamen bleiben für 4.2 bestehen.
+NativeDictateTests/FlowDictateTests.swift	file	FlowDictate|de.mcc.FlowDictate	Interne Modul-, Test-, Fixture- und Legacy-Vertragsnamen; Benutzerbranding wird durch separate Regressionstests geschützt.
+NativeDictateUITests/FlowDictateUITests.swift	file	FlowDictate	Interne UI-Testtarget- und Testklassennamen bleiben für 4.2 bestehen.
 docs/engineering/ARBEITSPLAN_PHASE_4_1.md	file	FlowDictate|de.mcc.FlowDictate|de.euler.FlowDictate	Abgeschlossener historischer 4.1-Arbeitsplan.
 docs/engineering/CAPTURE_SPIKE_PHASE_4_1.md	file	FlowDictate|de.mcc.FlowDictate|de.euler.FlowDictate	Abgeschlossener historischer Capture-Spike.
 docs/releases/RELEASE_NOTES_3.2.0.md	file	FlowDictate|de.mcc.FlowDictate|de.euler.FlowDictate	Veröffentlichte historische Release Notes.

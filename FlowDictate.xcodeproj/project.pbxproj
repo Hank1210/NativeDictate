@@ -39,14 +39,14 @@
 			path = NativeDictate;
 			sourceTree = "<group>";
 		};
-		37F7498A3032108500FFCE37 /* FlowDictateTests */ = {
+		37F7498A3032108500FFCE37 /* NativeDictateTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = FlowDictateTests;
+			path = NativeDictateTests;
 			sourceTree = "<group>";
 		};
-		37F749943032108500FFCE37 /* FlowDictateUITests */ = {
+		37F749943032108500FFCE37 /* NativeDictateUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = FlowDictateUITests;
+			path = NativeDictateUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -81,8 +81,8 @@
 			isa = PBXGroup;
 			children = (
 				37F7497C3032108300FFCE37 /* NativeDictate */,
-				37F7498A3032108500FFCE37 /* FlowDictateTests */,
-				37F749943032108500FFCE37 /* FlowDictateUITests */,
+				37F7498A3032108500FFCE37 /* NativeDictateTests */,
+				37F749943032108500FFCE37 /* NativeDictateUITests */,
 				37F7497B3032108300FFCE37 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -137,7 +137,7 @@
 				37F749893032108500FFCE37 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				37F7498A3032108500FFCE37 /* FlowDictateTests */,
+				37F7498A3032108500FFCE37 /* NativeDictateTests */,
 			);
 			name = FlowDictateTests;
 			packageProductDependencies = (
@@ -160,7 +160,7 @@
 				37F749933032108500FFCE37 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				37F749943032108500FFCE37 /* FlowDictateUITests */,
+				37F749943032108500FFCE37 /* NativeDictateUITests */,
 			);
 			name = FlowDictateUITests;
 			packageProductDependencies = (
