@@ -192,7 +192,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 37F749753032108300FFCE37 /* Build configuration list for PBXProject "FlowDictate" */;
+			buildConfigurationList = 37F749753032108300FFCE37 /* Build configuration list for PBXProject "NativeDictate" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -685,7 +685,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		37F749753032108300FFCE37 /* Build configuration list for PBXProject "FlowDictate" */ = {
+		37F749753032108300FFCE37 /* Build configuration list for PBXProject "NativeDictate" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				37F749993032108500FFCE37 /* Debug */,

@@ -718,6 +718,15 @@ Jede interne Bereinigung wird mechanisch getrennt, mit kleinen Commits und volls
 - `xcodebuild -list` weist `NativeDictate` als gemeinsames Scheme aus. Die vollständige serielle macOS-Suite wurde aus einer unveränderten temporären Kopie mit diesem Scheme ausgeführt und bestand mit 228/228 Tests sowie `TEST SUCCEEDED`.
 - Die bereits bekannten Compilerwarnungen im unveränderten Testhelfer und Retry-Code bleiben bestehen; der Schritt wird deshalb nicht als warnungsfrei bezeichnet.
 
+### 14.14 Xcode-Projekt
+
+- Das Xcode-Projektverzeichnis wurde von `FlowDictate.xcodeproj` zu `NativeDictate.xcodeproj` umbenannt. Die beiden PBXProject-Kommentare, alle fünf Containerverweise im gemeinsamen Scheme, README, beide Release-Buildskripte und die aktuellen Regressionserwartungen verwenden nun NativeDictate.
+- Projekt, Scheme, App- und Testtargets, Produkte, Quellwurzeln, Testdateien, Swift-Testtypen und Swift-Modul sind damit intern einheitlich nach NativeDictate benannt. Das historische R0-Namensinventar und abgeschlossene beziehungsweise veröffentlichte Nachweise bleiben unverändert.
+- Bundle-Identifier, Keychain-Service, `Application Support/FlowDictate`, UserDefaults-Schlüssel, Laufzeit-Fallbacks und gespeicherte Datenverträge bleiben bewusst unverändert.
+- Regressionserwartungen schützen den neuen Projektpfad, die PBXProject-Bezeichnung, Scheme-Container und Buildskripte und schließen die entsprechenden alten Projektreferenzen aus. Die nicht mehr benötigte Scheme-Ausnahme wurde entfernt und die Legacy-Allowlist auf echte technische Altverträge reduziert; beide Release-Skripte bestehen `zsh -n`, und `git diff --check` ist leer.
+- `xcodebuild -list` weist das Projekt `NativeDictate`, das Scheme `NativeDictate` sowie die drei NativeDictate-Targets aus. Die vollständige serielle macOS-Suite wurde aus einer unveränderten temporären Kopie über `NativeDictate.xcodeproj` ausgeführt und bestand mit 228/228 Tests sowie `TEST SUCCEEDED`.
+- Die bereits bekannten Compilerwarnungen im unveränderten Testhelfer und Retry-Code bleiben bestehen; der Schritt wird deshalb nicht als warnungsfrei bezeichnet.
+
 ## 15. Rollback-Strategie
 
 ### 15.1 Vor der GitHub-Umschaltung

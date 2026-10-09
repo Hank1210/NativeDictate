@@ -50,9 +50,9 @@ https://github.com/user-attachments/assets/041e2a7d-ba4e-4ab4-9b7f-bc823a764e26
 
 ## Configure and run
 
-NativeDictate retains the internal `FlowDictate.xcodeproj` project name. The shared scheme, resulting app and Swift module are named `NativeDictate`.
+The Xcode project, shared scheme, resulting app and Swift module are named `NativeDictate`.
 
-1. Open `FlowDictate.xcodeproj` and run the `NativeDictate` scheme.
+1. Open `NativeDictate.xcodeproj` and run the `NativeDictate` scheme.
 2. Follow the first-run setup assistant.
 3. Confirm `Documents/Recordings` or choose another recordings folder.
 4. Choose local transcription and download the model, or enter your own OpenAI API key; the key is stored in macOS Keychain.
@@ -114,7 +114,7 @@ NativeDictate is available under the [MIT License](LICENSE). You may use, modify
 ```sh
 DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer \
 xcodebuild clean build \
-  -project FlowDictate.xcodeproj \
+  -project NativeDictate.xcodeproj \
   -scheme NativeDictate \
   -configuration Debug \
   -destination 'platform=macOS,arch=arm64'
@@ -125,7 +125,7 @@ xcodebuild clean build \
 ```sh
 DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer \
 xcodebuild test \
-  -project FlowDictate.xcodeproj \
+  -project NativeDictate.xcodeproj \
   -scheme NativeDictate \
   -destination 'platform=macOS,arch=arm64'
 ```

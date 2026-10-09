@@ -14,7 +14,7 @@ mkdir -p "${ARCHIVE_DIRECTORY}"
 
 DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer \
     xcodebuild clean build \
-    -project "${PROJECT_DIRECTORY}/FlowDictate.xcodeproj" \
+    -project "${PROJECT_DIRECTORY}/NativeDictate.xcodeproj" \
     -scheme NativeDictate \
     -configuration Release \
     -destination 'platform=macOS,arch=arm64' \

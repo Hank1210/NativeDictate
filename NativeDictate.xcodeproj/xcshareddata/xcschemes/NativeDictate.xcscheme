@@ -18,7 +18,7 @@
                BlueprintIdentifier = "37F749793032108300FFCE37"
                BuildableName = "NativeDictate.app"
                BlueprintName = "NativeDictate"
-               ReferencedContainer = "container:FlowDictate.xcodeproj">
+               ReferencedContainer = "container:NativeDictate.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -38,7 +38,7 @@
                BlueprintIdentifier = "37F749863032108500FFCE37"
                BuildableName = "NativeDictateTests.xctest"
                BlueprintName = "NativeDictateTests"
-               ReferencedContainer = "container:FlowDictate.xcodeproj">
+               ReferencedContainer = "container:NativeDictate.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -49,7 +49,7 @@
                BlueprintIdentifier = "37F749903032108500FFCE37"
                BuildableName = "NativeDictateUITests.xctest"
                BlueprintName = "NativeDictateUITests"
-               ReferencedContainer = "container:FlowDictate.xcodeproj">
+               ReferencedContainer = "container:NativeDictate.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -71,7 +71,7 @@
             BlueprintIdentifier = "37F749793032108300FFCE37"
             BuildableName = "NativeDictate.app"
             BlueprintName = "NativeDictate"
-            ReferencedContainer = "container:FlowDictate.xcodeproj">
+            ReferencedContainer = "container:NativeDictate.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -88,7 +88,7 @@
             BlueprintIdentifier = "37F749793032108300FFCE37"
             BuildableName = "NativeDictate.app"
             BlueprintName = "NativeDictate"
-            ReferencedContainer = "container:FlowDictate.xcodeproj">
+            ReferencedContainer = "container:NativeDictate.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

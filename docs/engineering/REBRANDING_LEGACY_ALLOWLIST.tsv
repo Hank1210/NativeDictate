@@ -2,10 +2,9 @@ path	match_kind	allowed_match	reason
 NativeDictate/Utilities/ProductIdentity.swift	exact	de.mcc.FlowDictate	Produktions-Bundle-ID und Keychain-Service der bestehenden 4.1-Identität.
 NativeDictate/Utilities/ProductIdentity.swift	exact	de.mcc.FlowDictate.TestHost	Getrennte Testhost-Identität schützt die produktive TCC-Freigabe.
 NativeDictate/Utilities/ProductIdentity.swift	exact	FlowDictate	Persistente Application-Support-Wurzel der bestehenden Installation.
-FlowDictate.xcodeproj/project.pbxproj	exact	PRODUCT_BUNDLE_IDENTIFIER = de.mcc.FlowDictate;	Produktions-Bundle-ID in Debug und Release.
-FlowDictate.xcodeproj/project.pbxproj	exact	PRODUCT_BUNDLE_IDENTIFIER = de.mcc.FlowDictate.TestHost;	Dedizierte Testhost-Bundle-ID.
-FlowDictate.xcodeproj/project.pbxproj	prefix	FlowDictate|de.mcc.FlowDictate	Interner Projektname und Legacy-Bundle-IDs bleiben bestehen; Produkt-, Modul-, Buildable-, Quellgruppen- und Targetnamen sind separat als NativeDictate geschützt.
-FlowDictate.xcodeproj/xcshareddata/xcschemes/NativeDictate.xcscheme	prefix	container:FlowDictate.xcodeproj	Das NativeDictate-Scheme verweist weiterhin auf die separat zu bereinigende interne Projektdatei.
+NativeDictate.xcodeproj/project.pbxproj	exact	PRODUCT_BUNDLE_IDENTIFIER = de.mcc.FlowDictate;	Produktions-Bundle-ID in Debug und Release.
+NativeDictate.xcodeproj/project.pbxproj	exact	PRODUCT_BUNDLE_IDENTIFIER = de.mcc.FlowDictate.TestHost;	Dedizierte Testhost-Bundle-ID.
+NativeDictate.xcodeproj/project.pbxproj	prefix	de.mcc.FlowDictate	Produktions-, Testhost- und Test-Bundle-IDs bleiben als technische Legacy-Identitäten bestehen.
 NativeDictate/Audio/CaptureProbeArtifactStore.swift	prefix	FlowDictateCaptureProbes	Nur internes temporäres Diagnoseverzeichnis; kein neuer Nutzerexport und kein Persistenzvertrag.
 NativeDictate/Audio/AudioUploadPreparer.swift	prefix	FlowDictate-Upload-|FlowDictate-Multipart-	Interne temporäre Uploadartefakte bleiben kompatibel mit der bestehenden Bereinigung.
 NativeDictate/Transcription/MultipartUploadFileBuilder.swift	prefix	FlowDictate-Multipart-	Interne temporäre Multipart-Datei; nicht benutzersichtbar.
@@ -14,9 +13,9 @@ NativeDictate/Transcription/OpenAITranscriptionProvider.swift	prefix	FlowDictate
 NativeDictate/Meetings/LongFormTrackTranscriptionExecutor.swift	exact	FlowDictate's existing single-file	Interner Architekturkommentar; kein Nutzertext.
 NativeDictate/Meetings/MeetingTranscriptInsertionGate.swift	exact	FlowDictate stops after that boundary	Interner Architekturkommentar; kein Nutzertext.
 NativeDictate/Transcription/Local/LocalModelManager.swift	exact	Application Support/FlowDictate	Kommentar zum absichtlich bewahrten Legacy-Modellpfad.
-scripts/build-community-release.sh	prefix	FLOWDICTATE_|FlowDictate.xcodeproj	Legacy-Umgebungsvariablen bleiben als Fallbacks kompatibel; nur der Projektname ist noch intern alt benannt.
-scripts/build-release.sh	prefix	FLOWDICTATE_|FlowDictate.xcodeproj	Legacy-Umgebungsvariablen bleiben als Fallbacks kompatibel; nur der Projektname ist noch intern alt benannt.
-README.md	prefix	FlowDictate.xcodeproj|FlowDictate 4.1.0|FlowDictate.app|de.mcc.FlowDictate|previously released as FlowDictate|Historical FlowDictate|FLOWDICTATE_TRANSCRIPTION_MODEL	Aktueller Einstieg benennt nur den früheren Produktnamen im Übergang sowie ausdrücklich erklärte interne und Legacy-Identifier.
+scripts/build-community-release.sh	prefix	FLOWDICTATE_	Legacy-Umgebungsvariablen bleiben während der 4.x-Releaselinie als Fallbacks kompatibel.
+scripts/build-release.sh	prefix	FLOWDICTATE_	Legacy-Umgebungsvariablen bleiben während der 4.x-Releaselinie als Fallbacks kompatibel.
+README.md	prefix	FlowDictate 4.1.0|FlowDictate.app|de.mcc.FlowDictate|previously released as FlowDictate|Historical FlowDictate|FLOWDICTATE_TRANSCRIPTION_MODEL	Aktueller Einstieg benennt nur den früheren Produktnamen im Übergang sowie ausdrücklich erklärte Legacy-Identifier.
 COMMUNITY_INSTALLATION.md	prefix	FlowDictate 4.1.0|FlowDictate.app|de.mcc.FlowDictate|Application Support/FlowDictate|Beende FlowDictate|Starte FlowDictate	Deutscher 4.1-zu-4.2-Upgradepfad muss alte App und bewahrte Legacy-Identität benennen.
 COMMUNITY_INSTALLATION_EN.md	prefix	FlowDictate 4.1.0|FlowDictate.app|de.mcc.FlowDictate|Application Support/FlowDictate|Quit FlowDictate|start FlowDictate	Englischer 4.1-zu-4.2-Upgradepfad muss alte App und bewahrte Legacy-Identität benennen.
 PRIVACY.md	prefix	de.mcc.FlowDictate|Application Support/FlowDictate	Aktuelle Datenschutzerklärung macht die bewahrten technischen Identitäten transparent.

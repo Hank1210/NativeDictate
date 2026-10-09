@@ -71,7 +71,7 @@ struct NativeDictateTests {
             .deletingLastPathComponent()
             .deletingLastPathComponent()
         let projectFile = repositoryRoot
-            .appendingPathComponent("FlowDictate.xcodeproj", isDirectory: true)
+            .appendingPathComponent("NativeDictate.xcodeproj", isDirectory: true)
             .appendingPathComponent("project.pbxproj")
         let contents = try String(contentsOf: projectFile, encoding: .utf8)
         let productionSetting = "PRODUCT_BUNDLE_IDENTIFIER = \(ProductIdentity.Legacy.bundleIdentifier);"
@@ -86,13 +86,15 @@ struct NativeDictateTests {
             .deletingLastPathComponent()
             .deletingLastPathComponent()
         let projectFile = repositoryRoot
-            .appendingPathComponent("FlowDictate.xcodeproj", isDirectory: true)
+            .appendingPathComponent("NativeDictate.xcodeproj", isDirectory: true)
             .appendingPathComponent("project.pbxproj")
         let projectContents = try String(contentsOf: projectFile, encoding: .utf8)
 
         #expect(projectContents.components(separatedBy: "PRODUCT_NAME = NativeDictate;").count - 1 == 3)
         #expect(projectContents.components(separatedBy: "PRODUCT_MODULE_NAME = NativeDictate;").count - 1 == 3)
         #expect(projectContents.contains("PRODUCT_MODULE_NAME = FlowDictate;") == false)
+        #expect(projectContents.components(separatedBy: "PBXProject \"NativeDictate\"").count - 1 == 2)
+        #expect(projectContents.contains("PBXProject \"FlowDictate\"") == false)
         #expect(projectContents.components(separatedBy: "MARKETING_VERSION = 4.2.0;").count - 1 == 3)
         #expect(projectContents.components(separatedBy: "CURRENT_PROJECT_VERSION = 34;").count - 1 == 3)
         #expect(
@@ -102,9 +104,11 @@ struct NativeDictateTests {
         )
 
         let schemeURL = repositoryRoot.appendingPathComponent(
-            "FlowDictate.xcodeproj/xcshareddata/xcschemes/NativeDictate.xcscheme"
+            "NativeDictate.xcodeproj/xcshareddata/xcschemes/NativeDictate.xcscheme"
         )
         let schemeContents = try String(contentsOf: schemeURL, encoding: .utf8)
+        #expect(schemeContents.components(separatedBy: "container:NativeDictate.xcodeproj").count - 1 == 5)
+        #expect(schemeContents.contains("container:FlowDictate.xcodeproj") == false)
         #expect(schemeContents.components(separatedBy: "BuildableName = \"NativeDictate.app\"").count - 1 == 3)
         #expect(schemeContents.components(separatedBy: "BlueprintName = \"NativeDictate\"").count - 1 == 3)
         #expect(schemeContents.contains("BuildableName = \"FlowDictate.app\"") == false)
@@ -142,6 +146,8 @@ struct NativeDictateTests {
         #expect(communityScript.contains("VERSION=${NATIVEDICTATE_VERSION:-${FLOWDICTATE_VERSION:-4.2.0}}"))
         #expect(communityScript.contains("-scheme NativeDictate"))
         #expect(communityScript.contains("-scheme FlowDictate") == false)
+        #expect(communityScript.contains("/NativeDictate.xcodeproj"))
+        #expect(communityScript.contains("/FlowDictate.xcodeproj") == false)
 
         let releaseScript = try String(
             contentsOf: repositoryRoot.appendingPathComponent("scripts/build-release.sh"),
@@ -151,6 +157,8 @@ struct NativeDictateTests {
         #expect(releaseScript.contains("NATIVEDICTATE_NOTARY_PROFILE:-${FLOWDICTATE_NOTARY_PROFILE"))
         #expect(releaseScript.contains("-scheme NativeDictate"))
         #expect(releaseScript.contains("-scheme FlowDictate") == false)
+        #expect(releaseScript.contains("/NativeDictate.xcodeproj"))
+        #expect(releaseScript.contains("/FlowDictate.xcodeproj") == false)
 
         let environmentExample = try String(
             contentsOf: repositoryRoot.appendingPathComponent(".env.example"),
@@ -276,7 +284,7 @@ struct NativeDictateTests {
         #expect(infoPlist.values.allSatisfy { !$0.contains("FlowDictate") })
 
         let projectFile = repositoryRoot
-            .appendingPathComponent("FlowDictate.xcodeproj", isDirectory: true)
+            .appendingPathComponent("NativeDictate.xcodeproj", isDirectory: true)
             .appendingPathComponent("project.pbxproj")
         let projectContents = try String(contentsOf: projectFile, encoding: .utf8)
         #expect(
