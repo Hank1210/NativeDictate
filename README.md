@@ -50,7 +50,7 @@ https://github.com/user-attachments/assets/041e2a7d-ba4e-4ab4-9b7f-bc823a764e26
 
 ## Configure and run
 
-NativeDictate 4.2 retains the internal `FlowDictate.xcodeproj` project, `FlowDictate` scheme and Swift module names. Use those exact technical identifiers when building; the resulting app is `NativeDictate.app`.
+NativeDictate retains the internal `FlowDictate.xcodeproj` project and `FlowDictate` scheme names. Use those exact technical identifiers when building; the resulting app and Swift module are named `NativeDictate`.
 
 1. Open `FlowDictate.xcodeproj` and run the `FlowDictate` scheme.
 2. Follow the first-run setup assistant.

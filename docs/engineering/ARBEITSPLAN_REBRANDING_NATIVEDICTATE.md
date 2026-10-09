@@ -700,6 +700,15 @@ Jede interne Bereinigung wird mechanisch getrennt, mit kleinen Commits und volls
 - Die vollständige serielle macOS-Suite wurde aus einer unveränderten temporären Kopie ausgeführt und bestand mit 228/228 Tests sowie `TEST SUCCEEDED`. Der Buildgraph bestätigte, dass beide NativeDictate-Testtargets vom App-Target `NativeDictate` abhängen.
 - Die bereits bekannten Compilerwarnungen im unveränderten Testhelfer und Retry-Code bleiben bestehen; der Schritt wird deshalb nicht als warnungsfrei bezeichnet.
 
+### 14.12 Swift-Modul
+
+- Das Swift-Modul wurde durch `PRODUCT_MODULE_NAME = NativeDictate` in den App-Konfigurationen Debug, Release und DebugTests von `FlowDictate` zu `NativeDictate` umbenannt. Der Testcode importiert das App-Modul nun mit `@testable import NativeDictate`.
+- Xcode-Projektdatei und gemeinsames Scheme bleiben in diesem getrennten Schritt `FlowDictate.xcodeproj` beziehungsweise `FlowDictate`. App- und Testtargets sowie ihre Produkte tragen bereits die NativeDictate-Namen.
+- Bundle-Identifier, Keychain-Service, Persistenzpfade, UserDefaults-Schlüssel und gespeicherte Datenverträge bleiben unverändert. Die veröffentlichten Release Notes und der Changelog zu 4.2.0 werden als historischer Nachweis des damaligen Releasezustands nicht nachträglich umgeschrieben.
+- Der Packaging-Regressionstest schützt die drei neuen Modul-Buildsettings und schließt das alte Modul-Buildsetting aus. README und Legacy-Allowlist beschreiben den aktuellen Stand; `git diff --check` ist leer.
+- Die vollständige serielle macOS-Suite wurde aus einer unveränderten temporären Kopie ausgeführt und bestand mit 228/228 Tests sowie `TEST SUCCEEDED`.
+- Die bereits bekannten Compilerwarnungen im unveränderten Testhelfer und Retry-Code bleiben bestehen; der Schritt wird deshalb nicht als warnungsfrei bezeichnet.
+
 ## 15. Rollback-Strategie
 
 ### 15.1 Vor der GitHub-Umschaltung

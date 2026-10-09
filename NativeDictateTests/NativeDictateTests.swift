@@ -14,7 +14,7 @@ import CoreAudio
 import Foundation
 import ServiceManagement
 import Testing
-@testable import FlowDictate
+@testable import NativeDictate
 
 struct NativeDictateTests {
     @Test func rebrandingKeepsLegacyIdentityAndStorageContracts() throws {
@@ -81,7 +81,7 @@ struct NativeDictateTests {
         #expect(contents.components(separatedBy: testHostSetting).count - 1 == 1)
     }
 
-    @Test func packagingBuildSettingsUseNativeDictateWithoutChangingModuleIdentity() throws {
+    @Test func packagingBuildSettingsUseNativeDictateIdentity() throws {
         let repositoryRoot = URL(fileURLWithPath: #filePath)
             .deletingLastPathComponent()
             .deletingLastPathComponent()
@@ -91,7 +91,8 @@ struct NativeDictateTests {
         let projectContents = try String(contentsOf: projectFile, encoding: .utf8)
 
         #expect(projectContents.components(separatedBy: "PRODUCT_NAME = NativeDictate;").count - 1 == 3)
-        #expect(projectContents.components(separatedBy: "PRODUCT_MODULE_NAME = FlowDictate;").count - 1 == 3)
+        #expect(projectContents.components(separatedBy: "PRODUCT_MODULE_NAME = NativeDictate;").count - 1 == 3)
+        #expect(projectContents.contains("PRODUCT_MODULE_NAME = FlowDictate;") == false)
         #expect(projectContents.components(separatedBy: "MARKETING_VERSION = 4.2.0;").count - 1 == 3)
         #expect(projectContents.components(separatedBy: "CURRENT_PROJECT_VERSION = 34;").count - 1 == 3)
         #expect(

@@ -4,7 +4,7 @@ NativeDictate/Utilities/ProductIdentity.swift	exact	de.mcc.FlowDictate.TestHost	
 NativeDictate/Utilities/ProductIdentity.swift	exact	FlowDictate	Persistente Application-Support-Wurzel der bestehenden Installation.
 FlowDictate.xcodeproj/project.pbxproj	exact	PRODUCT_BUNDLE_IDENTIFIER = de.mcc.FlowDictate;	Produktions-Bundle-ID in Debug und Release.
 FlowDictate.xcodeproj/project.pbxproj	exact	PRODUCT_BUNDLE_IDENTIFIER = de.mcc.FlowDictate.TestHost;	Dedizierte Testhost-Bundle-ID.
-FlowDictate.xcodeproj/project.pbxproj	prefix	FlowDictate|de.mcc.FlowDictate	Interne Projekt- und Modulnamen sowie Legacy-Bundle-IDs bleiben bestehen; Produkt-, Buildable-, Quellgruppen- und Targetnamen sind separat als NativeDictate geschützt.
+FlowDictate.xcodeproj/project.pbxproj	prefix	FlowDictate|de.mcc.FlowDictate	Interner Projektname und Legacy-Bundle-IDs bleiben bestehen; Produkt-, Modul-, Buildable-, Quellgruppen- und Targetnamen sind separat als NativeDictate geschützt.
 FlowDictate.xcodeproj/xcshareddata/xcschemes/FlowDictate.xcscheme	prefix	container:FlowDictate.xcodeproj	App-Scheme und Projektdatei bleiben intern bestehen; App-Target und sämtliche Buildables sind separat als NativeDictate geschützt.
 NativeDictate/Audio/CaptureProbeArtifactStore.swift	prefix	FlowDictateCaptureProbes	Nur internes temporäres Diagnoseverzeichnis; kein neuer Nutzerexport und kein Persistenzvertrag.
 NativeDictate/Audio/AudioUploadPreparer.swift	prefix	FlowDictate-Upload-|FlowDictate-Multipart-	Interne temporäre Uploadartefakte bleiben kompatibel mit der bestehenden Bereinigung.
@@ -27,7 +27,7 @@ docs/MANUAL_VERIFICATION.md	prefix	FlowDictate.app|FlowDictate is fully stopped	
 docs/requirements/README.md	prefix	FlowDictate name|FlowDictate_PRD_	Aktueller Index erklärt die historische Benennung und bewahrt verlinkte PRD-Dateinamen.
 docs/releases/README.md	prefix	FlowDictate name	Release-Index kennzeichnet 4.1.0 als letzte Veröffentlichung unter dem alten Namen.
 docs/releases/RELEASE_NOTES_4.2.0.md	prefix	FlowDictate 4.1.0|FlowDictate.app|de.mcc.FlowDictate|Application Support/FlowDictate|FlowDictate is now NativeDictate|internal FlowDictate names|Quit FlowDictate|Never run FlowDictate|real FlowDictate-4.1.0	4.2-Release Notes erklären Umbenennung, Upgrade und unveränderte technische Identität.
-NativeDictateTests/NativeDictateTests.swift	file	FlowDictate|de.mcc.FlowDictate	Interne Modul-, Fixture- und Legacy-Vertragsnamen; Benutzerbranding wird durch separate Regressionstests geschützt.
+NativeDictateTests/NativeDictateTests.swift	file	FlowDictate|de.mcc.FlowDictate	Fixture- und Legacy-Vertragsnamen; Benutzerbranding und Modulname werden durch separate Regressionstests geschützt.
 docs/engineering/ARBEITSPLAN_PHASE_4_1.md	file	FlowDictate|de.mcc.FlowDictate|de.euler.FlowDictate	Abgeschlossener historischer 4.1-Arbeitsplan.
 docs/engineering/CAPTURE_SPIKE_PHASE_4_1.md	file	FlowDictate|de.mcc.FlowDictate|de.euler.FlowDictate	Abgeschlossener historischer Capture-Spike.
 docs/releases/RELEASE_NOTES_3.2.0.md	file	FlowDictate|de.mcc.FlowDictate|de.euler.FlowDictate	Veröffentlichte historische Release Notes.
