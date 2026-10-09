@@ -1,6 +1,6 @@
 //
 //  NativeDictateUITests.swift
-//  FlowDictateUITests
+//  NativeDictateUITests
 //
 //  Created by Frank Euler on 16.08.26.
 //

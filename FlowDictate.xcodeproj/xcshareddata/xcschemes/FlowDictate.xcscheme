@@ -36,8 +36,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "37F749863032108500FFCE37"
-               BuildableName = "FlowDictateTests.xctest"
-               BlueprintName = "FlowDictateTests"
+               BuildableName = "NativeDictateTests.xctest"
+               BlueprintName = "NativeDictateTests"
                ReferencedContainer = "container:FlowDictate.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -47,8 +47,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "37F749903032108500FFCE37"
-               BuildableName = "FlowDictateUITests.xctest"
-               BlueprintName = "FlowDictateUITests"
+               BuildableName = "NativeDictateUITests.xctest"
+               BlueprintName = "NativeDictateUITests"
                ReferencedContainer = "container:FlowDictate.xcodeproj">
             </BuildableReference>
          </TestableReference>

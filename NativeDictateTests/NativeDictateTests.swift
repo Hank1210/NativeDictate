@@ -1,6 +1,6 @@
 //
 //  NativeDictateTests.swift
-//  FlowDictateTests
+//  NativeDictateTests
 //
 //  Created by Frank Euler on 16.08.26.
 //
@@ -106,6 +106,25 @@ struct NativeDictateTests {
         let schemeContents = try String(contentsOf: schemeURL, encoding: .utf8)
         #expect(schemeContents.components(separatedBy: "BuildableName = \"NativeDictate.app\"").count - 1 == 3)
         #expect(schemeContents.contains("BuildableName = \"FlowDictate.app\"") == false)
+        #expect(schemeContents.contains("BuildableName = \"NativeDictateTests.xctest\""))
+        #expect(schemeContents.contains("BlueprintName = \"NativeDictateTests\""))
+        #expect(schemeContents.contains("BuildableName = \"NativeDictateUITests.xctest\""))
+        #expect(schemeContents.contains("BlueprintName = \"NativeDictateUITests\""))
+        #expect(schemeContents.contains("BuildableName = \"FlowDictateTests.xctest\"") == false)
+        #expect(schemeContents.contains("BuildableName = \"FlowDictateUITests.xctest\"") == false)
+
+        #expect(projectContents.contains("name = NativeDictateTests;"))
+        #expect(projectContents.contains("productName = NativeDictateTests;"))
+        #expect(projectContents.contains("path = NativeDictateTests.xctest;"))
+        #expect(projectContents.contains("name = NativeDictateUITests;"))
+        #expect(projectContents.contains("productName = NativeDictateUITests;"))
+        #expect(projectContents.contains("path = NativeDictateUITests.xctest;"))
+        #expect(projectContents.contains("name = FlowDictateTests;") == false)
+        #expect(projectContents.contains("productName = FlowDictateTests;") == false)
+        #expect(projectContents.contains("path = FlowDictateTests.xctest;") == false)
+        #expect(projectContents.contains("name = FlowDictateUITests;") == false)
+        #expect(projectContents.contains("productName = FlowDictateUITests;") == false)
+        #expect(projectContents.contains("path = FlowDictateUITests.xctest;") == false)
 
         let communityScript = try String(
             contentsOf: repositoryRoot.appendingPathComponent("scripts/build-community-release.sh"),
@@ -569,7 +588,7 @@ struct NativeDictateTests {
 
     @MainActor
     @Test func pasteboardSnapshotRestoresMultipleRepresentations() throws {
-        let pasteboard = NSPasteboard(name: NSPasteboard.Name("FlowDictateTests-\(UUID())"))
+        let pasteboard = NSPasteboard(name: NSPasteboard.Name("NativeDictateTests-\(UUID())"))
         pasteboard.clearContents()
 
         let originalItem = NSPasteboardItem()
@@ -590,7 +609,7 @@ struct NativeDictateTests {
 
     @MainActor
     @Test func appSettingsPersistPhaseOneConfiguration() {
-        let suiteName = "FlowDictateTests-\(UUID())"
+        let suiteName = "NativeDictateTests-\(UUID())"
         let defaults = UserDefaults(suiteName: suiteName)!
         defer { defaults.removePersistentDomain(forName: suiteName) }
 

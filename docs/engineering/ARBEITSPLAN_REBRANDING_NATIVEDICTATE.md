@@ -682,6 +682,15 @@ Jede interne Bereinigung wird mechanisch getrennt, mit kleinen Commits und volls
 - Die vollständige serielle macOS-Suite wurde aus einer unveränderten temporären Kopie ausgeführt und bestand mit 228/228 Tests sowie `TEST SUCCEEDED`. Swift Testing weist die Suite im Ergebnis nun als `NativeDictateTests` aus.
 - Die bekannte Actor-Isolation-Compilerwarnung am Defaultwert `MockCredentialStore()` bleibt von der mechanischen Typumbenennung unberührt. Technische App-Identität, Persistenzpfade und gespeicherte Datenverträge wurden nicht geändert.
 
+### 14.10 Xcode-Testtargets und Testprodukte
+
+- Die Xcode-Targets und Produktnamen `FlowDictateTests` sowie `FlowDictateUITests` wurden zu `NativeDictateTests` beziehungsweise `NativeDictateUITests` umbenannt. `project.pbxproj`, die Testable-Einträge des gemeinsamen Schemes, die Dateiköpfe und die aktuelle README-Testanleitung verwenden nun die neuen Namen.
+- `xcodebuild -list` weist im weiterhin `FlowDictate` genannten Projekt das unveränderte App-Target `FlowDictate` sowie die Testtargets `NativeDictateTests` und `NativeDictateUITests` aus. Das gemeinsame Scheme bleibt in diesem getrennten Schritt ebenfalls `FlowDictate`.
+- Der Build erzeugt `NativeDictateTests.xctest` und `NativeDictateUITests.xctest`. Ihre Bundle-Identifier bleiben bewusst `de.mcc.FlowDictateTests` und `de.mcc.FlowDictateUITests`; ebenso bleiben App-Target, App-Modul, Projektdatei, Scheme und `TEST_TARGET_NAME = FlowDictate` unverändert.
+- Regressionserwartungen schützen die neuen Target-, Produkt-, Buildable- und Blueprint-Namen und schließen die alten Testnamen in den entsprechenden Xcode-Feldern aus. Die überflüssigen Scheme-/README-Ausnahmen und die vollständig bereinigte UI-Testdatei wurden aus der Legacy-Allowlist entfernt; `git diff --check` ist leer.
+- Der erste vollständige Lauf erreichte 227 erfolgreiche Tests, bevor der Allowlist-Selbsttest den nun veralteten UI-Testdatei-Eintrag korrekt beanstandete. Nach dessen Entfernung bestand die erneut vollständig ausgeführte serielle macOS-Suite mit 228/228 Tests und `TEST SUCCEEDED`.
+- Die bereits bekannten Compilerwarnungen im unveränderten Testhelfer und Retry-Code bleiben bestehen. Bundle-Identifier, Keychain-Service, Persistenzpfade und gespeicherte Datenverträge wurden nicht geändert.
+
 ## 15. Rollback-Strategie
 
 ### 15.1 Vor der GitHub-Umschaltung
