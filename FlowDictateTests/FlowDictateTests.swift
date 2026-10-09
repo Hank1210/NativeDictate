@@ -130,7 +130,7 @@ struct FlowDictateTests {
         #expect(environmentExample.contains("FLOWDICTATE_TRANSCRIPTION_MODEL=") == false)
 
         let coordinatorSource = try String(
-            contentsOf: repositoryRoot.appendingPathComponent("FlowDictate/App/DictationCoordinator.swift"),
+            contentsOf: repositoryRoot.appendingPathComponent("NativeDictate/App/DictationCoordinator.swift"),
             encoding: .utf8
         )
         #expect(coordinatorSource.contains("environment[\"NATIVEDICTATE_UI_TESTING\"]"))
@@ -191,30 +191,30 @@ struct FlowDictateTests {
             .deletingLastPathComponent()
             .deletingLastPathComponent()
         let visibleSourcePaths = [
-            "FlowDictate/App/DictationCoordinator.swift",
-            "FlowDictate/Audio/SystemAudioRecorder.swift",
-            "FlowDictate/NativeDictateApp.swift",
-            "FlowDictate/History/DictationHistoryStore.swift",
-            "FlowDictate/History/HistoryView.swift",
-            "FlowDictate/Insertion/AccessibilityTextInserter.swift",
-            "FlowDictate/Jobs/DictationJobStore.swift",
-            "FlowDictate/Meetings/CoreAudioTapCaptureProbe.swift",
-            "FlowDictate/Meetings/MeetingRecordingConsentView.swift",
-            "FlowDictate/Meetings/MixedRecordingSession.swift",
-            "FlowDictate/Meetings/SystemAudioPermissionStatus.swift",
-            "FlowDictate/Meetings/SystemAudioTrackRecorder.swift",
-            "FlowDictate/MenuBar/NativeDictateMenu.swift",
-            "FlowDictate/Onboarding/OnboardingView.swift",
-            "FlowDictate/Permissions/PermissionManager.swift",
-            "FlowDictate/Productivity/ProductivityServices.swift",
-            "FlowDictate/Productivity/ProductivitySettingsView.swift",
-            "FlowDictate/Profiles/AppProfilesSettingsView.swift",
-            "FlowDictate/Settings/LaunchAtLoginManager.swift",
-            "FlowDictate/Settings/SmartDictationSettingsView.swift",
-            "FlowDictate/Storage/RecordingLocationStore.swift",
-            "FlowDictate/Transcription/LongForm/LongFormTranscriptionModels.swift",
-            "FlowDictate/Transcription/TranscriptionProvider.swift",
-            "FlowDictate/Transcription/TranscriptionRunner.swift"
+            "NativeDictate/App/DictationCoordinator.swift",
+            "NativeDictate/Audio/SystemAudioRecorder.swift",
+            "NativeDictate/NativeDictateApp.swift",
+            "NativeDictate/History/DictationHistoryStore.swift",
+            "NativeDictate/History/HistoryView.swift",
+            "NativeDictate/Insertion/AccessibilityTextInserter.swift",
+            "NativeDictate/Jobs/DictationJobStore.swift",
+            "NativeDictate/Meetings/CoreAudioTapCaptureProbe.swift",
+            "NativeDictate/Meetings/MeetingRecordingConsentView.swift",
+            "NativeDictate/Meetings/MixedRecordingSession.swift",
+            "NativeDictate/Meetings/SystemAudioPermissionStatus.swift",
+            "NativeDictate/Meetings/SystemAudioTrackRecorder.swift",
+            "NativeDictate/MenuBar/NativeDictateMenu.swift",
+            "NativeDictate/Onboarding/OnboardingView.swift",
+            "NativeDictate/Permissions/PermissionManager.swift",
+            "NativeDictate/Productivity/ProductivityServices.swift",
+            "NativeDictate/Productivity/ProductivitySettingsView.swift",
+            "NativeDictate/Profiles/AppProfilesSettingsView.swift",
+            "NativeDictate/Settings/LaunchAtLoginManager.swift",
+            "NativeDictate/Settings/SmartDictationSettingsView.swift",
+            "NativeDictate/Storage/RecordingLocationStore.swift",
+            "NativeDictate/Transcription/LongForm/LongFormTranscriptionModels.swift",
+            "NativeDictate/Transcription/TranscriptionProvider.swift",
+            "NativeDictate/Transcription/TranscriptionRunner.swift"
         ]
         let legacyVisibleName = try NSRegularExpression(
             pattern: #"(?:^|[\"\s])FlowDictate\b"#
@@ -264,7 +264,7 @@ struct FlowDictateTests {
 
         let coordinator = try String(
             contentsOf: repositoryRoot.appendingPathComponent(
-                "FlowDictate/App/DictationCoordinator.swift"
+                "NativeDictate/App/DictationCoordinator.swift"
             ),
             encoding: .utf8
         )

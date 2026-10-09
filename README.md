@@ -1,7 +1,7 @@
 # NativeDictate
 
 <p align="center">
-  <img src="FlowDictate/Assets.xcassets/AppIcon.appiconset/AppIcon_1024.png" alt="NativeDictate app icon" width="180">
+  <img src="NativeDictate/Assets.xcassets/AppIcon.appiconset/AppIcon_1024.png" alt="NativeDictate app icon" width="180">
 </p>
 
 NativeDictate is open-source dictation and meeting transcription for macOS. Built natively with Swift, SwiftUI and AppKit, it supports opt-in microphone-plus-system-audio recording with separate original tracks, a role-labelled transcript and restart-safe processing. One dictation or meeting is recorded and processed at a time.

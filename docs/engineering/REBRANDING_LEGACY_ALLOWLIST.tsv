@@ -1,22 +1,22 @@
 path	match_kind	allowed_match	reason
-FlowDictate/Utilities/ProductIdentity.swift	exact	de.mcc.FlowDictate	Produktions-Bundle-ID und Keychain-Service der bestehenden 4.1-Identität.
-FlowDictate/Utilities/ProductIdentity.swift	exact	de.mcc.FlowDictate.TestHost	Getrennte Testhost-Identität schützt die produktive TCC-Freigabe.
-FlowDictate/Utilities/ProductIdentity.swift	exact	FlowDictate	Persistente Application-Support-Wurzel der bestehenden Installation.
+NativeDictate/Utilities/ProductIdentity.swift	exact	de.mcc.FlowDictate	Produktions-Bundle-ID und Keychain-Service der bestehenden 4.1-Identität.
+NativeDictate/Utilities/ProductIdentity.swift	exact	de.mcc.FlowDictate.TestHost	Getrennte Testhost-Identität schützt die produktive TCC-Freigabe.
+NativeDictate/Utilities/ProductIdentity.swift	exact	FlowDictate	Persistente Application-Support-Wurzel der bestehenden Installation.
 FlowDictate.xcodeproj/project.pbxproj	exact	PRODUCT_BUNDLE_IDENTIFIER = de.mcc.FlowDictate;	Produktions-Bundle-ID in Debug und Release.
 FlowDictate.xcodeproj/project.pbxproj	exact	PRODUCT_BUNDLE_IDENTIFIER = de.mcc.FlowDictate.TestHost;	Dedizierte Testhost-Bundle-ID.
-FlowDictate.xcodeproj/project.pbxproj	prefix	FlowDictate|de.mcc.FlowDictate	Interne Xcode-Target-, Test-, Projekt-, Quell-, Plist- und Modulnamen sowie Legacy-Bundle-IDs bleiben gemäß R2.2 bestehen; Produkt- und BuildableName sind durch R3-Regressionen separat als NativeDictate geschützt.
+FlowDictate.xcodeproj/project.pbxproj	prefix	FlowDictate|de.mcc.FlowDictate	Interne Xcode-Target-, Test-, Projekt- und Modulnamen sowie Legacy-Bundle-IDs bleiben bestehen; Produkt-, Buildable- und Quellgruppenname sind separat als NativeDictate geschützt.
 FlowDictate.xcodeproj/xcshareddata/xcschemes/FlowDictate.xcscheme	prefix	BlueprintName = "FlowDictate"|container:FlowDictate.xcodeproj|FlowDictateTests|FlowDictateUITests	Interne Scheme-, Projekt-, Target- und Testnamen bleiben bestehen; BuildableName ist NativeDictate.app.
-FlowDictate/Audio/CaptureProbeArtifactStore.swift	prefix	FlowDictateCaptureProbes	Nur internes temporäres Diagnoseverzeichnis; kein neuer Nutzerexport und kein Persistenzvertrag.
-FlowDictate/Audio/AudioUploadPreparer.swift	prefix	FlowDictate-Upload-|FlowDictate-Multipart-	Interne temporäre Uploadartefakte bleiben kompatibel mit der bestehenden Bereinigung.
-FlowDictate/Transcription/MultipartUploadFileBuilder.swift	prefix	FlowDictate-Multipart-	Interne temporäre Multipart-Datei; nicht benutzersichtbar.
-FlowDictate/Transcription/OpenAITranscriptionProvider.swift	prefix	FlowDictate-	Interne Multipart-Boundary; nicht benutzersichtbar.
+NativeDictate/Audio/CaptureProbeArtifactStore.swift	prefix	FlowDictateCaptureProbes	Nur internes temporäres Diagnoseverzeichnis; kein neuer Nutzerexport und kein Persistenzvertrag.
+NativeDictate/Audio/AudioUploadPreparer.swift	prefix	FlowDictate-Upload-|FlowDictate-Multipart-	Interne temporäre Uploadartefakte bleiben kompatibel mit der bestehenden Bereinigung.
+NativeDictate/Transcription/MultipartUploadFileBuilder.swift	prefix	FlowDictate-Multipart-	Interne temporäre Multipart-Datei; nicht benutzersichtbar.
+NativeDictate/Transcription/OpenAITranscriptionProvider.swift	prefix	FlowDictate-	Interne Multipart-Boundary; nicht benutzersichtbar.
 .gitignore	exact	FlowDictate-Feature-Briefing_4.1.md	Explizit ignorierter privater historischer Dateiname; die Datei selbst darf nicht versioniert werden.
-FlowDictate/Meetings/LongFormTrackTranscriptionExecutor.swift	exact	FlowDictate's existing single-file	Interner Architekturkommentar; kein Nutzertext.
-FlowDictate/Meetings/MeetingTranscriptInsertionGate.swift	exact	FlowDictate stops after that boundary	Interner Architekturkommentar; kein Nutzertext.
-FlowDictate/Transcription/Local/LocalModelManager.swift	exact	Application Support/FlowDictate	Kommentar zum absichtlich bewahrten Legacy-Modellpfad.
+NativeDictate/Meetings/LongFormTrackTranscriptionExecutor.swift	exact	FlowDictate's existing single-file	Interner Architekturkommentar; kein Nutzertext.
+NativeDictate/Meetings/MeetingTranscriptInsertionGate.swift	exact	FlowDictate stops after that boundary	Interner Architekturkommentar; kein Nutzertext.
+NativeDictate/Transcription/Local/LocalModelManager.swift	exact	Application Support/FlowDictate	Kommentar zum absichtlich bewahrten Legacy-Modellpfad.
 scripts/build-community-release.sh	prefix	FLOWDICTATE_|FlowDictate.xcodeproj|-scheme FlowDictate	Legacy-Umgebungsvariablen bleiben als Fallbacks kompatibel; Projekt und Scheme sind interne Namen.
 scripts/build-release.sh	prefix	FLOWDICTATE_|FlowDictate.xcodeproj|-scheme FlowDictate	Legacy-Umgebungsvariablen bleiben als Fallbacks kompatibel; Projekt und Scheme sind interne Namen.
-README.md	prefix	FlowDictate.xcodeproj|FlowDictate 4.1.0|FlowDictate.app|de.mcc.FlowDictate|FlowDictateUITests|src="FlowDictate/|previously released as FlowDictate|Historical FlowDictate|-scheme FlowDictate|FLOWDICTATE_TRANSCRIPTION_MODEL	Aktueller Einstieg benennt nur den früheren Produktnamen im Übergang sowie ausdrücklich erklärte interne und Legacy-Identifier.
+README.md	prefix	FlowDictate.xcodeproj|FlowDictate 4.1.0|FlowDictate.app|de.mcc.FlowDictate|FlowDictateUITests|previously released as FlowDictate|Historical FlowDictate|-scheme FlowDictate|FLOWDICTATE_TRANSCRIPTION_MODEL	Aktueller Einstieg benennt nur den früheren Produktnamen im Übergang sowie ausdrücklich erklärte interne und Legacy-Identifier.
 COMMUNITY_INSTALLATION.md	prefix	FlowDictate 4.1.0|FlowDictate.app|de.mcc.FlowDictate|Application Support/FlowDictate|Beende FlowDictate|Starte FlowDictate	Deutscher 4.1-zu-4.2-Upgradepfad muss alte App und bewahrte Legacy-Identität benennen.
 COMMUNITY_INSTALLATION_EN.md	prefix	FlowDictate 4.1.0|FlowDictate.app|de.mcc.FlowDictate|Application Support/FlowDictate|Quit FlowDictate|start FlowDictate	Englischer 4.1-zu-4.2-Upgradepfad muss alte App und bewahrte Legacy-Identität benennen.
 PRIVACY.md	prefix	de.mcc.FlowDictate|Application Support/FlowDictate	Aktuelle Datenschutzerklärung macht die bewahrten technischen Identitäten transparent.

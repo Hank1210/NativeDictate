@@ -34,9 +34,9 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		37F7497C3032108300FFCE37 /* FlowDictate */ = {
+		37F7497C3032108300FFCE37 /* NativeDictate */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = FlowDictate;
+			path = NativeDictate;
 			sourceTree = "<group>";
 		};
 		37F7498A3032108500FFCE37 /* FlowDictateTests */ = {
@@ -80,7 +80,7 @@
 		37F749713032108300FFCE37 = {
 			isa = PBXGroup;
 			children = (
-				37F7497C3032108300FFCE37 /* FlowDictate */,
+				37F7497C3032108300FFCE37 /* NativeDictate */,
 				37F7498A3032108500FFCE37 /* FlowDictateTests */,
 				37F749943032108500FFCE37 /* FlowDictateUITests */,
 				37F7497B3032108300FFCE37 /* Products */,
@@ -113,7 +113,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				37F7497C3032108300FFCE37 /* FlowDictate */,
+				37F7497C3032108300FFCE37 /* NativeDictate */,
 			);
 			name = FlowDictate;
 			packageProductDependencies = (

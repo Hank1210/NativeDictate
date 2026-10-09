@@ -208,14 +208,14 @@ Vor sichtbaren Umbenennungen werden die Werte geschützt, die bestehende Install
 ### 7.3 Voraussichtlich betroffene Dateien
 
 - `FlowDictate.xcodeproj/project.pbxproj`
-- `FlowDictate/Settings/KeychainCredentialStore.swift`
-- `FlowDictate/History/DictationHistoryStore.swift`
-- `FlowDictate/Jobs/DictationJobStore.swift`
-- `FlowDictate/Profiles/AppDictationProfile.swift`
-- `FlowDictate/SmartDictation/SmartDictationStores.swift`
-- `FlowDictate/Transcription/Local/LocalModelManager.swift`
-- `FlowDictate/Transcription/LongForm/TranscriptionSessionStore.swift`
-- `FlowDictate/Audio/AudioStore.swift`
+- `NativeDictate/Settings/KeychainCredentialStore.swift`
+- `NativeDictate/History/DictationHistoryStore.swift`
+- `NativeDictate/Jobs/DictationJobStore.swift`
+- `NativeDictate/Profiles/AppDictationProfile.swift`
+- `NativeDictate/SmartDictation/SmartDictationStores.swift`
+- `NativeDictate/Transcription/Local/LocalModelManager.swift`
+- `NativeDictate/Transcription/LongForm/TranscriptionSessionStore.swift`
+- `NativeDictate/Audio/AudioStore.swift`
 - `FlowDictateTests/FlowDictateTests.swift`
 
 ### 7.4 Nachweis vom 3. Oktober 2026
@@ -515,7 +515,7 @@ Zu prüfen:
 
 ### 12.3 Besonders zu prüfen
 
-- `FlowDictate/Productivity/ProductivityServices.swift` enthielt bis zur Umschaltung absichtlich die alte GitHub-Release-API.
+- `NativeDictate/Productivity/ProductivityServices.swift` enthielt bis zur Umschaltung absichtlich die alte GitHub-Release-API.
 - README, Release Guide und Installationsdokumente enthalten alte Repository-Links nur noch mit ausdrücklicher historischer oder Migrationsbedeutung.
 - Externe Klone funktionieren zunächst über GitHubs Redirect, sollen aber die neue Remote-URL dokumentiert bekommen.
 - GitHub Pages und ein veröffentlichtes GitHub-Marketplace-Action-Repository sind nicht im Scope. Falls sie wider Erwarten existieren, muss R6 vor der Umschaltung neu bewertet werden.
@@ -657,6 +657,14 @@ Jede interne Bereinigung wird mechanisch getrennt, mit kleinen Commits und volls
 - Der Packaging-Regressionstest schützt die neuen Primärnamen, die definierten Fallbacks und die ausschließlich neue Benennung in `.env.example` sowie im UI-Test. Die überflüssige `.env.example`-Ausnahme wurde aus `REBRANDING_LEGACY_ALLOWLIST.tsv` entfernt; die README-Allowlist benennt den dokumentierten 4.x-Fallback nun ausdrücklich.
 - Beide Release-Skripte bestehen `zsh -n`; `git diff --check` ist leer. Die vollständige serielle macOS-Suite bestand mit 228/228 Tests und `TEST SUCCEEDED`.
 - Der Lauf meldete die bekannte Actor-Isolation-Compilerwarnung im Testhelfer sowie eine bereits im unveränderten Retry-Code vorhandene Capture-Warnung. Bundle-Identifier, Keychain-Service, Persistenzpfade, Xcode-Projekt, Scheme, Targets und Swift-Modul wurden nicht geändert.
+
+### 14.7 Quellwurzel
+
+- Der dateisystemsynchronisierte App-Quellordner `FlowDictate/` wurde zu `NativeDictate/` umbenannt. Die zugehörige Root Group in `project.pbxproj`, aktuelle Pfadprüfungen im Branding-Regressionstest, die Legacy-Allowlist und der README-Verweis auf das App-Icon verwenden den neuen Pfad.
+- Xcode-Projekt, App-Target, Testtargets, Scheme und Swift-Modul heißen in diesem Schritt weiterhin `FlowDictate`. Ebenso bleiben Bundle-Identifier, Keychain-Service, `Application Support/FlowDictate`, UserDefaults-Schlüssel und alle gespeicherten Datenverträge unverändert.
+- Der kontrollierte Restscan findet außerhalb historischer Nachweise keinen alten App-Quellpfad mehr. Der verbleibende aktive String `Library/Application Support/FlowDictate/Models` ist der ausdrücklich geschützte persistente Legacy-Pfad und keine Quellordnerreferenz. `git diff --check` ist leer.
+- Ein erster Testlauf im dokumentbasierten Arbeitsverzeichnis kompilierte die App bereits vollständig aus `NativeDictate/`, blieb anschließend jedoch beim Öffnen von `project.pbxproj` durch einen Regressionstest im macOS-Dateisystem hängen und wurde abgebrochen. Derselbe unveränderte Quellstand wurde deshalb in eine temporäre lokale Kopie unter `/private/tmp` übertragen.
+- Aus dieser Kopie bestand die vollständige serielle macOS-Suite mit 228/228 Tests und `TEST SUCCEEDED`. Der erfolgreiche Lauf meldete weiterhin die bekannte Actor-Isolation-Compilerwarnung am Defaultwert `MockCredentialStore()` des Testhelfers; der Schritt wird daher nicht als warnungsfrei bezeichnet.
 
 ## 15. Rollback-Strategie
 
